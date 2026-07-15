@@ -3,7 +3,8 @@
 
 window.HRT_CONFIG = {
   GA_ID: "G-2N3V0S9QT9",   // GA4 Measurement ID (property under kaveex@gmail.com)
-  FORM_ENDPOINT: ""         // Google Apps Script web app URL (see gas/lead-capture.gs)
+  SUPABASE_URL: "",         // e.g. https://abcdefgh.supabase.co (Settings > API)
+  SUPABASE_ANON_KEY: ""     // anon public key; safe to publish, table is insert-only via RLS
 };
 
 (function () {
@@ -100,28 +101,46 @@ window.HRT_CONFIG = {
 
       track("lead_submit", { form: form.getAttribute("data-lead-form") });
 
-      var payload = new URLSearchParams();
-      payload.set("email", email);
-      payload.set("form", form.getAttribute("data-lead-form"));
-      payload.set("page", location.pathname);
-      try { payload.set("utm", localStorage.getItem("hrt_utm") || ""); } catch (e) {}
-
-      if (!cfg.FORM_ENDPOINT) {
-        // Endpoint not wired yet: still record the attempt locally so no lead is lost in testing.
+      if (!cfg.SUPABASE_URL || !cfg.SUPABASE_ANON_KEY) {
+        // Database not wired yet: give people a working path so no lead is lost.
         status.textContent = "Almost live. Email us at aloha@hawaiirentaltax.com and we'll add you by hand.";
         status.className = "form-status ok";
         return;
       }
 
+      var utm = null;
+      try { utm = JSON.parse(localStorage.getItem("hrt_utm") || "null"); } catch (e) {}
+
       btn.disabled = true;
       btn.textContent = "Adding you…";
 
-      fetch(cfg.FORM_ENDPOINT, { method: "POST", mode: "no-cors", body: payload })
-        .then(function () {
-          form.querySelector(".form-fields") && (form.querySelector(".form-fields").style.display = "none");
-          status.textContent = "You're on the list. The checklist is on its way to your inbox.";
-          status.className = "form-status ok";
-          track("lead_success", { form: form.getAttribute("data-lead-form") });
+      fetch(cfg.SUPABASE_URL + "/rest/v1/leads", {
+        method: "POST",
+        headers: {
+          "apikey": cfg.SUPABASE_ANON_KEY,
+          "Authorization": "Bearer " + cfg.SUPABASE_ANON_KEY,
+          "Content-Type": "application/json",
+          "Prefer": "return=minimal"
+        },
+        body: JSON.stringify({
+          email: email,
+          form: form.getAttribute("data-lead-form"),
+          page: location.pathname,
+          utm: utm
+        })
+      })
+        .then(function (res) {
+          if (res.ok) {
+            status.textContent = "You're on the list. The checklist is on its way to your inbox.";
+            status.className = "form-status ok";
+            track("lead_success", { form: form.getAttribute("data-lead-form") });
+          } else if (res.status === 409) {
+            status.textContent = "You're already on the list. See you at launch.";
+            status.className = "form-status ok";
+            track("lead_duplicate", {});
+          } else {
+            throw new Error("insert failed " + res.status);
+          }
         })
         .catch(function () {
           status.textContent = "Something broke on our end. Email aloha@hawaiirentaltax.com and we'll add you ourselves.";
