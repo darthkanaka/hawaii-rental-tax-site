@@ -8,7 +8,7 @@ Static site for hawaiirentaltax.com. No build step, no framework. HTML + CSS + v
 - `learn/` — SEO education hub + 3 articles (Bill 47 checklist, TAT 11%, GET for long-term rentals)
 - `assets/css/style.css` — design system (ocean teal / sand / koa gold, Fraunces + Inter)
 - `assets/js/main.js` — GA4 loader, click tracking, scroll depth, UTM capture, lead form
-- `gas/lead-capture.gs` — Google Apps Script endpoint that writes leads to a Google Sheet
+  (leads insert into Supabase; table schema lives in the private engine repo, `db/001_leads.sql`)
 - `robots.txt`, `sitemap.xml`, `404.html`, `CNAME`, `favicon.svg`
 
 ## Preview locally
@@ -34,8 +34,10 @@ python3 -m http.server 8080
    in `assets/js/main.js`. Click tracking, scroll depth, and lead events start flowing automatically.
 6. **Search Console**: add hawaiirentaltax.com as a Domain property (DNS TXT verification),
    submit `sitemap.xml`.
-7. **Lead capture**: follow the comments in `gas/lead-capture.gs` (5 minutes), paste the web app URL
-   into `HRT_CONFIG.FORM_ENDPOINT`.
+7. **Lead capture**: create the Supabase project (hawaii-rental-tax, under kaveex), run the
+   engine repo's `db/001_leads.sql` in the SQL Editor, then paste the Project URL and anon key
+   into `HRT_CONFIG` in `assets/js/main.js`. The anon key is publishable; the table is
+   insert-only under RLS.
 8. **OG image**: shoot/design a 1200x630 image, save as `assets/img/og.jpg` (referenced on every page).
 9. **About photo**: replace the placeholder block in `index.html` (#about) with a real photo of
    Kawika and Jordyn. This is the single highest-trust element on the site.
