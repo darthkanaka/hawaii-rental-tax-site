@@ -2,7 +2,7 @@
    Fill in the two values in HRT_CONFIG before launch (see README). */
 
 window.HRT_CONFIG = {
-  GA_ID: "G-XXXXXXXXXX",   // GA4 Measurement ID from analytics.google.com
+  GA_ID: "G-2N3V0S9QT9",   // GA4 Measurement ID (property under kaveex@gmail.com)
   FORM_ENDPOINT: ""         // Google Apps Script web app URL (see gas/lead-capture.gs)
 };
 
