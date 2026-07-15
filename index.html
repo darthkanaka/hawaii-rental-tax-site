@@ -33,10 +33,7 @@
     "description": "Done-for-you Hawaii GET, TAT, and county TAT filing service for rental property owners. Local, family-run, technology-enabled.",
     "areaServed": { "@type": "State", "name": "Hawaii" },
     "priceRange": "$49-$59 per property per month",
-    "founder": [
-      { "@type": "Person", "name": "Kawika Lopez" },
-      { "@type": "Person", "name": "Jordyn Lopez" }
-    ],
+    "founder": { "@type": "Person", "name": "Kawika Lopez" },
     "address": { "@type": "PostalAddress", "addressRegion": "HI", "addressLocality": "Honolulu" }
   }
   </script>
@@ -67,13 +64,18 @@
       },
       {
         "@type": "Question",
+        "name": "Will you replace my accountant?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. GET and TAT are separate state filings that most income-tax preparers don't touch month to month, and that's the slice we handle. Your income taxes stay with whoever does them now, and at tax time we hand over clean records of everything we filed." }
+      },
+      {
+        "@type": "Question",
         "name": "What is Hawaii County Bill 47?",
         "acceptedAnswer": { "@type": "Answer", "text": "Bill 47 makes short-term rental registration mandatory on the Island of Hawaii, with a deadline of September 1, 2026 and steep fines for operating unregistered. Registering requires state tax licenses, which is surfacing many owners who have never filed GET or TAT." }
       },
       {
         "@type": "Question",
         "name": "When do you launch, and what does founding member mean?",
-        "acceptedAnswer": { "@type": "Answer", "text": "We onboard our first founding clients in August 2026. Founding members lock in $49 per property per month for the life of their account, before the rate moves to $59, and get first-in-line onboarding." }
+        "acceptedAnswer": { "@type": "Answer", "text": "We start taking founding clients in August 2026. Founding members lock in $49 per property per month before the rate moves to $59, and they're first in line ahead of the September 1 registration deadline." }
       }
     ]
   }
@@ -108,7 +110,7 @@
     <section class="hero">
       <div class="container">
         <div>
-          <span class="chip"><span class="dot" aria-hidden="true"></span> Family-run on O&#699;ahu &middot; Taking founding clients August 2026</span>
+          <span class="chip"><span class="dot" aria-hidden="true"></span> Family-run on O&#699;ahu &middot; Founding list open now &middot; First clients start August 2026</span>
           <h1>Hawaii rental taxes, filed for you every month. Guaranteed.</h1>
           <p class="hero-sub">We handle GET, TAT, and county TAT for your rental, start to finish. You forward your statements, we file on time every time, and if a filing is ever late because of us, we pay the penalty.</p>
         </div>
@@ -141,7 +143,7 @@
         <div class="section-head">
           <p class="eyebrow">Why this exists</p>
           <h2>Hawaii does rental taxes differently than everywhere else</h2>
-          <p style="color: var(--muted);">In most states, Airbnb collects the taxes and you never think about it. Not here. Hawaii makes the owner register, collect, and file. Three separate taxes, two government portals, filings as often as every month.</p>
+          <p style="color: var(--muted);">In most states, Airbnb collects the taxes and you never think about it. Not here. Hawaii makes the owner register, collect, and file. Three separate taxes, two government portals, filings as often as every month. If mail from the state gives you a little jolt of dread, you're exactly who we built this for.</p>
         </div>
 
         <div class="grid cols-3">
@@ -223,6 +225,7 @@
               <h3>The on-time guarantee</h3>
               <p style="color: var(--muted); margin-bottom: 0.75rem;">If a filing we handle is late because of us, we pay the penalty. Not you.</p>
               <p style="color: var(--muted); margin: 0; font-size: 0.95rem;">Here's how: software we built does the math, one of us personally checks and files every return, and a partner CPA reviews anything unusual. That's why we can make this promise.</p>
+              <p style="color: var(--muted); margin: 0.75rem 0 0; font-size: 0.95rem;">And here's what it feels like once it's running: your statements forward themselves, a confirmation lands in your inbox each period, and mail from the state stops being scary.</p>
             </div>
           </div>
         </div>
@@ -235,7 +238,7 @@
         <div class="section-head">
           <p class="eyebrow">Simple pricing</p>
           <h2>Flat rates. No hourly billing. No surprises.</h2>
-          <p style="color: var(--muted);">Full pricing goes up at launch. Founding members lock in this rate for as long as they stay.</p>
+          <p style="color: var(--muted);">Full pricing goes up at launch. Founding members lock in this rate for as long as they stay. All in for one property at the founding rate: $249 once, then $49 a month, everything included.</p>
         </div>
         <div class="grid cols-3">
           <div class="card price-card">
@@ -279,8 +282,8 @@
           <div>
             <p class="eyebrow">Who we are</p>
             <h2>A local family, not a mainland call center</h2>
-            <p style="color: var(--muted);">We're Kawika and Jordyn, and we run this from O&#699;ahu. Kawika builds software quality systems for a living, and he built the system behind this service. Jordyn is the person who answers when you email us. Between the two of us, your taxes are a household responsibility, and we treat them that way.</p>
-            <p style="color: var(--muted);">When you have a question, you get a person whose name you know, on Hawaii time.</p>
+            <p style="color: var(--muted);">We're a local family on O&#699;ahu, and this is our company. Kawika spent his career building quality-control systems for software, and he built the one that runs this service. The rest stays a family operation in the truest sense: when you email us, a person from this family answers, on Hawaii time.</p>
+            <p style="color: var(--muted);">We built this because staying square with Hawaii's rental taxes shouldn't require a CPA or a panic attack. Honest owners deserve an easy way to do it right.</p>
           </div>
           <img class="about-photo-real" src="/assets/img/kawika.jpg" alt="Kawika, co-founder of Hawaii Rental Tax" width="960" height="1200" loading="lazy">
         </div>
@@ -310,6 +313,10 @@
           <details>
             <summary>Are you a CPA firm?</summary>
             <div class="answer"><p>No, and we're upfront about that. We're a filing service built on our own software. It does the calculations, one of us checks and files every return, and a partner CPA reviews the complicated stuff. We prepare and file returns; we don't give tax or legal advice.</p></div>
+          </details>
+          <details>
+            <summary>Will you replace my accountant?</summary>
+            <div class="answer"><p>No. GET and TAT are separate state filings that most income-tax preparers don't touch month to month, and that's the slice we handle. Your income taxes stay with whoever does them now, and at tax time we hand over clean records of everything we filed for you.</p></div>
           </details>
           <details>
             <summary>What is Hawaii County Bill 47?</summary>
