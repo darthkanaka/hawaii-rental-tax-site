@@ -186,10 +186,9 @@ a:hover { color: var(--ocean-deep); }
 .guarantee .icon { flex: none; width: 48px; height: 48px; border-radius: 12px; background: var(--ocean-tint); color: var(--ocean); display: flex; align-items: center; justify-content: center; }
 
 /* about */
-.about-photo {
-  aspect-ratio: 4 / 3; border-radius: var(--radius); border: 1px solid var(--line);
-  background: linear-gradient(160deg, var(--ocean-tint), #f0e9db);
-  display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 0.9rem;
+.about-photo-real {
+  width: 100%; max-width: 420px; display: block; margin: 0 auto;
+  border-radius: var(--radius); border: 1px solid var(--line); box-shadow: var(--shadow);
 }
 
 /* FAQ */
