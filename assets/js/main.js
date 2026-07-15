@@ -3,8 +3,8 @@
 
 window.HRT_CONFIG = {
   GA_ID: "G-2N3V0S9QT9",   // GA4 Measurement ID (property under kaveex@gmail.com)
-  SUPABASE_URL: "",         // e.g. https://abcdefgh.supabase.co (Settings > API)
-  SUPABASE_ANON_KEY: ""     // anon public key; safe to publish, table is insert-only via RLS
+  SUPABASE_URL: "https://buasiiuvzxpbzrpqlnfy.supabase.co",
+  SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ1YXNpaXV2enhwYnpycHFsbmZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI2NDM4MzgsImV4cCI6MjA3ODIxOTgzOH0.sQ8EOxm6MfMqUE5BBvvcIryNvFb-0anxvW3KvmabGC0" // publishable; leads table is insert-only via RLS
 };
 
 (function () {
