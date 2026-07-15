@@ -48,6 +48,8 @@ python3 -m http.server 8080
 - [ ] Confirm you're comfortable with full names in the JSON-LD founder block on `index.html`.
 - [ ] Confirm final pricing ($49 founding / $59 regular / $249 setup / $500+ catch-up).
 - [ ] Have the attorney skim the guarantee wording and footer disclaimer.
+- [ ] Ask the attorney whether the footer should carry the legal-entity line
+      ("Hawaii Rental Tax is a trade name of Veex Photo LLC") and add it if so.
 
 ## Content roadmap (post-launch)
 
