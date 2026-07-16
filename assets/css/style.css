@@ -382,3 +382,20 @@ html.motion .reveal.in { opacity: 1; transform: none; }
 #taxes .card .stat { color: var(--brass); font-size: 2.4rem; }
 #taxes .card h3 { color: var(--paper); }
 #taxes .card p { color: var(--mut-dark); }
+
+/* ---------- page rails: vertical ledger margins framing the content column ---------- */
+@media (min-width: 1000px) {
+  body::before,
+  body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: rgba(22, 27, 30, 0.18);
+    z-index: 1;
+    pointer-events: none;
+  }
+  body::before { left: calc(50% - 34rem); }
+  body::after { right: calc(50% - 34rem); }
+}
