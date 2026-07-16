@@ -1,0 +1,27 @@
+name: IndexNow ping
+on:
+  push:
+    branches: [main]
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for Pages deploy
+        run: sleep 90
+      - name: Notify IndexNow
+        run: |
+          curl -s -X POST "https://api.indexnow.org/indexnow" \
+            -H "Content-Type: application/json; charset=utf-8" \
+            -d '{
+              "host": "hawaiirentaltax.com",
+              "key": "6c50960d2e327ed484080666e55eed19",
+              "keyLocation": "https://hawaiirentaltax.com/6c50960d2e327ed484080666e55eed19.txt",
+              "urlList": [
+                "https://hawaiirentaltax.com/",
+                "https://hawaiirentaltax.com/rates/",
+                "https://hawaiirentaltax.com/learn/",
+                "https://hawaiirentaltax.com/learn/bill-47-catch-up-checklist/",
+                "https://hawaiirentaltax.com/learn/hawaii-tat-11-percent/",
+                "https://hawaiirentaltax.com/learn/get-tax-long-term-rentals/"
+              ]
+            }'

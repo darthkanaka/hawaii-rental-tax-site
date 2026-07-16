@@ -18,6 +18,8 @@
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/icon-32.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -26,15 +28,52 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": "Hawaii Rental Tax",
-    "url": "https://hawaiirentaltax.com/",
-    "email": "aloha@hawaiirentaltax.com",
-    "description": "Done-for-you Hawaii GET, TAT, and county TAT filing service for rental property owners. Local, family-run, technology-enabled.",
-    "areaServed": { "@type": "State", "name": "Hawaii" },
-    "priceRange": "$49-$59 per property per month",
-    "founder": { "@type": "Person", "name": "Kawika Lopez" },
-    "address": { "@type": "PostalAddress", "addressRegion": "HI", "addressLocality": "Honolulu" }
+    "@graph": [
+      {
+        "@type": ["ProfessionalService", "Organization"],
+        "@id": "https://hawaiirentaltax.com/#org",
+        "name": "Hawaii Rental Tax",
+        "legalName": "Veex Photo LLC",
+        "url": "https://hawaiirentaltax.com/",
+        "email": "aloha@hawaiirentaltax.com",
+        "logo": "https://hawaiirentaltax.com/assets/img/icon-512.png",
+        "description": "Done-for-you Hawaii GET, TAT, and county TAT filing service for rental property owners. Family-run on Oahu, serving all Hawaiian islands.",
+        "naics": "541213",
+        "foundingDate": "2026",
+        "priceRange": "$49-$59 per property per month",
+        "founder": { "@id": "https://hawaiirentaltax.com/#kawika" },
+        "areaServed": [
+          { "@type": "State", "name": "Hawaii" },
+          { "@type": "AdministrativeArea", "name": "City and County of Honolulu" },
+          { "@type": "AdministrativeArea", "name": "Maui County" },
+          { "@type": "AdministrativeArea", "name": "Hawaii County" },
+          { "@type": "AdministrativeArea", "name": "Kauai County" }
+        ]
+      },
+      {
+        "@type": "Person",
+        "@id": "https://hawaiirentaltax.com/#kawika",
+        "name": "Kawika Lopez",
+        "jobTitle": "Co-founder",
+        "worksFor": { "@id": "https://hawaiirentaltax.com/#org" },
+        "url": "https://hawaiirentaltax.com/#about",
+        "knowsAbout": ["Hawaii general excise tax", "Hawaii transient accommodations tax", "rental property tax filing"]
+      },
+      {
+        "@type": "Service",
+        "name": "Hawaii GET and TAT rental tax filing",
+        "serviceType": "Tax preparation service",
+        "provider": { "@id": "https://hawaiirentaltax.com/#org" },
+        "areaServed": { "@type": "State", "name": "Hawaii" },
+        "description": "Monthly, quarterly, or semiannual GET, state TAT, and county TAT filings for Hawaii rental properties, plus catch-up filings for owners who are behind."
+      },
+      {
+        "@type": "WebSite",
+        "name": "Hawaii Rental Tax",
+        "url": "https://hawaiirentaltax.com/",
+        "publisher": { "@id": "https://hawaiirentaltax.com/#org" }
+      }
+    ]
   }
   </script>
   <script type="application/ld+json">
@@ -96,6 +135,7 @@
       </a>
       <div class="nav-links">
         <a href="#taxes">The taxes</a>
+        <a href="/rates/">Rates</a>
         <a href="#how">How it works</a>
         <a href="#pricing">Pricing</a>
         <a href="/learn/">Learn</a>
@@ -181,6 +221,8 @@
             <li>On the Island of Hawaii, <strong>Bill 47 registration is mandatory by September 1, 2026</strong>, with fines up to $10,000. Registering requires tax licenses, which is how the state finds out about years that were never filed.</li>
           </ul>
         </div>
+
+        <p style="margin-top: 1.5rem;"><a href="/rates/" data-track="home_rates_link">See every 2026 rate for all four islands, with sources &rsaquo;</a></p>
       </div>
     </section>
 
@@ -363,6 +405,7 @@
         <div>
           <ul>
             <li><a href="#taxes">The taxes</a></li>
+            <li><a href="/rates/">Rates</a></li>
             <li><a href="#how">How it works</a></li>
             <li><a href="#pricing">Pricing</a></li>
             <li><a href="/learn/">Learn</a></li>
