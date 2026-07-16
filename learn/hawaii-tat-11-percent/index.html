@@ -18,7 +18,7 @@
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/style.css">
   <script type="application/ld+json">
   {
@@ -50,10 +50,10 @@
   <header class="site-header">
     <nav class="nav" aria-label="Main">
       <a class="brand" href="/">
-        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true"><circle cx="13" cy="13" r="12" stroke="#0e4a5a" stroke-width="2"/><path d="M4 15c3-2.5 6-2.5 9 0s6 2.5 9 0" stroke="#0e4a5a" stroke-width="2" stroke-linecap="round"/><path d="M6 10.5c2.3-2 4.7-2 7 0s4.7 2 7 0" stroke="#c9a961" stroke-width="2" stroke-linecap="round"/></svg>
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true"><circle cx="13" cy="13" r="12" stroke="#12414e" stroke-width="2"/><path d="M4 15c3-2.5 6-2.5 9 0s6 2.5 9 0" stroke="#12414e" stroke-width="2" stroke-linecap="round"/><path d="M6 10.5c2.3-2 4.7-2 7 0s4.7 2 7 0" stroke="#8f4e26" stroke-width="1.6" stroke-linecap="round" opacity="0.8"/></svg>
         Hawaii Rental Tax
       </a>
-      <div class="nav-links">
+      <div class="nav-links" id="nav-links">
         <a href="/#taxes">The taxes</a>
         <a href="/rates/">Rates</a>
         <a href="/#how">How it works</a>
@@ -61,6 +61,9 @@
         <a href="/learn/">Learn</a>
       </div>
       <a class="btn small" href="/#join" data-track="nav_cta">Join the founding list</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
+        <span class="bar" aria-hidden="true"></span><span class="bar" aria-hidden="true"></span><span class="bar" aria-hidden="true"></span>
+      </button>
     </nav>
   </header>
 
@@ -83,7 +86,7 @@
 
         <h2>How much tax is on a $3,000 Hawaii booking?</h2>
         <p>Simplified, rounded example for a $3,000 booking on O&#699;ahu:</p>
-        <table>
+        <div class="table-scroll"><table>
           <thead><tr><th>Line</th><th>Rate</th><th>Amount</th></tr></thead>
           <tbody>
             <tr><td>State TAT</td><td>11%</td><td>$330</td></tr>
@@ -91,7 +94,7 @@
             <tr><td>GET (O&#699;ahu pass-on)</td><td>4.712%</td><td>$141</td></tr>
             <tr><td><strong>Total tax</strong></td><td><strong>~18.7%</strong></td><td><strong>~$561</strong></td></tr>
           </tbody>
-        </table>
+        </table></div>
         <p>The exact taxable base for each line has edge cases (what counts as gross proceeds, how visibly-passed-on taxes interact, how cleaning fees are treated), which is exactly the kind of detail a filing service exists to get right. The simple version: nearly a fifth of every booking is tax, and nobody collects it for you.</p>
 
         <h2>Common mistakes we see</h2>
@@ -106,7 +109,7 @@
 
         <div class="cta-inline">
           <h3>Never think about the 20th again</h3>
-          <p style="color: var(--muted);">We compute and file all three taxes for your rental every period, guaranteed on time. Founding clients onboard August 2026 at $49/mo per property, locked for life.</p>
+          <p>We compute and file all three taxes for your rental every period, guaranteed on time. Founding clients onboard August 2026 at $49/mo per property, locked for life.</p>
           <form data-lead-form="article-tat" novalidate>
             <div class="form-fields">
               <div class="field">

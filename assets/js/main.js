@@ -154,3 +154,65 @@ window.HRT_CONFIG = {
     });
   });
 })();
+
+/* ---------- mobile nav toggle (2026-07 design overhaul) ---------- */
+(function () {
+  "use strict";
+  var header = document.querySelector(".site-header");
+  var btn = document.querySelector(".menu-toggle");
+  if (!header || !btn) { return; }
+
+  function setOpen(open) {
+    header.classList.toggle("nav-open", open);
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+  }
+
+  btn.addEventListener("click", function () {
+    setOpen(!header.classList.contains("nav-open"));
+  });
+
+  document.addEventListener("keydown", function (ev) {
+    if (ev.key === "Escape" && header.classList.contains("nav-open")) {
+      setOpen(false);
+      btn.focus();
+    }
+  });
+
+  document.querySelectorAll(".nav-links a").forEach(function (a) {
+    a.addEventListener("click", function () { setOpen(false); });
+  });
+})();
+
+/* ---------- ink-settling reveals (2026-07 design overhaul)
+   Progressive enhancement only: without JS (or with reduced motion)
+   everything stays visible; this module just adds the animated state. */
+(function () {
+  "use strict";
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { return; }
+  if (!("IntersectionObserver" in window)) { return; }
+
+  var targets = document.querySelectorAll(
+    ".hero .container > *, .section-head, .card, .step, .guarantee, " +
+    ".signup-card, .stakes, .faq details, .cta-inline, .article-list .card"
+  );
+  if (!targets.length) { return; }
+
+  document.documentElement.classList.add("motion");
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("in");
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+
+  targets.forEach(function (el) {
+    var sec = el.closest("section, article, main") || document.body;
+    var i = (sec.hrtRevealCount = (sec.hrtRevealCount || 0) + 1) - 1;
+    el.style.setProperty("--d", Math.min(i * 80, 320) + "ms");
+    el.classList.add("reveal");
+    io.observe(el);
+  });
+})();

@@ -18,7 +18,7 @@
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/style.css">
   <script type="application/ld+json">
   {
@@ -50,10 +50,10 @@
   <header class="site-header">
     <nav class="nav" aria-label="Main">
       <a class="brand" href="/">
-        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true"><circle cx="13" cy="13" r="12" stroke="#0e4a5a" stroke-width="2"/><path d="M4 15c3-2.5 6-2.5 9 0s6 2.5 9 0" stroke="#0e4a5a" stroke-width="2" stroke-linecap="round"/><path d="M6 10.5c2.3-2 4.7-2 7 0s4.7 2 7 0" stroke="#c9a961" stroke-width="2" stroke-linecap="round"/></svg>
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true"><circle cx="13" cy="13" r="12" stroke="#12414e" stroke-width="2"/><path d="M4 15c3-2.5 6-2.5 9 0s6 2.5 9 0" stroke="#12414e" stroke-width="2" stroke-linecap="round"/><path d="M6 10.5c2.3-2 4.7-2 7 0s4.7 2 7 0" stroke="#8f4e26" stroke-width="1.6" stroke-linecap="round" opacity="0.8"/></svg>
         Hawaii Rental Tax
       </a>
-      <div class="nav-links">
+      <div class="nav-links" id="nav-links">
         <a href="/#taxes">The taxes</a>
         <a href="/rates/">Rates</a>
         <a href="/#how">How it works</a>
@@ -61,6 +61,9 @@
         <a href="/learn/">Learn</a>
       </div>
       <a class="btn small" href="/#join" data-track="nav_cta">Join the founding list</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
+        <span class="bar" aria-hidden="true"></span><span class="bar" aria-hidden="true"></span><span class="bar" aria-hidden="true"></span>
+      </button>
     </nav>
   </header>
 
@@ -95,7 +98,7 @@
 
         <div class="cta-inline">
           <h3>We do catch-ups for a flat quoted fee</h3>
-          <p style="color: var(--muted);">Send us your platform statements and we quote the whole cleanup up front, from $500 flat. No hourly meter. Complex cases get reviewed with our partner CPA. Founding clients onboard August 2026, ahead of the deadline.</p>
+          <p>Send us your platform statements and we quote the whole cleanup up front, from $500 flat. No hourly meter. Complex cases get reviewed with our partner CPA. Founding clients onboard August 2026, ahead of the deadline.</p>
           <form data-lead-form="article-bill47" novalidate>
             <div class="form-fields">
               <div class="field">

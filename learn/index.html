@@ -18,7 +18,7 @@
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
@@ -26,10 +26,10 @@
   <header class="site-header">
     <nav class="nav" aria-label="Main">
       <a class="brand" href="/">
-        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true"><circle cx="13" cy="13" r="12" stroke="#0e4a5a" stroke-width="2"/><path d="M4 15c3-2.5 6-2.5 9 0s6 2.5 9 0" stroke="#0e4a5a" stroke-width="2" stroke-linecap="round"/><path d="M6 10.5c2.3-2 4.7-2 7 0s4.7 2 7 0" stroke="#c9a961" stroke-width="2" stroke-linecap="round"/></svg>
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true"><circle cx="13" cy="13" r="12" stroke="#12414e" stroke-width="2"/><path d="M4 15c3-2.5 6-2.5 9 0s6 2.5 9 0" stroke="#12414e" stroke-width="2" stroke-linecap="round"/><path d="M6 10.5c2.3-2 4.7-2 7 0s4.7 2 7 0" stroke="#8f4e26" stroke-width="1.6" stroke-linecap="round" opacity="0.8"/></svg>
         Hawaii Rental Tax
       </a>
-      <div class="nav-links">
+      <div class="nav-links" id="nav-links">
         <a href="/#taxes">The taxes</a>
         <a href="/rates/">Rates</a>
         <a href="/#how">How it works</a>
@@ -37,6 +37,9 @@
         <a href="/learn/" aria-current="page">Learn</a>
       </div>
       <a class="btn small" href="/#join" data-track="nav_cta">Join the founding list</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
+        <span class="bar" aria-hidden="true"></span><span class="bar" aria-hidden="true"></span><span class="bar" aria-hidden="true"></span>
+      </button>
     </nav>
   </header>
 
@@ -45,8 +48,8 @@
       <div class="container">
         <div class="section-head">
           <p class="eyebrow">The library</p>
-          <h1 style="font-size: clamp(1.9rem, 4.5vw, 2.8rem);">Hawaii rental taxes, in plain English</h1>
-          <p style="color: var(--muted); max-width: 40rem;">Everything here is written for owners, not accountants. Start with whichever one sounds like you, or jump straight to <a href="/rates/">the full 2026 rate table</a>.</p>
+          <h1 class="hub-title">Hawaii rental taxes, in plain English</h1>
+          <p>Everything here is written for owners, not accountants. Start with whichever one sounds like you, or jump straight to <a href="/rates/">the full 2026 rate table</a>.</p>
         </div>
 
         <div class="grid cols-3 article-list">
@@ -67,9 +70,9 @@
           </a>
         </div>
 
-        <div class="cta-inline" style="margin-top: 3rem;">
+        <div class="cta-inline mt-lg">
           <h3>Rather have someone just handle it?</h3>
-          <p style="color: var(--muted);">We file GET, TAT, and county TAT for Hawaii rental owners every month, guaranteed. Founding clients onboard August 2026.</p>
+          <p>We file GET, TAT, and county TAT for Hawaii rental owners every month, guaranteed. Founding clients onboard August 2026.</p>
           <a class="btn" href="/#join" data-track="learn_hub_cta">Join the founding list</a>
         </div>
       </div>
@@ -80,8 +83,8 @@
     <div class="container">
       <div class="cols">
         <div>
-          <p class="brand" style="font-family: var(--font-display); font-size: 1.1rem;">Hawaii Rental Tax</p>
-          <p style="font-size: 0.95rem; max-width: 26rem;">Done-for-you GET and TAT filings for Hawaii rental owners. Family-run on O&#699;ahu.</p>
+          <p class="brand">Hawaii Rental Tax</p>
+          <p class="tagline">Done-for-you GET and TAT filings for Hawaii rental owners. Family-run on O&#699;ahu.</p>
         </div>
         <div>
           <ul>

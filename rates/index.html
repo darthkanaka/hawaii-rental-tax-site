@@ -19,7 +19,7 @@
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/style.css">
   <script type="application/ld+json">
   {
@@ -81,16 +81,19 @@
   <header class="site-header">
     <nav class="nav" aria-label="Main">
       <a class="brand" href="/">
-        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true"><circle cx="13" cy="13" r="12" stroke="#0e4a5a" stroke-width="2"/><path d="M4 15c3-2.5 6-2.5 9 0s6 2.5 9 0" stroke="#0e4a5a" stroke-width="2" stroke-linecap="round"/><path d="M6 10.5c2.3-2 4.7-2 7 0s4.7 2 7 0" stroke="#c9a961" stroke-width="2" stroke-linecap="round"/></svg>
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true"><circle cx="13" cy="13" r="12" stroke="#12414e" stroke-width="2"/><path d="M4 15c3-2.5 6-2.5 9 0s6 2.5 9 0" stroke="#12414e" stroke-width="2" stroke-linecap="round"/><path d="M6 10.5c2.3-2 4.7-2 7 0s4.7 2 7 0" stroke="#8f4e26" stroke-width="1.6" stroke-linecap="round" opacity="0.8"/></svg>
         Hawaii Rental Tax
       </a>
-      <div class="nav-links">
+      <div class="nav-links" id="nav-links">
         <a href="/#taxes">The taxes</a>
         <a href="/rates/" aria-current="page">Rates</a>
         <a href="/#pricing">Pricing</a>
         <a href="/learn/">Learn</a>
       </div>
       <a class="btn small" href="/#join" data-track="nav_cta">Join the founding list</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
+        <span class="bar" aria-hidden="true"></span><span class="bar" aria-hidden="true"></span><span class="bar" aria-hidden="true"></span>
+      </button>
     </nav>
   </header>
 
@@ -105,7 +108,7 @@
 
         <h2>What is the GET rate on each island in 2026?</h2>
         <p>The state GET base rate is 4%, and three of the four counties add a 0.5% surcharge, making the combined rate 4.5% on O&#699;ahu, the Big Island, and Kaua&#699;i, and 4.0% in Maui County. Owners may visibly pass on slightly more (the max pass-on rate) because the pass-on itself is taxable income.</p>
-        <table>
+        <div class="table-scroll"><table>
           <thead><tr><th>Island</th><th>State GET</th><th>County surcharge</th><th>Combined</th><th>Max pass-on</th></tr></thead>
           <tbody>
             <tr><td>O&#699;ahu</td><td>4.0%</td><td>0.5%</td><td><strong>4.5%</strong></td><td>4.712%</td></tr>
@@ -113,23 +116,23 @@
             <tr><td>Hawai&#699;i (Big Island)</td><td>4.0%</td><td>0.5%</td><td><strong>4.5%</strong></td><td>4.712%</td></tr>
             <tr><td>Kaua&#699;i</td><td>4.0%</td><td>0.5%</td><td><strong>4.5%</strong></td><td>4.712%</td></tr>
           </tbody>
-        </table>
-        <p style="font-size: 0.9rem; color: var(--muted);">Sources: <a href="https://www.capitol.hawaii.gov/hrscurrent/Vol04_Ch0201-0257/HRS0237/" rel="noopener">Hawaii Revised Statutes chapter 237</a> (general excise tax law) and the <a href="https://tax.hawaii.gov/" rel="noopener">Hawaii Department of Taxation</a>. GET applies to gross rent, including cleaning fees, for both short-term and long-term rentals.</p>
+        </table></div>
+        <p class="source-note">Sources: <a href="https://www.capitol.hawaii.gov/hrscurrent/Vol04_Ch0201-0257/HRS0237/" rel="noopener">Hawaii Revised Statutes chapter 237</a> (general excise tax law) and the <a href="https://tax.hawaii.gov/" rel="noopener">Hawaii Department of Taxation</a>. GET applies to gross rent, including cleaning fees, for both short-term and long-term rentals.</p>
 
         <h2>What is the Hawaii TAT rate in 2026?</h2>
         <p>The state transient accommodations tax is <strong>11%</strong> as of January 1, 2026, when the 2025 climate legislation (the green fee) raised it from 10.25%. Each county charges its own additional TAT of about 3%, adopted in late 2021 and early 2022, and filed separately with the county. TAT applies to stays under 180 days.</p>
-        <table>
+        <div class="table-scroll"><table>
           <thead><tr><th>Tax</th><th>Rate</th><th>Applies to</th><th>Filed with</th></tr></thead>
           <tbody>
             <tr><td>State TAT</td><td><strong>11%</strong> (since Jan 1, 2026)</td><td>Stays under 180 days</td><td>State (Hawaii Tax Online)</td></tr>
             <tr><td>County TAT</td><td><strong>3%</strong> (all four counties)</td><td>Same stays</td><td>Your county</td></tr>
           </tbody>
-        </table>
-        <p style="font-size: 0.9rem; color: var(--muted);">Sources: <a href="https://www.capitol.hawaii.gov/hrscurrent/Vol04_Ch0201-0257/HRS0237D/" rel="noopener">HRS chapter 237D</a> (transient accommodations tax law), the <a href="https://tax.hawaii.gov/" rel="noopener">Department of Taxation</a>, and your county's finance office: <a href="https://www.honolulu.gov/" rel="noopener">Honolulu</a>, <a href="https://www.mauicounty.gov/" rel="noopener">Maui</a>, <a href="https://www.hawaiicounty.gov/" rel="noopener">Hawai&#699;i</a>, <a href="https://www.kauai.gov/" rel="noopener">Kaua&#699;i</a>.</p>
+        </table></div>
+        <p class="source-note">Sources: <a href="https://www.capitol.hawaii.gov/hrscurrent/Vol04_Ch0201-0257/HRS0237D/" rel="noopener">HRS chapter 237D</a> (transient accommodations tax law), the <a href="https://tax.hawaii.gov/" rel="noopener">Department of Taxation</a>, and your county's finance office: <a href="https://www.honolulu.gov/" rel="noopener">Honolulu</a>, <a href="https://www.mauicounty.gov/" rel="noopener">Maui</a>, <a href="https://www.hawaiicounty.gov/" rel="noopener">Hawai&#699;i</a>, <a href="https://www.kauai.gov/" rel="noopener">Kaua&#699;i</a>.</p>
 
         <h2>What is the total tax on a Hawaii short-term rental?</h2>
         <p>Stacking all three taxes, a short-term rental's combined liability in 2026 is <strong>18.5% on O&#699;ahu, the Big Island, and Kaua&#699;i, and 18.0% in Maui County</strong>. On a $3,000 booking on O&#699;ahu that is roughly $555 in tax. None of it is collected for you by the booking platforms.</p>
-        <table>
+        <div class="table-scroll"><table>
           <thead><tr><th>Island</th><th>GET</th><th>State TAT</th><th>County TAT</th><th>Total</th></tr></thead>
           <tbody>
             <tr><td>O&#699;ahu</td><td>4.5%</td><td>11%</td><td>3%</td><td><strong>18.5%</strong></td></tr>
@@ -137,19 +140,19 @@
             <tr><td>Hawai&#699;i (Big Island)</td><td>4.5%</td><td>11%</td><td>3%</td><td><strong>18.5%</strong></td></tr>
             <tr><td>Kaua&#699;i</td><td>4.5%</td><td>11%</td><td>3%</td><td><strong>18.5%</strong></td></tr>
           </tbody>
-        </table>
+        </table></div>
         <p>Full worked example with the dollar math: <a href="/learn/hawaii-tat-11-percent/">what your rental must collect in 2026</a>.</p>
 
         <h2>Does Airbnb or VRBO collect Hawaii taxes for me?</h2>
         <p>No. Unlike most states, the booking platforms do not register you, collect GET or TAT for you, or file for you in Hawaii. The state holds the owner responsible for all three taxes on every booking, including bookings taken directly.</p>
-        <table>
+        <div class="table-scroll"><table>
           <thead><tr><th>Booking source</th><th>Who registers</th><th>Who collects</th><th>Who files</th></tr></thead>
           <tbody>
             <tr><td>Airbnb</td><td>You</td><td>You</td><td>You</td></tr>
             <tr><td>VRBO</td><td>You</td><td>You</td><td>You</td></tr>
             <tr><td>Direct bookings</td><td>You</td><td>You</td><td>You</td></tr>
           </tbody>
-        </table>
+        </table></div>
 
         <h2>How often do Hawaii rental taxes get filed?</h2>
         <p>Filing frequency depends on how much tax you owe per year: $2,000 or less files semiannually, up to $4,000 quarterly, and above $4,000 monthly. Periodic returns (G-45 for GET, TA-1 for TAT) are due the 20th of the month after the period ends, and annual reconciliations (G-49 and TA-2) are due April 20 for calendar-year filers. Forms live at the <a href="https://tax.hawaii.gov/forms/" rel="noopener">Department of Taxation forms page</a>.</p>
@@ -164,7 +167,7 @@
 
         <div class="cta-inline">
           <h3>Or never think about these numbers again</h3>
-          <p style="color: var(--muted);">We compute and file all three taxes for your rental every period, on time or we pay the penalty. Founding rate $49/mo per property, locked for life. First clients start August 2026.</p>
+          <p>We compute and file all three taxes for your rental every period, on time or we pay the penalty. Founding rate $49/mo per property, locked for life. First clients start August 2026.</p>
           <form data-lead-form="rates" novalidate>
             <div class="form-fields">
               <div class="field">

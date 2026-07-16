@@ -22,7 +22,7 @@
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/style.css">
 
   <script type="application/ld+json">
@@ -127,13 +127,13 @@
     <nav class="nav" aria-label="Main">
       <a class="brand" href="/">
         <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
-          <circle cx="13" cy="13" r="12" stroke="#0e4a5a" stroke-width="2"/>
-          <path d="M4 15c3-2.5 6-2.5 9 0s6 2.5 9 0" stroke="#0e4a5a" stroke-width="2" stroke-linecap="round"/>
-          <path d="M6 10.5c2.3-2 4.7-2 7 0s4.7 2 7 0" stroke="#c9a961" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="13" cy="13" r="12" stroke="#12414e" stroke-width="2"/>
+          <path d="M4 15c3-2.5 6-2.5 9 0s6 2.5 9 0" stroke="#12414e" stroke-width="2" stroke-linecap="round"/>
+          <path d="M6 10.5c2.3-2 4.7-2 7 0s4.7 2 7 0" stroke="#8f4e26" stroke-width="1.6" stroke-linecap="round" opacity="0.8"/>
         </svg>
         Hawaii Rental Tax
       </a>
-      <div class="nav-links">
+      <div class="nav-links" id="nav-links">
         <a href="#taxes">The taxes</a>
         <a href="/rates/">Rates</a>
         <a href="#how">How it works</a>
@@ -141,6 +141,9 @@
         <a href="/learn/">Learn</a>
       </div>
       <a class="btn small" href="#join" data-track="nav_cta">Join the founding list</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
+        <span class="bar" aria-hidden="true"></span><span class="bar" aria-hidden="true"></span><span class="bar" aria-hidden="true"></span>
+      </button>
     </nav>
   </header>
 
@@ -157,14 +160,14 @@
 
         <div class="signup-card">
           <h3>Get the launch email</h3>
-          <p style="color: var(--muted); font-size: 0.95rem; margin: 0;">Plus our free catch-up checklist for owners who are behind.</p>
+          <p class="note">Plus our free catch-up checklist for owners who are behind.</p>
           <form data-lead-form="hero" novalidate>
             <div class="form-fields">
               <div class="field">
                 <label for="email-hero">Email address</label>
                 <input type="email" id="email-hero" name="email" autocomplete="email" required placeholder="you@example.com">
               </div>
-              <button class="btn" type="submit" style="width: 100%;" data-track="hero_submit">Join the founding list</button>
+              <button class="btn" type="submit" data-track="hero_submit">Join the founding list</button>
             </div>
             <p class="form-status" role="status" aria-live="polite"></p>
             <p class="fine">One launch email, the checklist, and nothing else. Founding members lock in $49/mo per property for life.</p>
@@ -183,7 +186,7 @@
         <div class="section-head">
           <p class="eyebrow">Why this exists</p>
           <h2>Hawaii does rental taxes differently than everywhere else</h2>
-          <p style="color: var(--muted);">In most states, Airbnb collects the taxes and you never think about it. Not here. Hawaii makes the owner register, collect, and file. Three separate taxes, two government portals, filings as often as every month. If mail from the state gives you a little jolt of dread, you're exactly who we built this for.</p>
+          <p>In most states, Airbnb collects the taxes and you never think about it. Not here. Hawaii makes the owner register, collect, and file. Three separate taxes, two government portals, filings as often as every month. If mail from the state gives you a little jolt of dread, you're exactly who we built this for.</p>
         </div>
 
         <div class="grid cols-3">
@@ -222,7 +225,7 @@
           </ul>
         </div>
 
-        <p style="margin-top: 1.5rem;"><a href="/rates/" data-track="home_rates_link">See every 2026 rate for all four islands, with sources &rsaquo;</a></p>
+        <p class="mt-lg"><a href="/rates/" data-track="home_rates_link">See every 2026 rate for all four islands, with sources &rsaquo;</a></p>
       </div>
     </section>
 
@@ -234,7 +237,7 @@
           <h2>You forward statements. We do everything else.</h2>
         </div>
 
-        <div class="grid cols-2" style="align-items: start; gap: 3rem;">
+        <div class="grid cols-2 align-start gap-wide">
           <div>
             <div class="step">
               <div class="step-num" aria-hidden="true">1</div>
@@ -265,9 +268,9 @@
             </div>
             <div>
               <h3>The on-time guarantee</h3>
-              <p style="color: var(--muted); margin-bottom: 0.75rem;">If a filing we handle is late because of us, we pay the penalty. Not you.</p>
-              <p style="color: var(--muted); margin: 0; font-size: 0.95rem;">Here's how: software we built does the math, one of us personally checks and files every return, and a partner CPA reviews anything unusual. That's why we can make this promise.</p>
-              <p style="color: var(--muted); margin: 0.75rem 0 0; font-size: 0.95rem;">And here's what it feels like once it's running: your statements forward themselves, a confirmation lands in your inbox each period, and mail from the state stops being scary.</p>
+              <p class="tight">If a filing we handle is late because of us, we pay the penalty. Not you.</p>
+              <p class="detail">Here's how: software we built does the math, one of us personally checks and files every return, and a partner CPA reviews anything unusual. That's why we can make this promise.</p>
+              <p class="detail">And here's what it feels like once it's running: your statements forward themselves, a confirmation lands in your inbox each period, and mail from the state stops being scary.</p>
             </div>
           </div>
         </div>
@@ -280,10 +283,10 @@
         <div class="section-head">
           <p class="eyebrow">Simple pricing</p>
           <h2>Flat rates. No hourly billing. No surprises.</h2>
-          <p style="color: var(--muted);">Full pricing goes up at launch. Founding members lock in this rate for as long as they stay. All in for one property at the founding rate: $249 once, then $49 a month, everything included.</p>
+          <p>Full pricing goes up at launch. Founding members lock in this rate for as long as they stay. All in for one property at the founding rate: $249 once, then $49 a month, everything included.</p>
         </div>
         <div class="grid cols-3">
-          <div class="card price-card">
+          <div class="card price-card featured">
             <span class="badge">Founding rate</span>
             <h3>Monthly filing desk</h3>
             <p class="price">$49<small>/mo per property <span class="strike">$59</span></small></p>
@@ -320,12 +323,12 @@
     <!-- ============ ABOUT ============ -->
     <section class="section" id="about">
       <div class="container">
-        <div class="grid cols-2" style="align-items: center; gap: 3rem;">
+        <div class="grid cols-2 align-center gap-wide">
           <div>
             <p class="eyebrow">Who we are</p>
             <h2>A local family, not a mainland call center</h2>
-            <p style="color: var(--muted);">We're a local family on O&#699;ahu, and this is our company. Kawika spent his career building quality-control systems for software, and he built the one that runs this service. The rest stays a family operation in the truest sense: when you email us, a person from this family answers, on Hawaii time.</p>
-            <p style="color: var(--muted);">We built this because staying square with Hawaii's rental taxes shouldn't require a CPA or a panic attack. Honest owners deserve an easy way to do it right.</p>
+            <p>We're a local family on O&#699;ahu, and this is our company. Kawika spent his career building quality-control systems for software, and he built the one that runs this service. The rest stays a family operation in the truest sense: when you email us, a person from this family answers, on Hawaii time.</p>
+            <p>We built this because staying square with Hawaii's rental taxes shouldn't require a CPA or a panic attack. Honest owners deserve an easy way to do it right.</p>
           </div>
           <img class="about-photo-real" src="/assets/img/kawika.jpg" alt="Kawika, co-founder of Hawaii Rental Tax" width="960" height="1200" loading="lazy">
         </div>
@@ -375,10 +378,10 @@
     <!-- ============ FINAL CTA ============ -->
     <section class="section" id="join">
       <div class="container narrow">
-        <div class="signup-card" style="text-align: left;">
+        <div class="signup-card">
           <p class="eyebrow">Founding list</p>
-          <h2 style="font-size: 1.7rem;">Be squared away before September 1</h2>
-          <p style="color: var(--muted);">Join the list and get the launch email, the free catch-up checklist, and the locked founding rate. First fifty properties only.</p>
+          <h2>Be squared away before September 1</h2>
+          <p class="note">Join the list and get the launch email, the free catch-up checklist, and the locked founding rate. First fifty properties only.</p>
           <form data-lead-form="footer" novalidate>
             <div class="form-fields">
               <div class="field">
@@ -399,8 +402,8 @@
     <div class="container">
       <div class="cols">
         <div>
-          <p class="brand" style="font-family: var(--font-display); font-size: 1.1rem;">Hawaii Rental Tax</p>
-          <p style="font-size: 0.95rem; max-width: 26rem;">Done-for-you GET and TAT filings for Hawaii rental owners. Family-run on O&#699;ahu. Built and operated in Hawai&#699;i.</p>
+          <p class="brand">Hawaii Rental Tax</p>
+          <p class="tagline">Done-for-you GET and TAT filings for Hawaii rental owners. Family-run on O&#699;ahu. Built and operated in Hawai&#699;i.</p>
         </div>
         <div>
           <ul>
