@@ -1,8 +1,13 @@
 /* Hawaii Rental Tax — design system
    Direction: "The Ledger, Dark Rail" (2026-07-15 overhaul).
-   A beautifully set financial document: paper ground, hairline rules
-   instead of cards, deep pine panels as punctuation, brass only on dark,
-   copper only on paper. Newsreader display over Inter body.
+   Section rhythm: "The Bound Sheet" (2026-07-16). The page is a paper
+   sheet on a pine-wash desk; header, main, and footer bind to the 68rem
+   column and the old fixed rails became the sheet's edges. Rhythm inside
+   the sheet: dense/airy section padding, a deep-pine stakes breaker and
+   brass carry-line that bleed to the sheet edges, hairline dividers
+   between the lower sections, and the final CTA merged with the footer
+   into one dark close. Deep pine panels as punctuation, brass only on
+   dark, copper only on paper. Newsreader display over Inter body.
    WCAG AA checked: body text >= 4.5:1 on all backgrounds. */
 
 :root {
@@ -17,6 +22,8 @@
   --line: #d9d5c8;         /* hairlines on paper */
   --line-dark: rgba(250, 249, 244, 0.22);  /* hairlines on deep */
   --mut-dark: #b8c6c6;     /* secondary text on deep, 8.7:1 */
+  --desk: #e7edec;         /* cool pine wash behind the sheet, no text on it */
+  --edge: rgba(22, 27, 30, 0.18);  /* sheet edges (was the fixed page rails) */
   --danger: #8c2f22;       /* penalty highlights, AA on paper */
   --radius: 2px;
   --font-display: "Newsreader", Georgia, "Times New Roman", serif;
@@ -36,7 +43,7 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  background: var(--paper);
+  background: var(--desk);
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 17px;
@@ -46,6 +53,19 @@ body {
 }
 
 img { max-width: 100%; height: auto; }
+
+/* ---------- the bound sheet ----------
+   Header, main, and footer bind to the same 68rem column; the sheet's
+   edges are the old page rails. Below 1000px the sheet fills the
+   viewport and the desk disappears (mobile unchanged). */
+.site-header, main, .site-footer { max-width: 68rem; margin-left: auto; margin-right: auto; }
+main { background: var(--paper); }
+@media (min-width: 1000px) {
+  .site-header, main, .site-footer {
+    border-left: 1px solid var(--edge);
+    border-right: 1px solid var(--edge);
+  }
+}
 
 .container { max-width: 68rem; margin: 0 auto; padding: 0 1.25rem; }
 .narrow { max-width: 46rem; }
@@ -178,10 +198,15 @@ a:hover { color: var(--pine-hover); }
 .signup-card .form-status.ok { color: #9bd8ae; }
 .signup-card .form-status.err { color: #f0a9a0; }
 
-/* ---------- sections ---------- */
-.section { padding: 4.5rem 0; border-top: 1px solid var(--line); }
-main > .section:first-child, main.section { border-top: none; }
-.section.tint { background: transparent; }
+/* ---------- sections ----------
+   No default hairline; .divided draws a sheet-edge-to-edge divider.
+   Density rhythm: .dense compresses info sections, .airy lets trust
+   sections breathe. */
+.section { padding: 4.5rem 0; }
+.section.divided { border-top: 1px solid var(--line); }
+.section.dense { padding: 3.75rem 0; }
+.section.airy { padding: 6rem 0; }
+.section.flush { padding-bottom: 0; }
 .section.deep { background: var(--deep); color: var(--paper); }
 .section.deep h2 { color: var(--paper); }
 .section.deep p { color: var(--mut-dark); }
@@ -212,15 +237,30 @@ main > .section:first-child, main.section { border-top: none; }
   display: block; margin-bottom: 0.35rem; font-variant-numeric: tabular-nums; line-height: 1.1;
 }
 
-/* ---------- stakes band ---------- */
+/* ---------- stakes breaker ----------
+   Promoted to a full-column moment: a deep-pine block that bleeds to
+   the sheet edges (the -1.25rem margins cancel the container padding). */
 .stakes {
-  border-left: 3px solid var(--danger); background: transparent;
-  border-radius: 0; padding: 0.4rem 0 0.4rem 1.75rem; margin-top: 3rem; box-shadow: none;
+  background: var(--deep);
+  border-top: 2px solid var(--brass); border-left: none;
+  border-radius: var(--radius); box-shadow: none;
+  margin: 3.75rem -1.25rem 0; padding: 3rem 1.25rem 3.2rem;
 }
-.stakes h3 { color: var(--danger); }
-.stakes ul { margin: 0; padding-left: 1.2rem; color: var(--muted); }
-.stakes li { margin-bottom: 0.5rem; }
-.stakes strong { color: var(--ink); }
+.stakes h3 { color: var(--paper); font-family: var(--font-display); font-weight: 600; font-size: 1.5rem; margin-bottom: 1rem; }
+.stakes ul { margin: 0; padding-left: 1.2rem; color: var(--mut-dark); max-width: 52rem; }
+.stakes li { margin-bottom: 0.55rem; }
+.stakes strong { color: var(--brass); }
+
+/* ---------- carry line ----------
+   A slim brass strip for handoff links, like a ledger's balance carried
+   forward. Bleeds to the sheet edges; sits flush under a breaker. */
+.carry-line {
+  margin: 0 -1.25rem; padding: 0.85rem 1.25rem;
+  border-top: 1px solid var(--brass); border-bottom: 1px solid var(--brass);
+  display: flex; justify-content: flex-end;
+}
+.carry-line a { font-weight: 600; font-size: 0.95rem; text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; }
+.carry-line a:hover { text-decoration: underline; }
 
 /* ---------- steps ---------- */
 .step { display: flex; gap: 1.4rem; align-items: flex-start; border-top: 1px solid var(--line); padding-top: 1.5rem; }
@@ -305,7 +345,11 @@ main > .section:first-child, main.section { border-top: none; }
 .article-list .card h3 { color: var(--ink); margin-top: 0.45rem; }
 
 .prose { max-width: 44rem; }
-.prose h2 { margin-top: 2.3em; font-size: 1.55rem; }
+.prose h2 {
+  font-size: 1.55rem;
+  margin: 2.5rem -1.25rem 0.6rem; padding: 1.9rem 1.25rem 0;
+  border-top: 1px solid var(--line);
+}
 .prose h3 { margin-top: 1.6em; }
 .prose ul, .prose ol { padding-left: 1.3rem; color: var(--ink); }
 .prose li { margin-bottom: 0.5rem; }
@@ -327,8 +371,8 @@ main > .section:first-child, main.section { border-top: none; }
 }
 .cta-inline {
   background: var(--deep); color: var(--paper);
-  border: none; border-radius: var(--radius);
-  box-shadow: none; padding: 1.9rem 1.85rem 1.75rem; margin: 2.75rem 0;
+  border: none; border-top: 2px solid var(--brass); border-radius: var(--radius);
+  box-shadow: none; padding: 2.4rem 1.25rem 2.2rem; margin: 2.75rem -1.25rem;
 }
 .cta-inline h3 { font-family: var(--font-display); font-weight: 600; font-size: 1.4rem; color: var(--paper); }
 .cta-inline p { color: var(--mut-dark); }
@@ -341,8 +385,20 @@ main > .section:first-child, main.section { border-top: none; }
 .cta-inline .form-status.err { color: #f0a9a0; }
 .cta-inline .fine { font-size: 0.84rem; color: var(--mut-dark); margin: 0.85rem 0 0; }
 
+/* ---------- dark close ----------
+   The final CTA section and the footer merge into one deep block that
+   ends the sheet; the signup card dissolves into the band. */
+.section.close {
+  background: var(--deep);
+  border-top: 2px solid var(--brass);
+  padding: 4.5rem 0 3rem;
+}
+.section.close .signup-card { background: transparent; padding: 0; border-radius: 0; }
+.section.close .signup-card h2 { font-size: clamp(1.65rem, 3.5vw, 2.3rem); }
+.section.close .signup-card .btn { width: auto; min-width: 16rem; }
+
 /* ---------- footer ---------- */
-.site-footer { background: var(--deep); color: var(--mut-dark); padding: 3.25rem 0 2rem; margin-top: 4.5rem; }
+.site-footer { background: var(--deep); color: var(--mut-dark); padding: 3.25rem 0 2rem; margin-top: 0; border-top: 1px solid var(--line-dark); }
 .site-footer a { color: var(--paper); }
 .site-footer .cols { display: grid; gap: 2rem; margin-bottom: 2rem; }
 @media (min-width: 760px) { .site-footer .cols { grid-template-columns: 2fr 1fr 1fr; } }
@@ -383,19 +439,5 @@ html.motion .reveal.in { opacity: 1; transform: none; }
 #taxes .card h3 { color: var(--paper); }
 #taxes .card p { color: var(--mut-dark); }
 
-/* ---------- page rails: vertical ledger margins framing the content column ---------- */
-@media (min-width: 1000px) {
-  body::before,
-  body::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: rgba(22, 27, 30, 0.18);
-    z-index: 1;
-    pointer-events: none;
-  }
-  body::before { left: calc(50% - 34rem); }
-  body::after { right: calc(50% - 34rem); }
-}
+/* The fixed page rails (body::before/after) retired 2026-07-16: the
+   sheet's left/right edges now carry that line. See "the bound sheet". */
