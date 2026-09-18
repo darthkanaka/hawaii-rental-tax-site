@@ -135,7 +135,7 @@ window.HRT_CONFIG = {
             status.className = "form-status ok";
             track("lead_success", { form: form.getAttribute("data-lead-form") });
           } else if (res.status === 409) {
-            status.textContent = "You're already on the list. See you at launch.";
+            status.textContent = "You're already on the list. We'll be in touch to get you set up.";
             status.className = "form-status ok";
             track("lead_duplicate", {});
           } else {
