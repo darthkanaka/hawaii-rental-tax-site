@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Hawaii Rental Tax | GET &amp; TAT Filing Service for Rental Owners</title>
-  <meta name="description" content="We file Hawaii GET, TAT, and county TAT for your rental property every month, guaranteed. Local, family-run, flat monthly pricing. Join the founding list.">
+  <title>Hawaii Rental Tax | GET &amp; TAT Filing, Catch-Up and Tax Clearances</title>
+  <meta name="description" content="Behind on Hawaii rental taxes, got a letter, or need a tax clearance? We file GET, state TAT and county TAT for rental owners and property managers. Flat fees, quoted first. Call (808) 232-6959.">
   <link rel="canonical" href="https://hawaiirentaltax.com/">
   <meta name="robots" content="index, follow">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Hawaii Rental Tax">
-  <meta property="og:title" content="Hawaii rental taxes, filed for you every month. Guaranteed.">
-  <meta property="og:description" content="GET, TAT, and county TAT handled by a local family-run team. You forward statements, we file everything on time or we pay the penalty.">
+  <meta property="og:title" content="Behind on Hawaii rental taxes? We fix that.">
+  <meta property="og:description" content="Catch-up filing, tax clearances, and monthly GET and TAT for rental owners and property managers. Flat fees, quoted before we start.">
   <meta property="og:url" content="https://hawaiirentaltax.com/">
   <meta property="og:image" content="https://hawaiirentaltax.com/assets/img/og.jpg">
   <meta name="twitter:card" content="summary_large_image">
@@ -35,12 +35,14 @@
         "name": "Hawaii Rental Tax",
         "legalName": "Veex Photo LLC",
         "url": "https://hawaiirentaltax.com/",
+        "telephone": "+1-808-232-6959",
         "email": "aloha@hawaiirentaltax.com",
         "logo": "https://hawaiirentaltax.com/assets/img/icon-512.png",
-        "description": "Done-for-you Hawaii GET, TAT, and county TAT filing service for rental property owners. Family-run on Oahu, serving all Hawaiian islands.",
+        "image": "https://hawaiirentaltax.com/assets/img/og.jpg",
+        "description": "Hawaii general excise tax, state transient accommodations tax and county transient accommodations tax filing for rental owners and property managers. Catch-up filing, tax clearances and monthly filing. Run from Honolulu.",
         "naics": "541213",
         "foundingDate": "2026",
-        "priceRange": "$49-$59 per property per month",
+        "priceRange": "Catch-up from $500; $39 per owner per month for property managers; $49 to $59 per property per month; $249 a year for long-term landlords",
         "founder": { "@id": "https://hawaiirentaltax.com/#kawika" },
         "areaServed": [
           { "@type": "State", "name": "Hawaii" },
@@ -48,73 +50,93 @@
           { "@type": "AdministrativeArea", "name": "Maui County" },
           { "@type": "AdministrativeArea", "name": "Hawaii County" },
           { "@type": "AdministrativeArea", "name": "Kauai County" }
-        ]
+        ],
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "09:00",
+          "closes": "17:00"
+        }
       },
       {
         "@type": "Person",
         "@id": "https://hawaiirentaltax.com/#kawika",
         "name": "Kawika Lopez",
         "jobTitle": "Co-founder",
+        "url": "https://hawaiirentaltax.com/about/",
         "worksFor": { "@id": "https://hawaiirentaltax.com/#org" },
-        "url": "https://hawaiirentaltax.com/#about",
         "knowsAbout": ["Hawaii general excise tax", "Hawaii transient accommodations tax", "rental property tax filing"]
       },
       {
         "@type": "Service",
-        "name": "Hawaii GET and TAT rental tax filing",
+        "@id": "https://hawaiirentaltax.com/#catchup",
+        "name": "Hawaii GET and TAT catch-up filing",
         "serviceType": "Tax preparation service",
         "provider": { "@id": "https://hawaiirentaltax.com/#org" },
         "areaServed": { "@type": "State", "name": "Hawaii" },
-        "description": "Monthly, quarterly, or semiannual GET, state TAT, and county TAT filings for Hawaii rental properties, plus catch-up filings for owners who are behind."
+        "url": "https://hawaiirentaltax.com/catch-up/",
+        "offers": { "@type": "Offer", "priceCurrency": "USD", "price": "500", "description": "Flat fee quoted in writing before work starts, from $500." }
+      },
+      {
+        "@type": "Service",
+        "@id": "https://hawaiirentaltax.com/#pmdesk",
+        "name": "Filing desk for Hawaii property managers",
+        "serviceType": "Tax preparation service",
+        "provider": { "@id": "https://hawaiirentaltax.com/#org" },
+        "areaServed": { "@type": "State", "name": "Hawaii" },
+        "url": "https://hawaiirentaltax.com/property-managers/",
+        "offers": { "@type": "Offer", "priceCurrency": "USD", "price": "39", "description": "$39 per owner per month, minimum four owners, no setup fee." }
+      },
+      {
+        "@type": "Service",
+        "@id": "https://hawaiirentaltax.com/#monthly",
+        "name": "Monthly Hawaii rental tax filing",
+        "serviceType": "Tax preparation service",
+        "provider": { "@id": "https://hawaiirentaltax.com/#org" },
+        "areaServed": { "@type": "State", "name": "Hawaii" },
+        "url": "https://hawaiirentaltax.com/pricing/#monthly",
+        "offers": { "@type": "Offer", "priceCurrency": "USD", "price": "59", "description": "$59 per property per month, or $49 for founding clients, plus a one-time $249 setup fee." }
       },
       {
         "@type": "WebSite",
         "name": "Hawaii Rental Tax",
         "url": "https://hawaiirentaltax.com/",
         "publisher": { "@id": "https://hawaiirentaltax.com/#org" }
-      }
-    ]
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Doesn't Airbnb collect Hawaii taxes for me?",
-        "acceptedAnswer": { "@type": "Answer", "text": "No. Unlike most states, Airbnb and VRBO do not collect or file Hawaii GET or TAT for hosts. Hawaii holds the owner responsible for registering, collecting, and filing all rental taxes." }
       },
       {
-        "@type": "Question",
-        "name": "I only have a long-term rental. Do I still owe Hawaii taxes?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Hawaii's general excise tax (GET) applies to long-term rental income too, about 4.5% on Oahu. Long-term rentals are exempt from TAT, but GET filings are still required." }
-      },
-      {
-        "@type": "Question",
-        "name": "I have never filed. How much trouble am I in?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Unfiled Hawaii GET returns have no statute of limitations, and penalties grow 5% per month up to 25%, so the exposure grows the longer you wait. The fix is a catch-up filing that brings you current. We handle those as flat-fee projects." }
-      },
-      {
-        "@type": "Question",
-        "name": "Are you a CPA firm?",
-        "acceptedAnswer": { "@type": "Answer", "text": "No. We are a technology-enabled filing service. Software we built does the calculations, a local human checks and files every return, and a partner CPA reviews complex situations. We prepare and file your returns; we do not give tax or legal advice." }
-      },
-      {
-        "@type": "Question",
-        "name": "Will you replace my accountant?",
-        "acceptedAnswer": { "@type": "Answer", "text": "No. GET and TAT are separate state filings that most income-tax preparers don't touch month to month, and that's the slice we handle. Your income taxes stay with whoever does them now, and at tax time we hand over clean records of everything we filed." }
-      },
-      {
-        "@type": "Question",
-        "name": "What is Hawaii County Bill 47?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Bill 47 makes short-term rental registration mandatory on the Island of Hawaii. The deadline was September 1, 2026, and operating unregistered carries steep fines. Registering requires state tax licenses, which is surfacing many owners who have never filed GET or TAT." }
-      },
-      {
-        "@type": "Question",
-        "name": "Are you taking clients, and what does founding member mean?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes. We're bringing on founding clients now, in the order they join the list. Founding members lock in $49 per property per month for as long as they stay. After the first fifty properties, the rate moves to $59." }
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "I got a letter from the state. What do I do?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Send it to us before you pay it. Most of these letters are estimates rather than findings, and an estimate can be wrong in your favour. We work out what is actually owed for those periods, file what is missing, and answer the notice. If there is a penalty worth challenging, we ask for it to be waived before anyone pays anything." }
+          },
+          {
+            "@type": "Question",
+            "name": "What does this cost?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Catch-up work is a flat fee from $500, quoted in writing before anything starts. One property with a couple of missed years is usually $500 to $750. Monthly filing is $49 to $59 per property. Property managers pay $39 per owner per month with a four owner minimum. Long-term landlords pay $249 a year per property." }
+          },
+          {
+            "@type": "Question",
+            "name": "Are you a CPA?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No, and we are upfront about it. We are a tax return preparer registered with the Hawaii Department of Taxation as a Verified Practitioner, which is what lets us file your returns and deal with the Department for you. It is a registration, not an endorsement. We are not a CPA firm or a law firm, and we do not prepare income tax returns." }
+          },
+          {
+            "@type": "Question",
+            "name": "I live on the mainland and cannot even log in. Can you help?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes, and this is one of the most common reasons people call. You do not need your own Hawaii Tax Online login for us to file for you. Once you sign Form N-848, the state power of attorney, we request access to your accounts and handle it from here. It works the same way if you are outside the United States." }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you hold my tax money?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Never. When we file, the payment goes from your own bank account straight to the state. It does not pass through us, so there is no account of ours for it to sit in or go missing from. You see the amount before it leaves and you get the confirmation number afterwards." }
+          },
+          {
+            "@type": "Question",
+            "name": "Will you replace my accountant?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. General excise tax and transient accommodations tax are separate state filings that most income tax preparers do not touch month to month, and that is the slice we handle. Your income taxes stay with whoever does them now, and at tax time we hand over clean records of everything we filed." }
+          }
+        ]
       }
     ]
   }
@@ -122,119 +144,106 @@
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-
+  <!-- hrt:header -->
   <header class="site-header">
     <nav class="nav" aria-label="Main">
       <a class="brand" href="/">
-        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
-          <circle cx="13" cy="13" r="12" stroke="#12414e" stroke-width="2"/>
-          <path d="M4 15c3-2.5 6-2.5 9 0s6 2.5 9 0" stroke="#12414e" stroke-width="2" stroke-linecap="round"/>
-          <path d="M6 10.5c2.3-2 4.7-2 7 0s4.7 2 7 0" stroke="#8f4e26" stroke-width="1.6" stroke-linecap="round" opacity="0.8"/>
-        </svg>
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true"><circle cx="13" cy="13" r="12" stroke="#12414e" stroke-width="2"/><path d="M4 15c3-2.5 6-2.5 9 0s6 2.5 9 0" stroke="#12414e" stroke-width="2" stroke-linecap="round"/><path d="M6 10.5c2.3-2 4.7-2 7 0s4.7 2 7 0" stroke="#8f4e26" stroke-width="1.6" stroke-linecap="round" opacity="0.8"/></svg>
         Hawaii Rental Tax
       </a>
       <div class="nav-links" id="nav-links">
-        <a href="#taxes">The taxes</a>
+        <a href="/catch-up/">Catch-up</a>
+        <a href="/property-managers/">Property managers</a>
+        <a href="/pricing/">Pricing</a>
         <a href="/rates/">Rates</a>
-        <a href="#how">How it works</a>
-        <a href="#pricing">Pricing</a>
-        <a href="/learn/">Learn</a>
+        <a href="/about/">About</a>
       </div>
-      <a class="btn small" href="#join" data-track="nav_cta">Join the founding list</a>
+      <a class="nav-phone" href="tel:+18082326959" data-track="nav_phone">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span class="nav-phone-num">(808) 232-6959</span>
+        <span class="sr-only">Call Hawaii Rental Tax</span>
+      </a>
+      <a class="btn small" href="/start/" data-track="nav_cta">Get a quote</a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
         <span class="bar" aria-hidden="true"></span><span class="bar" aria-hidden="true"></span><span class="bar" aria-hidden="true"></span>
       </button>
     </nav>
   </header>
+  <!-- /hrt:header -->
 
   <main id="main">
 
     <!-- ============ HERO ============ -->
-    <section class="hero">
+    <section class="hero solo">
       <div class="container">
         <div>
-          <span class="chip"><span class="dot" aria-hidden="true"></span> Family-run on O&#699;ahu &middot; Now taking founding clients</span>
-          <h1>Hawaii rental taxes, filed for you every month. Guaranteed.</h1>
-          <p class="hero-sub">We handle GET, TAT, and county TAT for your rental, start to finish. You forward your statements, we file on time every time, and if a filing is ever late because of us, we pay the penalty.</p>
-        </div>
-
-        <div class="signup-card">
-          <h3>Join the founding list</h3>
-          <p class="note">Plus our free catch-up checklist for owners who are behind.</p>
-          <form data-lead-form="hero" novalidate>
-            <div class="form-fields">
-              <div class="field">
-                <label for="email-hero">Email address</label>
-                <input type="email" id="email-hero" name="email" autocomplete="email" required placeholder="you@example.com">
-              </div>
-              <button class="btn" type="submit" data-track="hero_submit">Join the founding list</button>
-            </div>
-            <p class="form-status" role="status" aria-live="polite"></p>
-            <p class="fine">We'll reach out to get you set up. The checklist comes too, and nothing else. Founding members lock in $49/mo per property for life.</p>
-          </form>
+          <h1>Behind on your Hawaii rental taxes? We fix that.</h1>
+          <p class="hero-sub">Got a letter from the state, need a tax clearance to renew a registration, or just found out nobody's been filing? We work out every period you missed, file the lot, and hand you the confirmations. One flat fee, quoted before we start.</p>
+          <p class="actions">
+            <a class="btn" href="/start/" data-track="home_hero_cta">Tell us your situation</a>
+            <a class="btn ghost" href="tel:+18082326959" data-track="home_hero_phone">Call (808) 232-6959</a>
+          </p>
+          <p class="fine">Monday to Friday, 9 to 5 Hawaii time. We answer every enquiry within one business day.</p>
         </div>
       </div>
     </section>
 
-    <svg class="wave" viewBox="0 0 1440 42" preserveAspectRatio="none" aria-hidden="true">
-      <path d="M0 30 C 240 8, 480 8, 720 24 S 1200 40, 1440 18 L 1440 42 L 0 42 Z" fill="#e7f0f2"/>
-    </svg>
-
-    <!-- ============ THE PROBLEM ============ -->
-    <section class="section dense flush" id="taxes">
+    <!-- ============ THE FOUR DOORS ============ -->
+    <section class="section dense divided" id="doors">
       <div class="container">
         <div class="section-head">
-          <p class="eyebrow">Why this exists</p>
-          <h2>Hawaii does rental taxes differently than everywhere else</h2>
-          <p>In most states, Airbnb collects the taxes and you never think about it. Not here. Hawaii makes the owner register, collect, and file. Three separate taxes, two government portals, filings as often as every month. If mail from the state gives you a little jolt of dread, you're exactly who we built this for.</p>
+          <p class="eyebrow">Start here</p>
+          <h2>Which one sounds like you?</h2>
+          <p>Hawaii puts all three rental taxes on the owner. Airbnb and VRBO don't collect them, don't file them, and don't register you. Wherever that's left you, one of these is the way in.</p>
         </div>
 
-        <div class="grid cols-3">
-          <div class="card">
-            <div class="icon" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17L17 7"/><circle cx="7.5" cy="7.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg>
-            </div>
-            <span class="stat">~4.5%</span>
-            <h3>GET on every rental dollar</h3>
-            <p>Hawaii's general excise tax applies to all rental income, including long-term rentals. Most mainland owners have never heard of it until the letter arrives.</p>
-          </div>
-          <div class="card">
-            <div class="icon" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/></svg>
-            </div>
-            <span class="stat">11% + 3%</span>
-            <h3>TAT on short-term stays</h3>
-            <p>The state transient accommodations tax went up to 11% in January 2026, and every county adds about 3% on top. Short-term rentals get hit with all three taxes at once.</p>
-          </div>
-          <div class="card">
-            <div class="icon" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 8l8 8M16 8l-8 8"/></svg>
-            </div>
-            <span class="stat">$0</span>
-            <h3>Collected for you by Airbnb</h3>
-            <p>Airbnb and VRBO don't register you, don't collect for you, and don't file for you in Hawaii. The state holds you, the owner, responsible for all of it.</p>
-          </div>
+        <div class="doors">
+          <a class="door" href="/catch-up/" data-track="door_catchup">
+            <h3>I'm behind, or I got a letter</h3>
+            <p>Years of unfiled returns, a compliance notice from the Department, or a back-year county bill. We sort out what's real, file it, and answer the letter.</p>
+            <span class="go">Flat fee from $500 &rsaquo;</span>
+          </a>
+          <a class="door" href="/catch-up/#clearance" data-track="door_clearance">
+            <h3>I need a tax clearance</h3>
+            <p>Registering or renewing a short-term rental means proving you're square with the state and county. You can't get a clearance while returns are missing.</p>
+            <span class="go">How clearances work &rsaquo;</span>
+          </a>
+          <a class="door" href="/property-managers/" data-track="door_pm">
+            <h3>I manage rentals for other owners</h3>
+            <p>Send us the month's figures and we file every owner's GET, state TAT and county TAT, paid from each owner's own account. Your clients stay yours.</p>
+            <span class="go">$39 per owner per month &rsaquo;</span>
+          </a>
+          <a class="door" href="/pricing/#monthly" data-track="door_monthly">
+            <h3>I'm current and want it to stay that way</h3>
+            <p>Every return, every period, filed by the 20th with a confirmation each time. If you're a long-term landlord it's GET only, so we charge $249 a year instead.</p>
+            <span class="go">Monthly and annual pricing &rsaquo;</span>
+          </a>
         </div>
+      </div>
+    </section>
 
-        <div class="stakes">
-          <h3>What happens when it slips</h3>
-          <ul>
-            <li>Late filings grow at <strong>5% per month, up to 25%</strong>, plus interest, and TAT unpaid 60+ days adds another 20%.</li>
-            <li>Unfiled GET returns have <strong>no statute of limitations</strong>. The state can reach back through every year you skipped.</li>
-            <li>On the Island of Hawaii, <strong>Bill 47 registration has been mandatory since September 1, 2026</strong>, with fines up to $10,000. Registering requires tax licenses, which is how the state finds out about years that were never filed.</li>
-          </ul>
+    <!-- ============ WHO YOU'RE DEALING WITH ============ -->
+    <section class="section airy divided">
+      <div class="container">
+        <div class="grid cols-2 align-center gap-wide">
+          <div>
+            <p class="eyebrow">Who you're dealing with</p>
+            <h2>A registered practitioner in Honolulu, not a call centre</h2>
+            <p>I'm Kawika Lopez. I run this with my wife from Honolulu, and when you call, one of us picks up.</p>
+            <p>I'm registered with the Hawaii Department of Taxation as a Verified Practitioner, which is the credential that lets me file your returns and deal with the Department on your behalf. It's a registration, not an endorsement, and I'm not a CPA or an attorney. We carry professional liability insurance and we've got a written security plan for your information, because you'll be handing over a Social Security number and you deserve to know where it goes.</p>
+            <p><a href="/about/" data-track="home_about_link">More about us, including the numbers and what we're not &rsaquo;</a></p>
+          </div>
+          <img class="about-photo-real" src="/assets/img/kawika.jpg" alt="Kawika Lopez, co-founder of Hawaii Rental Tax" width="960" height="1200" loading="lazy">
         </div>
-
-        <p class="carry-line"><a href="/rates/" data-track="home_rates_link">See every 2026 rate for all four islands, with sources &rsaquo;</a></p>
       </div>
     </section>
 
     <!-- ============ HOW IT WORKS ============ -->
-    <section class="section airy" id="how">
+    <section class="section divided" id="how">
       <div class="container">
         <div class="section-head">
-          <p class="eyebrow">The fix</p>
-          <h2>You forward statements. We do everything else.</h2>
+          <p class="eyebrow">How it goes</p>
+          <h2>Three steps, and none of them are homework</h2>
         </div>
 
         <div class="grid cols-2 align-start gap-wide">
@@ -242,22 +251,22 @@
             <div class="step">
               <div class="step-num" aria-hidden="true">1</div>
               <div>
-                <h3>We set up or clean up your tax accounts</h3>
-                <p>New owner? We register your GET and TAT licenses and county registration. Behind on filings? We quote a flat-fee catch-up and bring you current.</p>
+                <h3>Tell us where things stand</h3>
+                <p>Rough is fine. Which island, what kind of rental, how far behind you think you are, and anything the state has sent you. We come back within one business day, by phone if you leave a number.</p>
               </div>
             </div>
             <div class="step">
               <div class="step-num" aria-hidden="true">2</div>
               <div>
-                <h3>Send us your statements</h3>
-                <p>Forward your Airbnb or VRBO payout statements each month, or set them up to come to us automatically. That's all you have to do.</p>
+                <h3>You get a real number, in writing</h3>
+                <p>What the work costs, flat, and what we think you'll owe the state once it's all filed. Both before you commit to anything. If it's more than you expected, we'd rather you heard it from us early than from a letter later.</p>
               </div>
             </div>
             <div class="step">
               <div class="step-num" aria-hidden="true">3</div>
               <div>
-                <h3>We compute, file, and confirm</h3>
-                <p>All three taxes, every period, filed by the 20th. You get a confirmation for every filing, and the annual reconciliation is included.</p>
+                <h3>We file, and you get the proof</h3>
+                <p>Every return, every period, with the state's confirmation number for each one. The tax leaves your own bank account and goes straight to the state, so nothing waits in an account of ours.</p>
               </div>
             </div>
           </div>
@@ -268,69 +277,11 @@
             </div>
             <div>
               <h3>The on-time guarantee</h3>
-              <p class="tight">If a filing we handle is late because of us, we pay the penalty. Not you. Up to $2,500 per property each year, <a href="/terms/#guarantee">full terms here</a>.</p>
-              <p class="detail">Here's how: software we built does the math, one of us personally checks and files every return, and a partner CPA reviews anything unusual. That's why we can make this promise.</p>
-              <p class="detail">And here's what it feels like once it's running: your statements forward themselves, a confirmation lands in your inbox each period, and mail from the state stops being scary.</p>
+              <p class="tight">If a return we're responsible for goes in late or wrong because of us, we pay the penalty that causes. Up to $2,500 per property per calendar year, and conditions apply. <a href="/terms/#guarantee">Full terms here</a>.</p>
+              <p class="detail">It doesn't cover the tax itself, periods before we started working for you, or penalties caused by records that reached us late or wrong. To claim, send us the notice within 10 days and let us ask the Department to waive it first.</p>
+              <p class="detail">The reason we can promise it: the software does the arithmetic, I check and file every return personally, and there aren't so many clients that anything gets lost.</p>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ PRICING ============ -->
-    <section class="section divided" id="pricing">
-      <div class="container">
-        <div class="section-head">
-          <p class="eyebrow">Simple pricing</p>
-          <h2>Flat rates. No hourly billing. No surprises.</h2>
-          <p>Full pricing starts after the first fifty properties. Founding members lock in this rate for as long as they stay. All in for one property at the founding rate: $249 once, then $49 a month, everything included.</p>
-        </div>
-        <div class="grid cols-3">
-          <div class="card price-card featured">
-            <span class="badge">Founding rate</span>
-            <h3>Monthly filing desk</h3>
-            <p class="price">$49<small>/mo per property <span class="strike">$59</span></small></p>
-            <ul>
-              <li>GET, TAT, and county TAT, every period</li>
-              <li>Filed by the 20th, confirmation every time</li>
-              <li>Annual reconciliation included</li>
-              <li>Cancel anytime</li>
-            </ul>
-          </div>
-          <div class="card price-card">
-            <h3>Setup</h3>
-            <p class="price">$249<small> one-time</small></p>
-            <ul>
-              <li>GET and TAT registration</li>
-              <li>County registration where required</li>
-              <li>Filing calendar configured for your property</li>
-              <li>Waived for founding members with 2+ properties</li>
-            </ul>
-          </div>
-          <div class="card price-card">
-            <h3>Catch-up filings</h3>
-            <p class="price">from $500<small> flat quote</small></p>
-            <ul>
-              <li>For owners who are behind or never filed</li>
-              <li>Fixed price quoted up front, no hourly meter</li>
-              <li>Complex cases reviewed with our partner CPA</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ ABOUT ============ -->
-    <section class="section divided airy" id="about">
-      <div class="container">
-        <div class="grid cols-2 align-center gap-wide">
-          <div>
-            <p class="eyebrow">Who we are</p>
-            <h2>A local family, not a mainland call center</h2>
-            <p>We're a local family on O&#699;ahu, and this is our company. Kawika spent his career building quality-control systems for software, and he built the one that runs this service. The rest stays a family operation in the truest sense: when you email us, a person from this family answers, on Hawaii time.</p>
-            <p>We built this because staying square with Hawaii's rental taxes shouldn't require a CPA or a panic attack. Honest owners deserve an easy way to do it right.</p>
-          </div>
-          <img class="about-photo-real" src="/assets/img/kawika.jpg" alt="Kawika, co-founder of Hawaii Rental Tax" width="960" height="1200" loading="lazy">
         </div>
       </div>
     </section>
@@ -340,36 +291,32 @@
       <div class="container narrow">
         <div class="section-head">
           <p class="eyebrow">Questions</p>
-          <h2>The things owners always ask</h2>
+          <h2>The things people actually ask</h2>
         </div>
         <div class="faq">
           <details>
-            <summary>Doesn't Airbnb collect Hawaii taxes for me?</summary>
-            <div class="answer"><p>No. Unlike most states, Airbnb and VRBO don't collect or file Hawaii GET or TAT for hosts. Hawaii puts all of it on the owner: registering, collecting, and filing. It surprises almost everyone.</p></div>
+            <summary>I got a letter from the state. What do I do?</summary>
+            <div class="answer"><p>Send it to us before you pay it. Most of these letters are estimates rather than findings, and an estimate can be wrong in your favour. We work out what's actually owed for those periods, file what's missing, and answer the notice. If there's a penalty worth challenging, we ask for it to be waived before anyone pays anything. <a href="/catch-up/#letter">More on letters here.</a></p></div>
           </details>
           <details>
-            <summary>I only have a long-term rental. Do I still owe Hawaii taxes?</summary>
-            <div class="answer"><p>Yes. Hawaii's general excise tax applies to long-term rental income too, about 4.5% on O&#699;ahu. Long-term rentals are exempt from TAT, but GET filings are still required. <a href="/learn/get-tax-long-term-rentals/">Here's the plain-English explainer.</a></p></div>
+            <summary>What does this cost?</summary>
+            <div class="answer"><p>Catch-up work is a flat fee from $500, quoted in writing before anything starts. One property with a couple of missed years is usually $500 to $750. Monthly filing is $49 to $59 per property. Property managers pay $39 per owner per month with a four owner minimum. Long-term landlords pay $249 a year per property. <a href="/pricing/">All of it on one page.</a></p></div>
           </details>
           <details>
-            <summary>I have never filed. How much trouble am I in?</summary>
-            <div class="answer"><p>The honest answer: it grows the longer you wait. Unfiled GET returns have no statute of limitations, and penalties build at 5% per month up to 25%. The fix is a catch-up filing that brings you current, quoted flat so there are no surprises. <a href="/learn/bill-47-catch-up-checklist/">Start with the catch-up checklist.</a></p></div>
+            <summary>Are you a CPA?</summary>
+            <div class="answer"><p>No, and we're upfront about it. We're a tax return preparer registered with the Hawaii Department of Taxation as a Verified Practitioner, which is what lets us file your returns and deal with the Department for you. It's a registration, not an endorsement. We're not a CPA firm or a law firm, and we don't prepare income tax returns. <a href="/about/">Here's the full picture.</a></p></div>
           </details>
           <details>
-            <summary>Are you a CPA firm?</summary>
-            <div class="answer"><p>No, and we're upfront about that. We're a filing service built on our own software. It does the calculations, one of us checks and files every return, and a partner CPA reviews the complicated stuff. We prepare and file returns; we don't give tax or legal advice.</p></div>
+            <summary>I live on the mainland and can't even log in. Can you help?</summary>
+            <div class="answer"><p>Yes, and this is one of the most common reasons people call. You don't need your own Hawaii Tax Online login for us to file for you. Once you sign Form N-848, the state power of attorney, we request access to your accounts and handle it from here. It works the same way if you're outside the United States.</p></div>
+          </details>
+          <details>
+            <summary>Do you hold my tax money?</summary>
+            <div class="answer"><p>Never. When we file, the payment goes from your own bank account straight to the state. It doesn't pass through us, so there's no account of ours for it to sit in or go missing from. You see the amount before it leaves and you get the confirmation number afterwards.</p></div>
           </details>
           <details>
             <summary>Will you replace my accountant?</summary>
-            <div class="answer"><p>No. GET and TAT are separate state filings that most income-tax preparers don't touch month to month, and that's the slice we handle. Your income taxes stay with whoever does them now, and at tax time we hand over clean records of everything we filed for you.</p></div>
-          </details>
-          <details>
-            <summary>What is Hawaii County Bill 47?</summary>
-            <div class="answer"><p>Bill 47 makes short-term rental registration mandatory on the Island of Hawaii. The deadline was September 1, 2026, and fines go up to $10,000. Registering requires state tax licenses, which is how many owners are discovering they were supposed to be filing all along. <a href="/learn/bill-47-catch-up-checklist/">Our checklist walks through it.</a></p></div>
-          </details>
-          <details>
-            <summary>Are you taking clients, and what does founding member mean?</summary>
-            <div class="answer"><p>Yes. We're bringing on founding clients now, in the order they join the list. Founding members lock in $49 per property per month for as long as they stay. After the first fifty properties, the rate moves to $59.</p></div>
+            <div class="answer"><p>No. General excise tax and transient accommodations tax are separate state filings that most income tax preparers don't touch month to month, and that's the slice we handle. Your income taxes stay with whoever does them now, and at tax time we hand over clean records of everything we filed.</p></div>
           </details>
         </div>
       </div>
@@ -379,55 +326,54 @@
     <section class="section close" id="join">
       <div class="container narrow">
         <div class="signup-card">
-          <p class="eyebrow">Founding list</p>
-          <h2>Get squared away before the next filing</h2>
-          <p class="note">Join the list and we'll reach out to get you set up. You also get the free catch-up checklist and the locked founding rate. First fifty properties only.</p>
-          <form data-lead-form="footer" novalidate>
-            <div class="form-fields">
-              <div class="field">
-                <label for="email-footer">Email address</label>
-                <input type="email" id="email-footer" name="email" autocomplete="email" required placeholder="you@example.com">
-              </div>
-              <button class="btn" type="submit" data-track="footer_submit">Join the founding list</button>
-            </div>
-            <p class="form-status" role="status" aria-live="polite"></p>
-          </form>
+          <p class="eyebrow">Next step</p>
+          <h2>Tell us where you're at</h2>
+          <p class="note">However far behind you are, we've seen it. Send us the rough shape of it and we'll come back within one business day with what it'll take and what it'll cost. If it turns out you don't need us, we'll tell you that too.</p>
+          <p class="actions">
+            <a class="btn" href="/start/" data-track="home_close_cta">Tell us your situation</a>
+            <a class="btn ghost" href="tel:+18082326959" data-track="home_close_phone">Call (808) 232-6959</a>
+          </p>
         </div>
       </div>
     </section>
 
   </main>
 
+  <!-- hrt:footer -->
   <footer class="site-footer">
     <div class="container">
       <div class="cols">
         <div>
           <p class="brand">Hawaii Rental Tax</p>
-          <p class="tagline">Done-for-you GET and TAT filings for Hawaii rental owners. Family-run on O&#699;ahu. Built and operated in Hawai&#699;i.</p>
+          <p class="tagline">We file Hawaii GET, state TAT and county TAT for rental owners and the people who manage their properties. Run from Honolulu.</p>
         </div>
         <div>
           <ul>
-            <li><a href="#taxes">The taxes</a></li>
-            <li><a href="/rates/">Rates</a></li>
-            <li><a href="#how">How it works</a></li>
-            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="/catch-up/">Catch-up filings</a></li>
+            <li><a href="/property-managers/">For property managers</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+            <li><a href="/rates/">2026 rates</a></li>
+            <li><a href="/about/">About</a></li>
             <li><a href="/learn/">Learn</a></li>
           </ul>
         </div>
         <div>
           <ul>
+            <li><a href="tel:+18082326959" data-track="footer_phone">(808) 232-6959</a></li>
             <li><a href="mailto:aloha@hawaiirentaltax.com">aloha@hawaiirentaltax.com</a></li>
             <li>Honolulu, Hawai&#699;i</li>
+            <li>Monday to Friday, 9 to 5 Hawaii time</li>
           </ul>
         </div>
       </div>
       <div class="legal">
-        <p>Hawaii Rental Tax is a technology-enabled filing service, not a CPA firm or law firm. Content on this site is general information about Hawaii tax rules as of July 2026, not tax or legal advice for your situation. Rates and deadlines change; verify against the Hawaii Department of Taxation or a licensed professional. On-time guarantee applies to penalties caused by our filing errors, up to $2,500 per property per calendar year; <a href="/terms/#guarantee">see the guarantee terms</a>.</p>
+        <p>Hawaii Rental Tax is a trade name of Veex Photo LLC, a Hawaii limited liability company. We're a tax return preparer registered with the Hawaii Department of Taxation as a Verified Practitioner. That's not an endorsement by the Department, and we're not a CPA firm or a law firm.</p>
+        <p>Content on this site is general information about Hawaii tax rules as of September 2026, not tax or legal advice for your situation. Rates and deadlines change; check against the Hawaii Department of Taxation or ask a licensed professional. Our on-time guarantee covers penalties caused by our filing errors, up to $2,500 per property per calendar year, and conditions apply; <a href="/terms/#guarantee">see the guarantee terms</a>.</p>
         <p>&copy; 2026 Hawaii Rental Tax, a trade name of Veex Photo LLC &middot; <a href="/privacy/">Privacy Policy</a> &middot; <a href="/terms/">Terms of Use</a></p>
       </div>
     </div>
   </footer>
-
+  <!-- /hrt:footer -->
   <script src="/assets/js/main.js" defer></script>
 </body>
 </html>

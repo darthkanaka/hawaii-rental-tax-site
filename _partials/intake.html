@@ -1,0 +1,82 @@
+      <form class="intake" data-intake-form="{{id}}" novalidate>
+        <div class="form-fields">
+          <div class="field-row">
+            <div class="field">
+              <label for="{{id}}-name">Your name</label>
+              <input type="text" id="{{id}}-name" name="name" autocomplete="name" required maxlength="120" placeholder="First and last">
+            </div>
+            <div class="field">
+              <label for="{{id}}-email">Email</label>
+              <input type="email" id="{{id}}-email" name="email" autocomplete="email" required maxlength="254" placeholder="you@example.com">
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="{{id}}-phone">Phone <span class="opt">(fastest way to reach you)</span></label>
+              <input type="tel" id="{{id}}-phone" name="phone" autocomplete="tel" maxlength="40" placeholder="(808) 555-0100">
+            </div>
+            <div class="field">
+              <label for="{{id}}-situation">Which sounds like you?</label>
+              <select id="{{id}}-situation" name="situation" required>
+                <option value="" disabled selected>Pick one</option>
+                <option value="behind">I'm behind, or I got a letter</option>
+                <option value="clearance">I need a tax clearance</option>
+                <option value="manager">I manage rentals for other owners</option>
+                <option value="monthly">I'm current and want it filed every month</option>
+                <option value="landlord">I'm a long-term landlord</option>
+                <option value="other">Something else</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="{{id}}-island">Which island?</label>
+              <select id="{{id}}-island" name="island">
+                <option value="">Pick one</option>
+                <option value="oahu">O&#699;ahu</option>
+                <option value="maui">Maui</option>
+                <option value="hawaii-island">Hawai&#699;i Island</option>
+                <option value="kauai">Kaua&#699;i</option>
+                <option value="multiple">More than one</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="{{id}}-rental-type">Short-term or long-term?</label>
+              <select id="{{id}}-rental-type" name="rental_type">
+                <option value="">Pick one</option>
+                <option value="short-term">Short-term</option>
+                <option value="long-term">Long-term</option>
+                <option value="both">Both</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="{{id}}-count">{{count_label}}</label>
+            <select id="{{id}}-count" name="property_count">
+              <option value="">Pick one</option>
+              <option value="1">1</option>
+              <option value="2-3">2 to 3</option>
+              <option value="4-10">4 to 10</option>
+              <option value="11+">11 or more</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="{{id}}-message">Anything else we should know?</label>
+            <textarea id="{{id}}-message" name="message" maxlength="4000" rows="4" placeholder="How far behind you are, what the letter says, whatever's on your mind."></textarea>
+            <p class="fine">Please don't put your Social Security number or bank details in here. Once we talk, we'll send you a secure link for those.</p>
+          </div>
+
+          <div class="hp" aria-hidden="true">
+            <label for="{{id}}-website">Leave this empty</label>
+            <input type="text" id="{{id}}-website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+
+          <button class="btn" type="submit" data-track="{{id}}_intake_submit">Send this over</button>
+          <p class="fine">We'll get back to you within one business day. Prefer to talk now? Call <a href="tel:+18082326959" data-track="{{id}}_form_phone">(808) 232-6959</a>.</p>
+        </div>
+        <p class="form-status" role="status" aria-live="polite"></p>
+      </form>

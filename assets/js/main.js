@@ -1,10 +1,12 @@
-/* Hawaii Rental Tax — analytics + lead capture
-   Fill in the two values in HRT_CONFIG before launch (see README). */
+/* Hawaii Rental Tax: analytics + enquiry capture.
+   Enquiries insert into the Supabase `intakes` table, which is insert-only
+   under row level security. Schema and the notification trigger live in the
+   private engine repo, db/002_intakes.sql. */
 
 window.HRT_CONFIG = {
   GA_ID: "G-2N3V0S9QT9",   // GA4 Measurement ID (property under kaveex@gmail.com)
   SUPABASE_URL: "https://buasiiuvzxpbzrpqlnfy.supabase.co",
-  SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ1YXNpaXV2enhwYnpycHFsbmZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI2NDM4MzgsImV4cCI6MjA3ODIxOTgzOH0.sQ8EOxm6MfMqUE5BBvvcIryNvFb-0anxvW3KvmabGC0" // publishable; leads table is insert-only via RLS
+  SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ1YXNpaXV2enhwYnpycHFsbmZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI2NDM4MzgsImV4cCI6MjA3ODIxOTgzOH0.sQ8EOxm6MfMqUE5BBvvcIryNvFb-0anxvW3KvmabGC0" // publishable; intakes table is insert-only via RLS
 };
 
 (function () {
@@ -52,8 +54,29 @@ window.HRT_CONFIG = {
     }
   } catch (e) { /* private mode, ignore */ }
 
-  /* ---------- click tracking: any element with data-track ---------- */
+  /* ---------- click tracking ----------
+     Phone and email links get their own events and stop there, so a tel:
+     link carrying data-track doesn't also fire the generic click event.
+     gtag sends with sendBeacon, so the dialer navigation doesn't lose it. */
+  function linkLocation(a) {
+    if (a.getAttribute("data-track")) { return a.getAttribute("data-track"); }
+    if (a.closest(".site-header")) { return "header"; }
+    if (a.closest(".site-footer")) { return "footer"; }
+    if (a.closest(".hero")) { return "hero"; }
+    return "body";
+  }
+
   document.addEventListener("click", function (ev) {
+    var a = ev.target.closest("a");
+    if (a && a.protocol === "tel:") {
+      track("phone_click", { location: linkLocation(a) });
+      return;
+    }
+    if (a && a.protocol === "mailto:") {
+      track("email_click", { location: linkLocation(a) });
+      return;
+    }
+
     var el = ev.target.closest("[data-track]");
     if (el) {
       track("click", {
@@ -84,37 +107,64 @@ window.HRT_CONFIG = {
   }
   window.addEventListener("scroll", onScroll, { passive: true });
 
-  /* ---------- lead form ---------- */
-  document.querySelectorAll("form[data-lead-form]").forEach(function (form) {
+  /* ---------- enquiry form ----------
+     One handler for every intake form on the site. The row is built from an
+     explicit column list: PostgREST rejects the whole insert with a 400 if
+     it sees a key that isn't a column, and the honeypot is one of those. */
+  var INTAKE_COLS = [
+    "name", "email", "phone", "situation", "island", "rental_type",
+    "property_count", "message"
+  ];
+  var PHONE_HTML = '<a href="tel:+18082326959">(808) 232-6959</a>';
+
+  document.querySelectorAll("form[data-intake-form]").forEach(function (form) {
     form.addEventListener("submit", function (ev) {
       ev.preventDefault();
-      var emailInput = form.querySelector("input[type='email']");
+
       var btn = form.querySelector("button[type='submit']");
       var status = form.querySelector(".form-status");
-      var email = (emailInput.value || "").trim();
+      var fields = form.querySelector(".form-fields");
+      var data = new FormData(form);
 
+      function say(text, kind) {
+        status.innerHTML = text;
+        status.className = "form-status " + kind;
+      }
+
+      // Honeypot: a bot filled in the off-screen field. Look successful,
+      // send nothing.
+      if ((data.get("website") || "").toString().trim()) {
+        if (fields) { fields.hidden = true; }
+        say("Thanks. We'll be in touch within one business day.", "ok");
+        track("intake_bot", {});
+        return;
+      }
+
+      // reportValidity still works on a novalidate form
+      if (!form.reportValidity()) { return; }
+
+      var email = (data.get("email") || "").toString().trim();
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        status.textContent = "That email doesn't look right. Mind checking it?";
-        status.className = "form-status err";
+        say("That email doesn't look right. Mind checking it?", "err");
         return;
       }
 
-      track("lead_submit", { form: form.getAttribute("data-lead-form") });
+      var row = { page: location.pathname };
+      INTAKE_COLS.forEach(function (key) {
+        var value = (data.get(key) || "").toString().trim();
+        if (value) { row[key] = value; }
+      });
+      try {
+        row.utm = JSON.parse(localStorage.getItem("hrt_utm") || "null");
+      } catch (e) { /* private mode, ignore */ }
 
-      if (!cfg.SUPABASE_URL || !cfg.SUPABASE_ANON_KEY) {
-        // Database not wired yet: give people a working path so no lead is lost.
-        status.textContent = "Almost live. Email us at aloha@hawaiirentaltax.com and we'll add you by hand.";
-        status.className = "form-status ok";
-        return;
-      }
+      track("intake_submit", { situation: row.situation || "unknown" });
 
-      var utm = null;
-      try { utm = JSON.parse(localStorage.getItem("hrt_utm") || "null"); } catch (e) {}
-
+      var label = btn.textContent;
       btn.disabled = true;
-      btn.textContent = "Adding you…";
+      btn.textContent = "Sending\u2026";
 
-      fetch(cfg.SUPABASE_URL + "/rest/v1/leads", {
+      fetch(cfg.SUPABASE_URL + "/rest/v1/intakes", {
         method: "POST",
         headers: {
           "apikey": cfg.SUPABASE_ANON_KEY,
@@ -122,34 +172,22 @@ window.HRT_CONFIG = {
           "Content-Type": "application/json",
           "Prefer": "return=minimal"
         },
-        body: JSON.stringify({
-          email: email,
-          form: form.getAttribute("data-lead-form"),
-          page: location.pathname,
-          utm: utm
-        })
+        body: JSON.stringify(row)
       })
         .then(function (res) {
-          if (res.ok) {
-            status.textContent = "You're on the list. The checklist is on its way to your inbox.";
-            status.className = "form-status ok";
-            track("lead_success", { form: form.getAttribute("data-lead-form") });
-          } else if (res.status === 409) {
-            status.textContent = "You're already on the list. We'll be in touch to get you set up.";
-            status.className = "form-status ok";
-            track("lead_duplicate", {});
-          } else {
-            throw new Error("insert failed " + res.status);
-          }
+          if (!res.ok) { throw new Error("insert failed " + res.status); }
+          // hide the fields so a second click can't send it twice
+          if (fields) { fields.hidden = true; }
+          say("Got it. We'll get back to you within one business day, and we'll call if you left a number.", "ok");
+          track("intake_success", { situation: row.situation || "unknown" });
         })
-        .catch(function () {
-          status.textContent = "Something broke on our end. Email aloha@hawaiirentaltax.com and we'll add you ourselves.";
-          status.className = "form-status err";
-          track("lead_error", {});
-        })
-        .then(function () {
+        .catch(function (err) {
+          var code = (err && err.message || "").replace(/\D+/g, "") || "0";
+          say("Something broke on our end, sorry. Call us at " + PHONE_HTML +
+              " or email aloha@hawaiirentaltax.com and we'll pick it up from there.", "err");
+          track("intake_error", { status: code });
           btn.disabled = false;
-          btn.textContent = "Join the founding list";
+          btn.textContent = label;
         });
     });
   });

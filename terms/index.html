@@ -14,9 +14,41 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["ProfessionalService", "Organization"],
+        "@id": "https://hawaiirentaltax.com/#org",
+        "name": "Hawaii Rental Tax",
+        "legalName": "Veex Photo LLC",
+        "url": "https://hawaiirentaltax.com/",
+        "telephone": "+1-808-232-6959",
+        "email": "aloha@hawaiirentaltax.com",
+        "logo": "https://hawaiirentaltax.com/assets/img/icon-512.png"
+      },
+      {
+        "@type": "WebPage",
+        "name": "Terms of Use",
+        "url": "https://hawaiirentaltax.com/terms/",
+        "description": "The terms for using hawaiirentaltax.com and buying Hawaii Rental Tax filing services: pricing, automatic renewal, cancellation, refunds and the on-time guarantee.",
+        "isPartOf": { "@id": "https://hawaiirentaltax.com/#org" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://hawaiirentaltax.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Terms of Use" }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
+  <!-- hrt:header -->
   <header class="site-header">
     <nav class="nav" aria-label="Main">
       <a class="brand" href="/">
@@ -24,29 +56,36 @@
         Hawaii Rental Tax
       </a>
       <div class="nav-links" id="nav-links">
-        <a href="/#taxes">The taxes</a>
+        <a href="/catch-up/">Catch-up</a>
+        <a href="/property-managers/">Property managers</a>
+        <a href="/pricing/">Pricing</a>
         <a href="/rates/">Rates</a>
-        <a href="/#how">How it works</a>
-        <a href="/#pricing">Pricing</a>
-        <a href="/learn/">Learn</a>
+        <a href="/about/">About</a>
       </div>
-      <a class="btn small" href="/#join" data-track="nav_cta">Join the founding list</a>
+      <a class="nav-phone" href="tel:+18082326959" data-track="nav_phone">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span class="nav-phone-num">(808) 232-6959</span>
+        <span class="sr-only">Call Hawaii Rental Tax</span>
+      </a>
+      <a class="btn small" href="/start/" data-track="nav_cta">Get a quote</a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
         <span class="bar" aria-hidden="true"></span><span class="bar" aria-hidden="true"></span><span class="bar" aria-hidden="true"></span>
       </button>
     </nav>
   </header>
+  <!-- /hrt:header -->
 
   <main id="main">
     <article class="section">
       <div class="container prose">
         <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> &rsaquo; Terms of Use</nav>
         <h1>Terms of Use</h1>
-<p><strong>Effective date:</strong> September 17, 2026</p>
+<p><strong>Effective date:</strong> September 22, 2026</p>
+<p class="muted">Updated September 22, 2026: added the property manager filing desk and the long-term landlord annual plan to Section 5. Nothing else changed.</p>
 <p>These terms cover your use of hawaiirentaltax.com and your purchase of our services. Please read them. By using the site, joining our email list, or buying our service, you agree to them.</p>
 <p>Hawaii Rental Tax is a trade name of Veex Photo LLC, a Hawaii limited liability company. "We," "us," and "our" mean Veex Photo LLC doing business as Hawaii Rental Tax. "You" means anyone using the site or our services.</p>
 <h2>1. What we do, and what we don't</h2>
-<p>We prepare and file Hawaii rental property tax returns for our clients: the General Excise Tax (GET), the state Transient Accommodations Tax (TAT), and county Transient Accommodations Tax where it applies. We also help clients who are behind catch up on past periods.</p>
+<p>We prepare and file Hawaii rental property tax returns for our clients: the General Excise Tax (GET), the state Transient Accommodations Tax (TAT), and county Transient Accommodations Tax where it applies. We also help clients who are behind catch up on past periods. We do this for rental owners, and for property managers who arrange it for the owners they manage. Where a property manager engages us, each owner still signs their own engagement letter and their own Form N-848, because the returns are the owner's.</p>
 <p>A few things we are not:</p>
 <ul>
 <li><strong>We're not a CPA firm or a law firm.</strong> We're a tax return preparer registered with the Hawaii Department of Taxation as a Verified Practitioner. That registration lets us act for clients who authorize us. It isn't an endorsement by the Department, and it doesn't make us accountants or attorneys.</li>
@@ -69,8 +108,10 @@
 <h2>5. Prices and billing</h2>
 <ul>
 <li><strong>Monthly filing service:</strong> $59 per property per month. Founding clients pay $49 per property per month, and that rate stays locked for as long as the property stays continuously enrolled.</li>
-<li><strong>Setup:</strong> $249, charged once per client account when you sign up. Waived for founding clients who enroll two or more properties.</li>
+<li><strong>Setup:</strong> $249, charged once per client account when you sign up for the monthly filing service. Waived for founding clients who enroll two or more properties. There is no setup fee on the property manager desk or the long-term landlord annual plan.</li>
 <li><strong>Catch-up work:</strong> quoted in writing before we start, from $500, based on how many periods and properties are involved.</li>
+<li><strong>Property manager filing desk:</strong> $39 per owner per month, minimum four owners, <strong>no setup fee</strong>, billed monthly to the property manager under a written agreement with them.</li>
+<li><strong>Long-term landlord annual filing:</strong> $249 per property per year, General Excise Tax only, <strong>no setup fee</strong>. Billed once a year in advance, and it renews each year until you cancel.</li>
 </ul>
 <p>Payments are processed by Stripe. Your card or bank account is charged when you sign up and then on the same day each month. Your first payment covers the setup fee and your first month. Monthly fees are charged in advance for the coming month.</p>
 <p>Our prices include everything described on our pricing page. We don't add tax on top of the prices shown.</p>
@@ -171,14 +212,41 @@ Phone: (808) 232-6959</p>
     </article>
   </main>
 
+  <!-- hrt:footer -->
   <footer class="site-footer">
     <div class="container">
+      <div class="cols">
+        <div>
+          <p class="brand">Hawaii Rental Tax</p>
+          <p class="tagline">We file Hawaii GET, state TAT and county TAT for rental owners and the people who manage their properties. Run from Honolulu.</p>
+        </div>
+        <div>
+          <ul>
+            <li><a href="/catch-up/">Catch-up filings</a></li>
+            <li><a href="/property-managers/">For property managers</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+            <li><a href="/rates/">2026 rates</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/learn/">Learn</a></li>
+          </ul>
+        </div>
+        <div>
+          <ul>
+            <li><a href="tel:+18082326959" data-track="footer_phone">(808) 232-6959</a></li>
+            <li><a href="mailto:aloha@hawaiirentaltax.com">aloha@hawaiirentaltax.com</a></li>
+            <li>Honolulu, Hawai&#699;i</li>
+            <li>Monday to Friday, 9 to 5 Hawaii time</li>
+          </ul>
+        </div>
+      </div>
       <div class="legal">
-        <p>Hawaii Rental Tax is a technology-enabled filing service, not a CPA firm or law firm. Content on this site is general information about Hawaii tax rules as of July 2026, not tax or legal advice for your situation.</p>
-        <p>&copy; 2026 Hawaii Rental Tax &middot; <a href="/">Home</a> &middot; <a href="/learn/">Learn</a> &middot; <a href="/privacy/">Privacy</a> &middot; <a href="/terms/">Terms</a></p>
+        <p>Hawaii Rental Tax is a trade name of Veex Photo LLC, a Hawaii limited liability company. We're a tax return preparer registered with the Hawaii Department of Taxation as a Verified Practitioner. That's not an endorsement by the Department, and we're not a CPA firm or a law firm.</p>
+        <p>Content on this site is general information about Hawaii tax rules as of September 2026, not tax or legal advice for your situation. Rates and deadlines change; check against the Hawaii Department of Taxation or ask a licensed professional. Our on-time guarantee covers penalties caused by our filing errors, up to $2,500 per property per calendar year, and conditions apply; <a href="/terms/#guarantee">see the guarantee terms</a>.</p>
+        <p>&copy; 2026 Hawaii Rental Tax, a trade name of Veex Photo LLC &middot; <a href="/privacy/">Privacy Policy</a> &middot; <a href="/terms/">Terms of Use</a></p>
       </div>
     </div>
   </footer>
+  <!-- /hrt:footer -->
   <script src="/assets/js/main.js" defer></script>
 </body>
 </html>

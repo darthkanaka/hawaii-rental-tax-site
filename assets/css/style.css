@@ -105,7 +105,7 @@ a:hover { color: var(--pine-hover); }
   color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 0.55rem;
 }
 .brand svg { flex: none; }
-.nav-links { display: none; gap: 1.6rem; align-items: center; }
+.nav-links { display: none; gap: 1.35rem; align-items: center; }
 .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.92rem; font-weight: 500; }
 .nav-links a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
 .nav-links a[aria-current="page"] { color: var(--ink); border-bottom: 1px solid var(--ink); }
@@ -121,7 +121,7 @@ a:hover { color: var(--pine-hover); }
 .nav-open .menu-toggle .bar:nth-child(2) { opacity: 0; }
 .nav-open .menu-toggle .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-@media (max-width: 819.98px) {
+@media (max-width: 999.98px) {
   .nav-open .nav-links {
     display: flex; flex-direction: column; align-items: stretch; gap: 0;
     position: absolute; top: 100%; left: 0; right: 0;
@@ -131,7 +131,7 @@ a:hover { color: var(--pine-hover); }
   .nav-open .nav-links a { padding: 0.7rem 0; min-height: 44px; display: flex; align-items: center; font-size: 1rem; border-bottom: 1px solid var(--line); }
   .nav-open .nav-links a:last-child { border-bottom: none; }
 }
-@media (min-width: 820px) {
+@media (min-width: 1000px) {
   .nav-links { display: flex; }
   .menu-toggle { display: none; }
 }
@@ -159,6 +159,9 @@ a:hover { color: var(--pine-hover); }
 .hero { padding: 4.5rem 0 4rem; }
 .hero .container { display: grid; gap: 2.5rem; }
 @media (min-width: 900px) { .hero .container { grid-template-columns: 1.4fr 1fr; align-items: start; } }
+.hero.solo .container { display: block; }
+.hero.solo h1 { max-width: 24ch; }
+.hero.solo .hero-sub { max-width: 42rem; }
 .hero h1 { margin-bottom: 1.1rem; }
 .hero-sub { font-size: 1.13rem; color: var(--muted); max-width: 34rem; }
 .chip {
@@ -182,16 +185,41 @@ a:hover { color: var(--pine-hover); }
 .signup-card .fine { font-size: 0.84rem; color: var(--mut-dark); margin: 0.85rem 0 0; }
 .field { display: flex; flex-direction: column; gap: 0.35rem; margin: 1.1rem 0; }
 .field label { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; }
-.field input {
-  min-height: 48px; padding: 0.6rem 0.2rem; font-size: 1rem;
-  border: none; border-bottom: 1.5px solid var(--line-dark); border-radius: 0;
-  background: transparent; color: var(--paper);
+.field label .opt { font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted); }
+.field input, .field select, .field textarea {
+  width: 100%; min-height: 48px; padding: 0.6rem 0.2rem; font-size: 1rem;
+  border: none; border-bottom: 1.5px solid var(--line); border-radius: 0;
+  background: transparent; color: var(--ink);
   font-family: var(--font-body);
 }
-.signup-card .field input::placeholder { color: #8fa3a6; }
-.signup-card .field input:focus { border-bottom-color: var(--brass); outline: none; }
+.field textarea { min-height: 8rem; resize: vertical; line-height: 1.55; }
+.field select {
+  appearance: none; -webkit-appearance: none; cursor: pointer;
+  padding-right: 1.7rem; background-repeat: no-repeat;
+  background-position: right 0.25rem center; background-size: 11px;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2312414e' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+.field input::placeholder, .field textarea::placeholder { color: #8b9490; }
+.field input:focus, .field select:focus, .field textarea:focus { border-bottom-color: var(--pine); outline: none; }
+
+/* dark panels: the signup card and the inline article CTA */
+.signup-card .field input, .signup-card .field select, .signup-card .field textarea,
+.cta-inline .field input, .cta-inline .field select, .cta-inline .field textarea {
+  color: var(--paper); border-bottom-color: var(--line-dark);
+}
+.signup-card .field label .opt, .cta-inline .field label .opt { color: var(--mut-dark); }
+.signup-card .field select, .cta-inline .field select {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23e3c27e' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+.signup-card .field input::placeholder, .signup-card .field textarea::placeholder,
+.cta-inline .field input::placeholder, .cta-inline .field textarea::placeholder { color: #8fa3a6; }
+.signup-card .field input:focus, .signup-card .field select:focus, .signup-card .field textarea:focus,
+.cta-inline .field input:focus, .cta-inline .field select:focus, .cta-inline .field textarea:focus {
+  border-bottom-color: var(--brass); outline: none;
+}
 .signup-card .btn { width: 100%; background: var(--brass); color: var(--ink); }
 .signup-card .btn:hover { background: #ecd095; color: var(--ink); }
+.fine { font-size: 0.84rem; color: var(--muted); margin: 0.85rem 0 0; }
 .form-status { font-size: 0.95rem; font-weight: 500; margin-top: 0.6rem; min-height: 1.4em; }
 .form-status.ok { color: #1e6b3a; }
 .form-status.err { color: var(--danger); }
@@ -362,7 +390,7 @@ a:hover { color: var(--pine-hover); }
 .prose th, .prose td { text-align: left; padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--line); }
 .prose th { font-weight: 600; border-bottom: 1px solid var(--ink); }
 .prose .source-note { font-size: 0.9rem; color: var(--muted); }
-.breadcrumb { font-size: 0.88rem; color: var(--muted); margin: 1.5rem 0 0; }
+.breadcrumb { font-size: 0.88rem; color: var(--muted); margin: 1.5rem 0 1.1rem; }
 .breadcrumb a { color: var(--muted); }
 .article-date { font-size: 0.88rem; color: var(--muted); margin-bottom: 2rem; }
 .notice {
@@ -441,3 +469,99 @@ html.motion .reveal.in { opacity: 1; transform: none; }
 
 /* The fixed page rails (body::before/after) retired 2026-07-16: the
    sheet's left/right edges now carry that line. See "the bound sheet". */
+
+/* ---------- rebuild 2026-09: front door, phone, intake form ----------
+   Added when the site moved from an email-list coming-soon page to an
+   enquiry front door. Three new pieces only: the header phone link, the
+   situation chooser on the home page, and the multi-field intake form. */
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* header phone: the number is the point of the page on a phone, so the
+   icon shows at every width and the digits appear once there's room */
+.nav-phone {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem;
+  min-height: 44px; min-width: 44px; padding: 0 0.3rem; flex: none;
+  color: var(--ink); text-decoration: none;
+  font-weight: 600; font-size: 0.92rem; font-variant-numeric: tabular-nums;
+}
+.nav-phone:hover { color: var(--pine); }
+.nav-phone:hover .nav-phone-num { text-decoration: underline; text-underline-offset: 4px; }
+.nav-phone svg { color: var(--pine); flex: none; }
+.nav-phone-num { display: none; }
+@media (min-width: 600px) { .nav-phone-num { display: inline; } }
+
+/* situation chooser: "which one sounds like you" */
+.doors { display: grid; gap: 1.5rem; }
+@media (min-width: 760px) { .doors { grid-template-columns: repeat(2, 1fr); } }
+.door {
+  display: block; text-decoration: none; color: inherit;
+  border-top: 1px solid var(--ink); padding: 1.3rem 0 0;
+  transition: border-color 200ms ease;
+}
+.door:hover { border-top-color: var(--copper); }
+.door h3 { color: var(--ink); margin-bottom: 0.4rem; }
+.door:hover h3 { text-decoration: underline; text-underline-offset: 3px; }
+.door p { color: var(--muted); font-size: 0.97rem; margin: 0 0 0.7rem; }
+.door .go { font-weight: 600; font-size: 0.92rem; color: var(--pine); }
+
+/* buttons that sit side by side under the hero */
+.actions { display: flex; flex-wrap: wrap; gap: 0.85rem; align-items: center; margin-top: 1.75rem; }
+.actions .btn.ghost { background: transparent; }
+
+/* intake form */
+.intake { margin-top: 1.5rem; }
+.intake .btn { width: 100%; max-width: 22rem; margin-top: 0.5rem; }
+.field-row { display: grid; gap: 0 1.5rem; }
+@media (min-width: 620px) { .field-row { grid-template-columns: 1fr 1fr; } }
+.field-row .field { margin-top: 0.85rem; margin-bottom: 0.85rem; }
+
+/* honeypot: a real, focusable input parked off screen. Bots fill it in,
+   people never see it, and main.js drops any submission that has it set. */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* the intake form also appears inside the dark inline CTA on two pages */
+.cta-inline .intake .btn { background: var(--brass); color: var(--ink); }
+.cta-inline .intake .fine, .cta-inline .intake .fine a { color: var(--mut-dark); }
+.cta-inline .intake .fine a { text-decoration: underline; }
+
+/* ---------- links and ghost buttons on the deep panels ----------
+   Body links are pine, which disappears against deep pine. Anything inside a
+   dark panel needs the brass treatment instead. Buttons are excluded: they
+   set their own colours. This also fixes the "/terms/#guarantee" link, which
+   was pine on deep everywhere the guarantee panel appears. */
+.signup-card a:not(.btn),
+.cta-inline a:not(.btn),
+.guarantee a:not(.btn),
+.stakes a:not(.btn),
+.section.deep a:not(.btn) {
+  color: var(--brass);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.signup-card a:not(.btn):hover,
+.cta-inline a:not(.btn):hover,
+.guarantee a:not(.btn):hover,
+.stakes a:not(.btn):hover,
+.section.deep a:not(.btn):hover { color: #ecd095; }
+
+.signup-card .btn.ghost,
+.cta-inline .btn.ghost,
+.section.deep .btn.ghost {
+  background: transparent;
+  color: var(--brass);
+  border: 1px solid var(--brass);
+}
+.signup-card .btn.ghost:hover,
+.cta-inline .btn.ghost:hover,
+.section.deep .btn.ghost:hover {
+  background: rgba(227, 194, 126, 0.14);
+  color: var(--brass);
+}
+
+/* the dark close section holds a list of contact links */
+.section.close .signup-card ul { list-style: none; margin: 1.2rem 0 0; padding: 0; }
+.section.close .signup-card li { margin-bottom: 0.55rem; color: var(--mut-dark); }

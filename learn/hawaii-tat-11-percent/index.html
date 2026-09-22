@@ -27,8 +27,8 @@
     "headline": "Hawaii's TAT is 11% now. What your rental must collect in 2026",
     "description": "The 2026 TAT rate change, the full Hawaii short-term rental tax stack, and a worked example.",
     "datePublished": "2026-07-15",
-    "dateModified": "2026-07-15",
-    "author": { "@type": "Person", "name": "Kawika Lopez", "url": "https://hawaiirentaltax.com/#about" },
+    "dateModified": "2026-09-22",
+    "author": { "@type": "Person", "name": "Kawika Lopez", "url": "https://hawaiirentaltax.com/about/" },
     "publisher": { "@type": "Organization", "name": "Hawaii Rental Tax" },
     "mainEntityOfPage": "https://hawaiirentaltax.com/learn/hawaii-tat-11-percent/"
   }
@@ -47,6 +47,7 @@
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
+  <!-- hrt:header -->
   <header class="site-header">
     <nav class="nav" aria-label="Main">
       <a class="brand" href="/">
@@ -54,25 +55,31 @@
         Hawaii Rental Tax
       </a>
       <div class="nav-links" id="nav-links">
-        <a href="/#taxes">The taxes</a>
+        <a href="/catch-up/">Catch-up</a>
+        <a href="/property-managers/">Property managers</a>
+        <a href="/pricing/">Pricing</a>
         <a href="/rates/">Rates</a>
-        <a href="/#how">How it works</a>
-        <a href="/#pricing">Pricing</a>
-        <a href="/learn/">Learn</a>
+        <a href="/about/">About</a>
       </div>
-      <a class="btn small" href="/#join" data-track="nav_cta">Join the founding list</a>
+      <a class="nav-phone" href="tel:+18082326959" data-track="nav_phone">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span class="nav-phone-num">(808) 232-6959</span>
+        <span class="sr-only">Call Hawaii Rental Tax</span>
+      </a>
+      <a class="btn small" href="/start/" data-track="nav_cta">Get a quote</a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
         <span class="bar" aria-hidden="true"></span><span class="bar" aria-hidden="true"></span><span class="bar" aria-hidden="true"></span>
       </button>
     </nav>
   </header>
+  <!-- /hrt:header -->
 
   <main id="main">
     <article class="section">
       <div class="container prose">
         <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/learn/">Learn</a> &rsaquo; Hawaii TAT is 11% now</nav>
         <h1>Hawaii's TAT is 11% now. Here is what your rental must collect</h1>
-        <p class="article-date">By <a href="/#about">Kawika Lopez</a> &middot; Updated July 15, 2026 &middot; General information, not tax advice</p>
+        <p class="article-date">By <a href="/about/">Kawika Lopez</a> &middot; Updated September 22, 2026 &middot; General information, not tax advice</p>
 
         <p class="lede">On January 1, 2026, Hawaii's transient accommodations tax rose from 10.25% to 11% under the state's new climate legislation, sometimes called the green fee. If your nightly pricing and guest tax lines still assume the old rate, you're collecting less than you owe.</p>
 
@@ -81,11 +88,11 @@
         <ul>
           <li><strong>State TAT: 11%</strong> of your rental proceeds for stays under 180 days, set by <a href="https://www.capitol.hawaii.gov/hrscurrent/Vol04_Ch0201-0257/HRS0237D/" rel="noopener">HRS chapter 237D</a> and raised January 1, 2026.</li>
           <li><strong>County TAT: about 3%</strong> on top, charged by each county separately.</li>
-          <li><strong>GET: roughly 4.5%</strong> (up to a 4.712% pass-on rate on O&#699;ahu) on gross income, and unlike TAT, this one applies to cleaning fees too.</li>
+          <li><strong>GET: 4.5%</strong> on gross income, on every island since Maui adopted its county surcharge in January 2024. Unlike TAT, this one applies to cleaning fees too. If you pass it on to the guest visibly you can charge up to 4.712%, because the pass-on is itself income.</li>
         </ul>
 
         <h2>How much tax is on a $3,000 Hawaii booking?</h2>
-        <p>Simplified, rounded example for a $3,000 booking on O&#699;ahu:</p>
+        <p>Here is a $3,000 booking on O&#699;ahu, rounded. The first table is what you owe the state and county on that income. It is the same on all four islands.</p>
         <div class="table-scroll"><table>
           <thead><tr><th>Line</th><th>Rate</th><th>Amount</th></tr></thead>
           <tbody>
@@ -95,6 +102,7 @@
             <tr><td><strong>Total tax</strong></td><td><strong>~18.7%</strong></td><td><strong>~$561</strong></td></tr>
           </tbody>
         </table></div>
+        <p>If you'd rather the guest carried it, you charge a bit more than $555, about $561, because the tax you pass on counts as income and gets taxed in turn. That is the only reason the 4.712% figure exists, and it is a ceiling rather than a rate you owe.</p>
         <p>The exact taxable base for each line has edge cases (what counts as gross proceeds, how visibly-passed-on taxes interact, how cleaning fees are treated), which is exactly the kind of detail a filing service exists to get right. The simple version: nearly a fifth of every booking is tax, and nobody collects it for you.</p>
 
         <h2>Common mistakes we see</h2>
@@ -105,21 +113,15 @@
           <li><strong>Assuming Airbnb handles any of this.</strong> In Hawaii, the platforms don't do any of it for you.</li>
         </ul>
 
-        <div class="notice">Rates current as of July 2026. County rates and rules vary slightly by island and do change; verify against the Hawaii Department of Taxation and your county, or ask a licensed professional.</div>
+        <div class="notice">Rates checked against the Department of Taxation on September 22, 2026. County rates and rules vary slightly by island and do change; verify against the Hawaii Department of Taxation and your county, or ask a licensed professional.</div>
 
         <div class="cta-inline">
           <h3>Never think about the 20th again</h3>
-          <p>We compute and file all three taxes for your rental every period, guaranteed on time. We're taking founding clients now at $49/mo per property, locked for life.</p>
-          <form data-lead-form="article-tat" novalidate>
-            <div class="form-fields">
-              <div class="field">
-                <label for="email-a2">Email address</label>
-                <input type="email" id="email-a2" name="email" autocomplete="email" required placeholder="you@example.com">
-              </div>
-              <button class="btn" type="submit" data-track="article_tat_submit">Join the founding list</button>
-            </div>
-            <p class="form-status" role="status" aria-live="polite"></p>
-          </form>
+          <p>We work out and file all three taxes for your rental, every period, and you get a confirmation number each time. If you're behind, we start by getting you current.</p>
+          <p class="actions">
+            <a class="btn" href="/pricing/" data-track="a_tat_cta">See pricing</a>
+            <a class="btn ghost" href="/catch-up/" data-track="a_tat_catchup">I'm behind</a>
+          </p>
         </div>
 
         <p>Related reading: <a href="/rates/">every 2026 rate in one sourced table</a>, <a href="/learn/bill-47-catch-up-checklist/">the Bill 47 catch-up checklist</a>, and <a href="/learn/get-tax-long-term-rentals/">why long-term rentals owe GET too</a>.</p>
@@ -127,14 +129,41 @@
     </article>
   </main>
 
+  <!-- hrt:footer -->
   <footer class="site-footer">
     <div class="container">
+      <div class="cols">
+        <div>
+          <p class="brand">Hawaii Rental Tax</p>
+          <p class="tagline">We file Hawaii GET, state TAT and county TAT for rental owners and the people who manage their properties. Run from Honolulu.</p>
+        </div>
+        <div>
+          <ul>
+            <li><a href="/catch-up/">Catch-up filings</a></li>
+            <li><a href="/property-managers/">For property managers</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+            <li><a href="/rates/">2026 rates</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/learn/">Learn</a></li>
+          </ul>
+        </div>
+        <div>
+          <ul>
+            <li><a href="tel:+18082326959" data-track="footer_phone">(808) 232-6959</a></li>
+            <li><a href="mailto:aloha@hawaiirentaltax.com">aloha@hawaiirentaltax.com</a></li>
+            <li>Honolulu, Hawai&#699;i</li>
+            <li>Monday to Friday, 9 to 5 Hawaii time</li>
+          </ul>
+        </div>
+      </div>
       <div class="legal">
-        <p>Hawaii Rental Tax is a technology-enabled filing service, not a CPA firm or law firm. Content on this site is general information about Hawaii tax rules as of July 2026, not tax or legal advice for your situation.</p>
-        <p>&copy; 2026 Hawaii Rental Tax &middot; <a href="/">Home</a> &middot; <a href="/learn/">Learn</a> &middot; <a href="/privacy/">Privacy</a> &middot; <a href="/terms/">Terms</a></p>
+        <p>Hawaii Rental Tax is a trade name of Veex Photo LLC, a Hawaii limited liability company. We're a tax return preparer registered with the Hawaii Department of Taxation as a Verified Practitioner. That's not an endorsement by the Department, and we're not a CPA firm or a law firm.</p>
+        <p>Content on this site is general information about Hawaii tax rules as of September 2026, not tax or legal advice for your situation. Rates and deadlines change; check against the Hawaii Department of Taxation or ask a licensed professional. Our on-time guarantee covers penalties caused by our filing errors, up to $2,500 per property per calendar year, and conditions apply; <a href="/terms/#guarantee">see the guarantee terms</a>.</p>
+        <p>&copy; 2026 Hawaii Rental Tax, a trade name of Veex Photo LLC &middot; <a href="/privacy/">Privacy Policy</a> &middot; <a href="/terms/">Terms of Use</a></p>
       </div>
     </div>
   </footer>
+  <!-- /hrt:footer -->
   <script src="/assets/js/main.js" defer></script>
 </body>
 </html>
