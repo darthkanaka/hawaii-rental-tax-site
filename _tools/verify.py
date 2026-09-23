@@ -37,13 +37,17 @@ FORBIDDEN = [
     ("promises an email we never send", re.compile(r"checklist is on its way"), set(), None),
     ("retired 'locked for life' promise", re.compile(r"locked for life", re.I), set(), None),
     ("inaccurate self-description", re.compile(r"technology-enabled"), set(), None),
-    ("stale sitewide date stamp", re.compile(r"as of July 2026"), set(), None),
+    ("stale sitewide date stamp", re.compile(r"as of July 2026", re.I), set(), None),
     ("unkept maintenance promise", re.compile(r"re-checked monthly"), set(), None),
     ("unqualified CPA claim", re.compile(r"CPA firm", re.I), set(),
      re.compile(r"(not|never|n't)\s+an?\s*CPA firm", re.I)),
     ("implies we hold client money", re.compile(r"\bhold\b[^.]{0,25}\bmoney\b", re.I), set(),
      re.compile(r"(never|don't|doesn't|do not|not)\b[^.]{0,30}\bhold\b"
                 r"|\bhold\b[^.?]{0,25}\bmoney\b\?", re.I)),
+    # 2026-09-22 StoryBrand pass: the visitor is the hero, so no CTA asks them to do us a favor
+    ("retired CTA (asks the visitor for a favor)", re.compile(r"Tell us your situation|Send this over|Start (with )?a conversation", re.I), set(), None),
+    # customer-facing copy is American English
+    ("British spelling", re.compile(r"\b(favour\w*|centre|enquir\w*|programme|licen[cs]e?s?\b(?<=licence)|licences?\b|authoris\w*|cancelling|organis\w*|colour\w*|honour\w*|behaviour\w*|travell\w*|recognis\w*)", re.I), set(), None),
 ]
 
 
@@ -53,6 +57,11 @@ class PageParser(HTMLParser):
         self.links, self.ids, self.ld = [], set(), []
         self._in_ld = False
         self._ld_line = 0
+        # visible FAQ: <details><summary>Q</summary><div class="answer">A</div></details>
+        self.faq = []            # list of [question, answer]
+        self._faq_part = None    # "q", "a" or "h" while inside one
+        self._heading = ""
+        self.headings = []       # question-form h2/h3, the shape /rates/ uses
 
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
@@ -66,14 +75,36 @@ class PageParser(HTMLParser):
                 self.links.append((a[key], line))
         if tag == "script" and a.get("type") == "application/ld+json":
             self._in_ld, self._ld_line = True, line
+        if tag == "details":
+            self.faq.append(["", ""])
+        if tag in ("h2", "h3"):
+            self._faq_part = "h"
+            self._heading = ""
+        if tag == "summary" and self.faq:
+            self._faq_part = "q"
+        if tag == "div" and "answer" in (a.get("class") or "").split() and self.faq:
+            self._faq_part = "a"
 
     def handle_data(self, data):
         if self._in_ld:
             self.ld.append((data, self._ld_line))
+        if self._faq_part == "h":
+            self._heading += data
+        elif self._faq_part and self.faq:
+            self.faq[-1][0 if self._faq_part == "q" else 1] += data
 
     def handle_endtag(self, tag):
         if tag == "script":
             self._in_ld = False
+        if tag in ("h2", "h3") and self._faq_part == "h":
+            # a question-form heading counts as a visible question
+            if self._heading.strip().endswith("?"):
+                self.headings.append(self._heading)
+            self._faq_part = None
+        if tag == "summary" and self._faq_part == "q":
+            self._faq_part = None
+        if tag == "div" and self._faq_part == "a":
+            self._faq_part = None
 
 
 def pages():
@@ -122,6 +153,32 @@ def main() -> int:
                 types.update([t] if isinstance(t, str) else t)
         if rel != "404.html" and not types & PAGE_TYPES:
             findings.append(f"{rel}:1: no page-level JSON-LD ({' or '.join(sorted(PAGE_TYPES))})")
+
+        # FAQPage schema must mirror the visible FAQ word for word
+        norm = lambda t: re.sub(r"\s+", " ", t.replace("\u2019", "'").replace("\u2018", "'")).strip()
+        schema_faq = {}
+        for block, line in p.ld:
+            try:
+                data = json.loads(block)
+            except json.JSONDecodeError:
+                continue
+            for node in (data.get("@graph", [data]) if isinstance(data, dict) else data):
+                if node.get("@type") == "FAQPage":
+                    for q in node.get("mainEntity", []):
+                        schema_faq[norm(q.get("name", ""))] = norm(q.get("acceptedAnswer", {}).get("text", ""))
+        visible = {norm(q): norm(a) for q, a in p.faq if q.strip()}
+        as_headings = {norm(h) for h in p.headings}
+        if schema_faq or visible:
+            for q in visible.keys() - schema_faq.keys():
+                findings.append(f"{rel}:1: FAQ on the page but not in the schema: {q[:60]!r}")
+            # schema questions must be visible, either in an accordion or as a
+            # question-form heading with the answer under it
+            for q in schema_faq.keys() - visible.keys() - as_headings:
+                findings.append(f"{rel}:1: FAQ in the schema but not on the page: {q[:60]!r}")
+            # answers are only comparable for the accordion shape
+            for q in visible.keys() & schema_faq.keys():
+                if visible[q] != schema_faq[q]:
+                    findings.append(f"{rel}:1: FAQ answer differs between page and schema: {q[:60]!r}")
 
         # --- 3. forbidden strings ---
         for num, line in enumerate(text.splitlines(), 1):

@@ -278,6 +278,7 @@ a:hover { color: var(--pine-hover); }
 .stakes ul { margin: 0; padding-left: 1.2rem; color: var(--mut-dark); max-width: 52rem; }
 .stakes li { margin-bottom: 0.55rem; }
 .stakes strong { color: var(--brass); }
+.stakes p { color: var(--mut-dark); margin: 1.1rem 0 0; max-width: 52rem; }
 
 /* ---------- carry line ----------
    A slim brass strip for handoff links, like a ledger's balance carried

@@ -20,16 +20,16 @@ Any price or guarantee wording on the site has to match `/terms/`. The guarantee
 - `rates/` the island-by-island rate table, the only page earning search impressions
 - `learn/` three articles plus a hub
 - `privacy/`, `terms/` published legal pages, written against real law. Do not reword casually
-- `_partials/` the shared header, footer and enquiry form
+- `_partials/` the shared header, footer and inquiry form
 - `_tools/sync.py`, `_tools/verify.py` see below
 - `assets/css/style.css` the design system, "The Bound Sheet": Newsreader over Inter, paper, ink, pine, brass, copper
-- `assets/js/main.js` GA4, click and scroll tracking, first-touch UTM capture, the enquiry form
+- `assets/js/main.js` GA4, click and scroll tracking, first-touch UTM capture, the inquiry form
 
 Folders starting with an underscore are not served: Jekyll excludes them, and there is no `.nojekyll`.
 
 ## Shared blocks
 
-The header, footer and enquiry form live once in `_partials/` and are stamped between marker comments in each page:
+The header, footer and inquiry form live once in `_partials/` and are stamped between marker comments in each page:
 
 ```html
 <!-- hrt:header -->   ... generated ...   <!-- /hrt:header -->
@@ -55,17 +55,17 @@ python3 -m http.server 8080   # then walk the site at 375px and desktop
 
 `verify.py` parses every JSON-LD block, resolves every internal link including `#fragments`, greps for retired copy and stale claims, and checks the partials are in sync. Open the preview through the server, not `file://`, because paths are absolute.
 
-## Enquiries
+## Inquiries
 
 The form posts to the Supabase `intakes` table, which is insert-only under row level security. The anon key in `main.js` is publishable by design; row level security is the boundary, and there is no read policy, so nobody can pull the list out of the page source.
 
-Schema, constraints and the notification trigger live in the private engine repo at `db/002_intakes.sql`. On insert, a Postgres trigger posts the row to a Google Apps Script web app running under the aloha@hawaiirentaltax.com Workspace account, which emails the enquiry to us and sends the person a fixed acknowledgment. The endpoint URL and its token sit in Supabase Vault, not in any repo.
+Schema, constraints and the notification trigger live in the private engine repo at `db/002_intakes.sql`. On insert, a Postgres trigger posts the row to a Google Apps Script web app running under the aloha@hawaiirentaltax.com Workspace account, which emails the inquiry to us and sends the person a fixed acknowledgment. The endpoint URL and its token sit in Supabase Vault, not in any repo.
 
-Read enquiries in the Supabase table editor, or server-side with the service role key. The `leads` table is the retired email list and is no longer written to.
+Read inquiries in the Supabase table editor, or server-side with the service role key. The `leads` table is the retired email list and is no longer written to.
 
 ## Things that are deliberately not here
 
-- **No buy button.** The live Stripe link stays private until the client paperwork clears review. The site takes enquiries, not payments.
+- **No buy button.** The live Stripe link stays private until the client paperwork clears review. The site takes inquiries, not payments.
 - **No postal address**, because there is no PO box yet. That also blocks any marketing email, which legally needs one.
 - **No claim to be a CPA firm**, and nothing suggesting the state endorses us. The Verified Practitioner registration is a registration, not an endorsement.
 - **Nothing implying we hold client tax money.** The client's own bank account pays the state.

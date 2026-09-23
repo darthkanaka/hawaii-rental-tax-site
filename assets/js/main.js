@@ -1,5 +1,5 @@
-/* Hawaii Rental Tax: analytics + enquiry capture.
-   Enquiries insert into the Supabase `intakes` table, which is insert-only
+/* Hawaii Rental Tax: analytics + inquiry capture.
+   Inquiries insert into the Supabase `intakes` table, which is insert-only
    under row level security. Schema and the notification trigger live in the
    private engine repo, db/002_intakes.sql. */
 
@@ -107,7 +107,7 @@ window.HRT_CONFIG = {
   }
   window.addEventListener("scroll", onScroll, { passive: true });
 
-  /* ---------- enquiry form ----------
+  /* ---------- inquiry form ----------
      One handler for every intake form on the site. The row is built from an
      explicit column list: PostgREST rejects the whole insert with a 400 if
      it sees a key that isn't a column, and the honeypot is one of those. */
@@ -178,7 +178,7 @@ window.HRT_CONFIG = {
           if (!res.ok) { throw new Error("insert failed " + res.status); }
           // hide the fields so a second click can't send it twice
           if (fields) { fields.hidden = true; }
-          say("Got it. We'll get back to you within one business day, and we'll call if you left a number.", "ok");
+          say("Got it. You'll hear back within one business day, by phone if you left a number.", "ok");
           track("intake_success", { situation: row.situation || "unknown" });
         })
         .catch(function (err) {
