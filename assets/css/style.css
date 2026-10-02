@@ -1,4 +1,4 @@
-/* Hawaii Rental Tax — design system
+/* Hawaii Rental Tax: design system
    Direction: "The Ledger, Dark Rail" (2026-07-15 overhaul).
    Section rhythm: "The Bound Sheet" (2026-07-16). The page is a paper
    sheet on a pine-wash desk; header, main, and footer bind to the 68rem
@@ -35,7 +35,7 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 5.5rem; } /* keeps focused or linked items clear of the sticky header */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -566,3 +566,85 @@ html.motion .reveal.in { opacity: 1; transform: none; }
 /* the dark close section holds a list of contact links */
 .section.close .signup-card ul { list-style: none; margin: 1.2rem 0 0; padding: 0; }
 .section.close .signup-card li { margin-bottom: 0.55rem; color: var(--mut-dark); }
+
+/* ---------- 2026-10: the free checker ----------
+   Radio and checkbox "choices", the inline validation, and the rendered
+   checklist. Everything sits inside .container.narrow on paper. */
+
+[hidden] { display: none !important; }
+
+.checker-section .lede { font-size: 1.15rem; color: var(--muted); margin-bottom: 2.5rem; }
+
+.checker { margin-top: 1rem; }
+.checker fieldset { border: 0; margin: 0 0 2.25rem; padding: 0; min-width: 0; }
+.checker legend { font-weight: 600; font-size: 1.08rem; margin: 0 0 0.85rem; padding: 0; display: flex; gap: 0.6rem; align-items: baseline; }
+.q-num {
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  width: 1.7rem; height: 1.7rem; border: 1px solid var(--ink); border-radius: var(--radius);
+  font-family: var(--font-display); color: var(--copper); font-size: 1rem;
+}
+.checker .hint { color: var(--muted); font-size: 0.93rem; margin: -0.35rem 0 0.85rem; }
+
+.choices { display: grid; gap: 0.6rem; }
+@media (min-width: 620px) { .choices.two { grid-template-columns: 1fr 1fr; } }
+.choice {
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  min-height: 48px; padding: 0.8rem 1rem;
+  border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper);
+  cursor: pointer; transition: border-color 150ms ease, background-color 150ms ease;
+}
+.choice:hover { border-color: var(--pine); }
+.choice input { flex: none; width: 1.15rem; height: 1.15rem; margin: 0.2rem 0 0; accent-color: var(--pine); }
+.choice span { line-height: 1.4; }
+.choice small { display: block; color: var(--muted); font-size: 0.87rem; margin-top: 0.1rem; }
+.choice:has(input:checked) { border-color: var(--pine); background: rgba(18, 65, 78, 0.06); box-shadow: inset 0 0 0 1px var(--pine); }
+.choice:has(input:focus-visible) { outline: 3px solid var(--pine); outline-offset: 2px; }
+
+.field-error { color: var(--danger); font-size: 0.93rem; font-weight: 500; margin: 0.6rem 0 0; }
+.checker fieldset.invalid .choice { border-color: var(--danger); }
+
+/* the checklist */
+.results { margin-top: 3.5rem; padding-top: 2.25rem; border-top: 2px solid var(--ink); }
+.results h2 { margin-bottom: 0.5rem; }
+.results h2:focus { outline: none; }
+.results h3 { font-family: var(--font-display); font-weight: 600; font-size: 1.4rem; margin: 2.4rem 0 0.9rem; }
+.results .summary { font-size: 1.12rem; color: var(--muted); }
+
+.priority {
+  background: var(--deep); color: var(--paper); border-top: 2px solid var(--brass);
+  border-radius: var(--radius); padding: 1.6rem 1.5rem 1.4rem; margin: 1.75rem 0 0;
+}
+.priority h3 { color: var(--paper); margin-top: 0; }
+.priority ol { margin: 0; padding-left: 1.2rem; color: var(--mut-dark); }
+.priority li { margin-bottom: 0.6rem; }
+
+.tax-row, .file-row, .tool-row, .step-block { border-top: 1px solid var(--line); padding: 1rem 0; }
+.tax-row:last-child, .file-row:last-child, .tool-row:last-child { border-bottom: 1px solid var(--line); }
+.tax-row { display: grid; grid-template-columns: 4.5rem 1fr; gap: 1rem; align-items: baseline; }
+.tax-rate { font-family: var(--font-display); font-size: 1.6rem; color: var(--copper); font-variant-numeric: tabular-nums; }
+.tax-name, .tool-name, .step-title { font-weight: 600; margin: 0 0 0.25rem; }
+.tax-row p, .tool-row p, .file-body p, .step-block p { margin: 0 0 0.4rem; }
+.tax-row p:not(.tax-name), .tool-row p:not(.tool-name) { color: var(--muted); }
+.step-block ol { margin: 0.4rem 0 0.6rem; padding-left: 1.2rem; }
+.step-block li { margin-bottom: 0.35rem; }
+
+.file-row { display: grid; gap: 0.35rem 1.5rem; }
+@media (min-width: 620px) { .file-row { grid-template-columns: 8.5rem 1fr; } }
+.file-id { display: flex; flex-direction: column; }
+.form-id { font-family: var(--font-display); font-size: 1.35rem; color: var(--ink); line-height: 1.2; }
+.form-sub { font-size: 0.82rem; color: var(--muted); }
+.due { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.also-list { padding-left: 1.2rem; }
+.also-list li { margin-bottom: 0.55rem; }
+
+.fine-print { font-size: 0.88rem; color: var(--muted); margin-top: 1rem; }
+.results .actions { margin-top: 2rem; }
+.copy-status { font-size: 0.93rem; color: #1e6b3a; min-height: 1.4em; margin-top: 0.5rem; }
+
+@media print {
+  .site-header, .site-footer, .checker, #faq, .results .actions, .skip-link { display: none !important; }
+  .results { border: 0; margin: 0; padding: 0; }
+  .priority { background: none; color: var(--ink); border: 1px solid var(--ink); }
+  .priority h3, .priority ol { color: var(--ink); }
+}

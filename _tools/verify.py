@@ -47,7 +47,16 @@ FORBIDDEN = [
     # 2026-09-22 StoryBrand pass: the visitor is the hero, so no CTA asks them to do us a favor
     ("retired CTA (asks the visitor for a favor)", re.compile(r"Tell us your situation|Send this over|Start (with )?a conversation", re.I), set(), None),
     # customer-facing copy is American English
-    ("British spelling", re.compile(r"\b(favour\w*|centre|enquir\w*|programme|licen[cs]e?s?\b(?<=licence)|licences?\b|authoris\w*|cancelling|organis\w*|colour\w*|honour\w*|behaviour\w*|travell\w*|recognis\w*)", re.I), set(), None),
+    ("British spelling", re.compile(r"\b(favour\w*|centre|enquir\w*|programme|licen[cs]e?s?\b(?<=licence)|licences?\b|authoris\w*|cancelling|organis\w*|colour\w*|honour\w*|behaviour\w*|travell\w*|recognis\w*)", re.I), set(), None),    # 2026-10-01: the filing service is closed; the site is a free checker.
+    # Nothing may offer the service, a quote, a phone line, or the dead mailbox.
+    ("personal cell number", re.compile(r"232-6959"), set(), None),
+    ("phone link (no phone line on a free tool)", re.compile(r"tel:"), set(), None),
+    ("retired service CTA", re.compile(r"Get my quote|Get started|See pricing", re.I), set(), None),
+    ("dead mailbox", re.compile(r"aloha@hawaiirentaltax\.com", re.I), set(), None),
+    ("link to a deleted service page", re.compile(r'href="/(start|catch-up|pricing|property-managers|about)/'), set(), None),
+    ("offers to file for the visitor", re.compile(r"\bwe (file|prepare)\b|filed for you|flat fee|flat quote", re.I), set(),
+     re.compile(r"(don't|do not|never)\s+(prepare or )?(file|prepare)", re.I)),
+    ("practitioner claim on a free tool", re.compile(r"Verified Practitioner|PTIN|errors and omissions", re.I), set(), None),
 ]
 
 

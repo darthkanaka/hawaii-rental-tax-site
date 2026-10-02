@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Stamp the shared header, footer and intake form into every page.
+"""Stamp the shared header and footer into every page.
 
 There is no build step on this site, so the nav and footer used to be
 hand-copied into every file. That is how three different nav variants and
@@ -8,7 +8,6 @@ one copy of each block in _partials/ and writes it between marker comments:
 
     <!-- hrt:header -->  ... generated ...  <!-- /hrt:header -->
     <!-- hrt:footer -->  ... generated ...  <!-- /hrt:footer -->
-    <!-- hrt:intake id="cu" preset="behind" count="properties" --> ... <!-- /hrt:intake -->
 
 Run it before every commit. `--check` exits 1 and names the drifted files
 without writing anything; verify.py calls it that way.
@@ -29,10 +28,6 @@ PARTIALS = ROOT / "_partials"
 # Bumped whenever the tax content on the site is re-verified against DOTAX.
 LEGAL_DATE = "September 2026"
 
-COUNT_LABELS = {
-    "properties": "How many properties?",
-    "owners": "How many owners do you file for?",
-}
 
 
 def page_url(path: Path) -> str | None:
@@ -61,24 +56,9 @@ def build_footer(_url: str | None) -> str:
     return (PARTIALS / "footer.html").read_text().replace("{{legal_date}}", LEGAL_DATE)
 
 
-def build_intake(attrs: dict) -> str:
-    html = (PARTIALS / "intake.html").read_text()
-    form_id = attrs.get("id", "intake")
-    count = attrs.get("count", "properties")
-    preset = attrs.get("preset", "")
-
-    html = html.replace("{{id}}", form_id)
-    html = html.replace("{{count_label}}", COUNT_LABELS[count])
-    if preset:
-        # this page is about one situation, so preselect it and drop the
-        # "Pick one" placeholder that /start/ needs
-        html = html.replace('<option value="" disabled selected>Pick one</option>\n                ', "")
-        html = html.replace(f'<option value="{preset}">', f'<option value="{preset}" selected>', 1)
-    return html
 
 
 BUILDERS = {"header": build_header, "footer": build_footer}
-ATTR_RE = re.compile(r'(\w+)="([^"]*)"')
 
 
 def stamp(path: Path) -> str:
@@ -94,14 +74,6 @@ def stamp(path: Path) -> str:
             lambda m: m.group(1) + BUILDERS[name](url) + m.group(3), text
         )
 
-    intake = re.compile(
-        r"(<!-- hrt:intake([^>]*)-->\n)(.*?)(^\s*<!-- /hrt:intake -->)",
-        re.DOTALL | re.MULTILINE,
-    )
-    text = intake.sub(
-        lambda m: m.group(1) + build_intake(dict(ATTR_RE.findall(m.group(2)))) + m.group(4),
-        text,
-    )
     return text
 
 
