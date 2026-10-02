@@ -108,111 +108,231 @@
   }
 
   // ---------------------------------------------------------- rendering
+  var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  var NUM = ["None", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve"];
+  var EVERY = { monthly: "every month", quarterly: "every quarter", semiannual: "twice a year" };
+  var HOW = { monthly: "monthly", quarterly: "quarterly", semiannual: "twice a year" };
+  var OWED = { monthly: "more than $4,000 a year", quarterly: "between $2,000 and $4,000 a year", semiannual: "$2,000 a year or less" };
+  var PLACE = { honolulu: "on Oʻahu", maui: "in Maui County", hawaii: "on Hawaiʻi Island", kauai: "on Kauaʻi" };
+  var STATUS = { current: "every return is filed", behind: "you're behind on filing", letter: "you got a letter from the state or county", "new": "you're just starting out" };
+  var HOME = { island: "you live on the same island", state: "you live elsewhere in Hawaii", mainland: "you live on the mainland", abroad: "you live outside the US" };
   var FREQ_RULE = {
-    GET: "How often depends on the GET you owe in a year. Twice a year at $2,000 or less, quarterly at $4,000 or less, and monthly above that. In rent, that's about $44,000 and $89,000 a year.",
-    TAT: "How often depends on the TAT you owe in a year. Twice a year at $2,000 or less, quarterly at $4,000 or less, and monthly above that. In short-term rent, that's about $18,000 and $36,000 a year."
+    GET: "How often you file GET depends on the GET you owe in a year. Twice a year at $2,000 or less, quarterly at $4,000 or less, and monthly above that. In rent, that's about $44,000 and $89,000 a year.",
+    TAT: "How often you file TAT depends on the TAT you owe in a year. Twice a year at $2,000 or less, quarterly at $4,000 or less, and monthly above that. In short-term rent, that's about $18,000 and $36,000 a year."
   };
+  var ARROW = "<svg aria-hidden=\"true\" viewBox=\"0 0 16 16\"><path d=\"M8 2v11M3 8.5 8 13.5 13 8.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/></svg>";
 
-  function nextText(next) {
-    if (!next || !next.length) { return ""; }
-    var first = "Next due <strong class=\"due\">" + esc(next[0].dueText) + "</strong>, for " + esc(next[0].period) + ".";
-    var then = next[1] ? " Then " + esc(next[1].dueText) + "." : "";
-    return first + then;
+  function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+  function joinList(xs) { return xs.length < 2 ? xs.join("") : xs.slice(0, -1).join(", ") + " and " + xs[xs.length - 1]; }
+  function rowFreq(P, form) { var r = P.rows.filter(function (x) { return x.form === form; })[0]; return r ? r.frequency : null; }
+
+  // The front page strip: one calendar year of monthly due dates.
+  function renderStrip() {
+    var list = document.getElementById("strip-list");
+    if (!list) { return; }
+    var y = C.stripYear(today());
+    var st = C.yearStrip(y);
+    var moved = st.filter(function (x) { return x.moved; }).length;
+    document.getElementById("strip-year").textContent = y;
+    document.getElementById("strip-sub").textContent = "The 20th, unless it lands on a weekend or a state holiday. " +
+      (moved === 1 ? "One of them moves." : NUM[moved] + " of them move.");
+    list.innerHTML = st.map(function (x) {
+      return "<li" + (x.moved ? " class=\"moved\"" : "") + "><span class=\"mon\">" + x.mon + "</span><span class=\"day\">" + x.day +
+        "</span><span class=\"wd\">" + x.wd + "</span>" + (x.moved ? "<span class=\"why\">" + esc(cap(x.why)) + "</span>" : "") + "</li>";
+    }).join("");
   }
 
-  function fileRow(f, county) {
-    var body;
-    if (f.county) {
-      body = "<p>" + esc(f.text) + "</p>";
-      if (f.frequency) {
-        body += "<p>Paid <strong>" + esc(f.frequencyText) + "</strong>. Next payment due <strong class=\"due\">" + esc(f.next[0].dueText) + "</strong>, for " + esc(f.next[0].period) + "." +
-                (f.next[1] ? " Then " + esc(f.next[1].dueText) + "." : "") + "</p>";
-        if (!f.shifts) {
-          body += "<p>The county doesn't say its payment date moves off weekends and holidays, so these are the plain 20th. Paying by then is always on time.</p>";
-        }
-      } else {
-        body += "<p>Paid on the same schedule as your TA-1, due the 20th.</p>";
-      }
-      body += "<p>Once a year, by <strong class=\"due\">" + esc(f.annualNext.dueText) + "</strong>, pay anything your TA-2 shows that wasn't on your TA-1s.</p>";
-      body += "<p><a href=\"" + esc(f.pay) + "\" rel=\"noopener\" target=\"_blank\" data-track=\"county_pay_" + esc(county.key) + "\">" + esc(f.payText) + "</a>." +
-              (f.payNote ? " " + esc(f.payNote) : "") + "</p>";
-    } else if (f.annual) {
-      body = "<p>Once a year. Next due <strong class=\"due\">" + esc(f.next[0].dueText) + "</strong>, covering " + esc(f.next[0].period) + ".</p>";
-    } else if (f.frequency) {
-      body = "<p>Filed <strong>" + esc(f.frequencyText) + "</strong>, most likely, based on your rent. " + nextText(f.next) + "</p>" +
-             (f.note ? "<p>" + esc(f.note) + "</p>" : "");
-    } else {
-      var rule = f.tax === "GET" ? FREQ_RULE.GET : FREQ_RULE.TAT;
-      body = "<p>" + (f.mode === "both" ? "Only your short-term rent counts for TAT. " : "") + esc(rule) + "</p>" +
-             "<p>You choose your schedule on the BB-1 when you register, and you can check it in Hawaii Tax Online.</p>" +
-             (f.note ? "<p>" + esc(f.note) + "</p>" : "");
+  function answerText(a) {
+    var short = a.stay !== "ltr";
+    var kind = a.stay === "str" ? "A short-term rental" : (a.stay === "ltr" ? "A long-term rental" : "A rental with short and long stays");
+    var band = C.BANDS.filter(function (b) { return b.id === a.rent; })[0];
+    var rent = !band ? ", rent not known yet" :
+      ", " + (a.rent === "b1" || a.rent === "b5" ? band.label.charAt(0).toLowerCase() + band.label.slice(1) : "about " + band.label) + " a year";
+    var get = a.have && a.have.get, tat = a.have && a.have.tat;
+    var reg = short
+      ? (get && tat ? "You're registered for GET and TAT" : get ? "You have a GET license but no TAT registration" :
+         tat ? "You have a TAT registration but no GET license" : "You haven't registered yet")
+      : (get ? "You have a GET license" : "You haven't registered yet");
+    return kind + " " + PLACE[a.county] + rent + ". " + reg + ", " + STATUS[a.status] + ", and " + HOME[a.home] + ".";
+  }
+
+  function summaryText(a, P, county) {
+    var L = P.list, short = a.stay !== "ltr";
+    var s = L.taxes.length === 1
+      ? "You owe one tax on this rental, general excise tax, filed with the state."
+      : "You owe three taxes on this rental. All the returns go to the state, and the county's 3% is paid to " + county.county + " separately.";
+    var g = rowFreq(P, "G-45"), t = rowFreq(P, "TA-1");
+    var ad = P.rows[P.rows.length - 1].cells.filter(Boolean)[0].due;
+    var aText = C.MONTHS[ad.m - 1] + " " + ad.d;
+    if (!short && g) { s += " GET is due " + EVERY[g] + ", and the annual return on " + aText + "."; }
+    else if (short && g && t) {
+      s += g === t
+        ? " GET, TAT and the county's 3% are all due " + EVERY[g] + ", and both annual returns on " + aText + "."
+        : " TAT and the county's 3% are due " + EVERY[t] + ", GET " + EVERY[g] + ", and both annual returns on " + aText + ".";
     }
-    var title = esc(f.form);
-    var sub = f.county ? "County TAT payment" : (f.annual ? "Annual " + esc(f.tax).replace("State", "state") + " return" : esc(f.tax) + " return");
-    return "<div class=\"file-row\"><div class=\"file-id\"><span class=\"form-id\">" + title + "</span><span class=\"form-sub\">" + sub + "</span></div><div class=\"file-body\">" + body + "</div></div>";
+    return s;
+  }
+
+  function nextBox(a, P) {
+    var n = P.next;
+    var when = n.weekday + ", " + (n.days === 0 ? "today" : n.days === 1 ? "tomorrow" : n.days + " days from today");
+    var h = "<aside class=\"next-box\" aria-labelledby=\"next-label\" data-due=\"" + esc(n.dueText) + "\">" +
+      "<p class=\"next-label\" id=\"next-label\">" + (P.unknown.length ? "Next certain date" : "Next up") + (n.due.y !== today().y ? " in " + n.due.y : "") + "</p>" +
+      "<p class=\"next-date\">" + MON[n.due.m - 1] + " " + n.due.d + "</p>" +
+      "<p class=\"next-when\">" + esc(when) + "</p>" +
+      "<ul class=\"next-items\">" + n.items.map(function (i) {
+        return "<li><span class=\"f\">" + esc(i.form) + "</span><span>" + esc(i.what) + "</span></li>";
+      }).join("") + "</ul>";
+    if (P.unknown.length) {
+      // the soonest an open schedule could come due is next month's state date
+      var soon = C.upcoming("monthly", today(), 1)[0];
+      var early = C.daysBetween(soon.due, n.due) > 0 ? ", which could be due as soon as " + soon.dueText : "";
+      h += "<p class=\"next-note\">Plus your " + esc(joinList(P.unknown)) + esc(early) + (a.rent === "unsure"
+        ? ". <a href=\"#q-rent\">Pick a rent range</a> to see them.</p>"
+        : ", depending on the TAT schedule you picked when you registered.</p>");
+    }
+    return h + "</aside>";
+  }
+
+  function chart(a, P) {
+    var cols = P.cols;
+    function brk(i) { return i > 0 && cols[i].y !== cols[i - 1].y; }
+    var years = [];
+    cols.forEach(function (c, i) {
+      var g = years[years.length - 1];
+      if (g && g.y === c.y) { g.n += 1; } else { years.push({ y: c.y, n: 1, i: i }); }
+    });
+    var h = "<div class=\"chart-wrap\"><table class=\"year-chart\"><caption class=\"sr-only\">Your due dates from " +
+      cols[0].month + " " + cols[0].y + " to " + cols[11].month + " " + cols[11].y + "</caption><thead><tr class=\"yr\"><td></td>" +
+      years.map(function (g) { return "<th colspan=\"" + g.n + "\" scope=\"colgroup\"" + (g.i ? " class=\"yr-break\"" : "") + ">" + g.y + "</th>"; }).join("") +
+      "</tr><tr class=\"cols\"><th scope=\"col\" class=\"due-h\">Due</th>" +
+      cols.map(function (c, i) {
+        var star = c.moved && c.marked;
+        var cls = [star ? "moved" : "", brk(i) ? "yr-break" : ""].filter(Boolean).join(" ");
+        return "<th scope=\"col\"" + (cls ? " class=\"" + cls + "\"" : "") + "><span class=\"mon\">" + c.mon + "</span><span class=\"day\">" +
+          c.day + (star ? "<sup>*</sup>" : "") + "</span><span class=\"wd\">" + c.wd + "</span></th>";
+      }).join("") + "</tr></thead><tbody>";
+    P.rows.forEach(function (r) {
+      var what = r.annual ? "Annual returns for " + r.year : r.label + ", " + (r.frequency ? HOW[r.frequency] : "schedule not set");
+      h += "<tr data-form=\"" + esc(r.form) + "\"><th scope=\"row\"><span class=\"form\">" + esc(r.form) + "</span><span class=\"what\">" + esc(what) + "</span></th>";
+      if (!r.cells) {
+        h += "<td colspan=\"12\" class=\"open\">" + (a.rent === "unsure"
+          ? "Depends on your rent. Pick a rent range to draw it."
+          : "Depends on how much of your rent is short-term. See the notes below.") + "</td>";
+      } else {
+        h += r.cells.map(function (c, i) {
+          return "<td" + (brk(i) ? " class=\"yr-break\"" : "") + ">" +
+            (c ? "<span class=\"mk mk-" + r.kind + "\" aria-hidden=\"true\"></span><span class=\"sr-only\">Due " + esc(c.dueText) + "</span>" : "") + "</td>";
+        }).join("");
+      }
+      h += "</tr>";
+    });
+    h += "</tbody></table></div>";
+    h += "<ol class=\"date-list\" aria-label=\"Every due date in order\">" + P.groups.map(function (g) {
+      return "<li><span class=\"dl-date\">" + esc(g.dueText) + "</span><span class=\"dl-items\">" + g.items.map(function (i) {
+        return "<span><span class=\"f\">" + esc(i.form) + "</span> " + esc(i.what) + "</span>";
+      }).join("") + "</span></li>";
+    }).join("") + "</ol>";
+    return h;
+  }
+
+  function notes(a, P, county) {
+    var L = P.list, out = [];
+    var wk = P.moved.filter(function (c) { return c.weekend; });
+    var hol = P.moved.filter(function (c) { return !c.weekend; });
+    if (wk.length) {
+      out.push("<span class=\"star\">*</span> In " + joinList(wk.map(function (c) { return c.month; })) +
+        " the 20th lands on a weekend, so state returns are due the next business day.");
+    }
+    hol.forEach(function (c) {
+      out.push("<span class=\"star\">*</span> In " + c.month + " " + esc(c.why) + ", a state holiday, so that one's due " +
+        C.WEEKDAYS[C.weekday(c.due)] + " the " + C.ordinal(c.due.d) + ".");
+    });
+    var cf = L.file.filter(function (f) { return f.county; })[0];
+    if (cf) {
+      out.push((cf.shifts
+          ? cap(county.county) + " moves its payment dates off weekends and holidays the same way the state does."
+          : cap(county.county) + " doesn't say its payment date moves, so pay " + esc(cf.form) + " by the plain 20th and you're always on time.") +
+        " Once a year, by " + esc(cf.annualNext.dueText) + ", pay anything your TA-2 shows that wasn't on your TA-1s. " +
+        "<a href=\"" + esc(cf.pay) + "\" rel=\"noopener\" target=\"_blank\" data-track=\"county_pay_" + esc(a.county) + "\">" + esc(cf.payText) + "</a>." +
+        (cf.payNote ? " " + esc(cf.payNote) : ""));
+    }
+    var g = rowFreq(P, "G-45"), t = rowFreq(P, "TA-1");
+    if (g && t && g !== t) {
+      out.push("Why two schedules? GET and TAT are judged separately. Your TAT comes to " + OWED[t] + ", so it's " + HOW[t] +
+        ". Your GET comes to " + OWED[g] + ", so it's " + HOW[g] + ".");
+    }
+    var bb1 = " You choose your schedule on the BB-1 when you register, and you can check it in Hawaii Tax Online.";
+    var openGet = P.unknown.indexOf("G-45") !== -1, openTat = P.unknown.indexOf("TA-1") !== -1;
+    if (openGet) { out.push(FREQ_RULE.GET + (openTat ? "" : bb1)); }
+    if (openTat) { out.push((a.stay === "both" ? "Only your short-term rent counts for TAT. " : "") + FREQ_RULE.TAT + bb1); }
+    var g45 = L.file.filter(function (f) { return f.form === "G-45"; })[0];
+    if (g45.note) { out.push(esc(g45.note)); }
+    return out.length ? "<div class=\"notes\">" + out.map(function (x) { return "<p>" + x + "</p>"; }).join("") + "</div>" : "";
   }
 
   function render(a) {
     var t = today();
-    var list = C.checklist(a, t);
+    var P = C.yearPlan(a, t);
+    var list = P.list;
     var county = C.COUNTIES[a.county];
-    county.key = a.county;
-    var taxes = list.taxes.length;
 
-    var html = "<h2 id=\"results-title\" tabindex=\"-1\">Your checklist</h2>";
-    html += "<p class=\"summary\">" + (taxes === 1
-      ? "You owe one tax on this rental, general excise tax, filed with the state."
-      : "You owe three taxes on this rental. All the returns go to the state, and the county's 3% is paid to " + esc(county.county) + " separately.") + "</p>";
+    var html = "<div class=\"container\"><div class=\"year-top\"><div class=\"year-intro\">" +
+      "<p class=\"kicker\">Your checklist</p>" +
+      "<h2 id=\"results-title\" tabindex=\"-1\">Your year, " + P.cols[0].month + " to " + P.cols[11].month + "</h2>" +
+      "<p class=\"answers\">" + esc(answerText(a)) + " <a href=\"#checker\">Change my answers</a></p>" +
+      "<p class=\"summary\">" + esc(summaryText(a, P, county)) + "</p>" +
+      "</div>" + nextBox(a, P) + "</div>";
 
     if (list.first) {
       html += "<div class=\"priority\"><h3>" + esc(list.first.title) + "</h3><ol>" +
         list.first.items.map(function (i) { return "<li>" + esc(i) + "</li>"; }).join("") + "</ol></div>";
     }
 
-    html += "<h3>What you owe</h3><div class=\"tax-list\">" + list.taxes.map(function (x) {
-      return "<div class=\"tax-row\"><span class=\"tax-rate\">" + esc(x.rate) + "</span><div><p class=\"tax-name\">" + esc(x.name) +
-             "</p><p>" + esc(x.what) + " Paid to " + esc(x.who) + ".</p></div></div>";
-    }).join("") + "</div>";
-
-    html += "<h3>Register</h3>";
     if (list.register.length) {
-      html += list.register.map(function (r) {
-        var steps = r.steps.length === 1 ? "<p>" + esc(r.steps[0]) + "</p>" :
-          "<ol>" + r.steps.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") + "</ol>";
-        return "<div class=\"step-block\"><p class=\"step-title\">" + esc(r.title) + "</p>" + steps +
+      html += "<div class=\"register\"><h3>Register first</h3>" + list.register.map(function (r) {
+        return "<div class=\"step-block\"><p class=\"step-title\">" + esc(r.title) + "</p><ol>" +
+          r.steps.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") + "</ol>" +
           (r.link ? "<p><a href=\"" + esc(r.link.href) + "\" rel=\"noopener\" target=\"_blank\" data-track=\"register_" + esc(r.id) + "\">" + esc(r.link.text) + "</a></p>" : "") +
           "</div>";
-      }).join("");
-    } else {
-      html += "<p>You're registered for everything this rental needs.</p>";
+      }).join("") + "</div>";
     }
 
-    html += "<h3>What to file, and when</h3><div class=\"file-list\">" +
-      list.file.map(function (f) { return fileRow(f, county); }).join("") + "</div>" +
-      "<p class=\"fine-print\">State returns are due the 20th. When that's a weekend or state holiday, they're due the next business day (HRS 231-21), and the dates above already account for it.</p>";
+    html += chart(a, P) + notes(a, P, county);
 
+    html += "<h3 class=\"block-title owe-head\">What you owe</h3><div class=\"owe-grid\">" + list.taxes.map(function (x) {
+      return "<div class=\"tax-row\"><p class=\"tax-rate\">" + esc(x.rate) + "</p><p class=\"tax-name\">" + esc(x.name) +
+             "</p><p>" + esc(x.what) + " Paid to " + esc(x.who) + ".</p></div>";
+    }).join("") + "</div>";
+
+    html += "<div class=\"lists\"><div><h3 class=\"block-title\">Also on your list</h3>";
     if (list.also.length) {
-      html += "<h3>Also required</h3><ul class=\"also-list\">" +
-        list.also.map(function (x) {
-          return "<li>" + esc(x.text) + (x.link ? " <a href=\"" + esc(x.link.href) + "\" rel=\"noopener\" target=\"_blank\" data-track=\"also_" + esc(x.id) + "\">" + esc(x.link.text) + "</a>" : "") + "</li>";
-        }).join("") + "</ul>";
+      html += "<ul class=\"also-list\">" + list.also.map(function (x) {
+        return "<li>" + esc(x.text) + (x.link ? " <a href=\"" + esc(x.link.href) + "\" rel=\"noopener\" target=\"_blank\" data-track=\"also_" + esc(x.id) + "\">" + esc(x.link.text) + "</a>" : "") + "</li>";
+      }).join("") + "</ul>";
     }
+    if (!list.register.length) { html += "<p class=\"registered\">You're registered for everything this rental needs.</p>"; }
+    else if (!list.also.length) { html += "<p class=\"registered\">Nothing else beyond registering, above.</p>"; }
+    html += "</div>";
 
     if (list.tools.length) {
-      html += "<h3>Tools that can help</h3><div class=\"tool-list\">" + list.tools.map(function (x) {
+      html += "<div><h3 class=\"block-title\">Tools that can help</h3><ul class=\"tool-list\">" + list.tools.map(function (x) {
         var id = x.name.toLowerCase().replace(/[^a-z]+/g, "_").replace(/^_|_$/g, "");
-        return "<div class=\"tool-row\"><p class=\"tool-name\">" + esc(x.name) + "</p><p>" + esc(x.why) + "</p>" +
-          "<p><a href=\"" + esc(x.href) + "\" rel=\"" + (x.affiliate ? "sponsored noopener" : "noopener") + "\" target=\"_blank\" data-track=\"tool_" + id + "\">Visit " + esc(x.name) + "</a></p></div>";
-      }).join("") + "</div>";
+        return "<li class=\"tool-row\"><a class=\"tool-name\" href=\"" + esc(x.href) + "\" rel=\"" + (x.affiliate ? "sponsored noopener" : "noopener") +
+          "\" target=\"_blank\" data-track=\"tool_" + id + "\">" + esc(x.name) + "</a><span>" + esc(x.why) + "</span></li>";
+      }).join("") + "</ul>";
       if (list.tools.some(function (x) { return x.affiliate; })) {
         html += "<p class=\"fine-print\">Some of these links pay us a commission if you sign up. It doesn't change what you pay or what we recommend.</p>";
       }
+      html += "</div>";
     }
+    html += "</div>";
 
-    html += "<p class=\"fine-print\">" + list.notes.map(esc).join(" ") + " This is general information, not tax advice.</p>";
     html += "<p class=\"actions\"><button type=\"button\" class=\"btn ghost\" id=\"edit-answers\">Change my answers</button>" +
-            "<button type=\"button\" class=\"btn ghost\" id=\"copy-link\">Copy a link to this checklist</button></p>" +
-            "<p class=\"copy-status\" role=\"status\" aria-live=\"polite\"></p>";
+            "<button type=\"button\" class=\"btn ghost\" id=\"copy-link\">Copy a link to this year</button></p>" +
+            "<p class=\"copy-status\" role=\"status\" aria-live=\"polite\"></p>" +
+            "<p class=\"fine-print\">State returns are due the 20th. When that's a weekend or state holiday, they're due the next business day (HRS 231-21), and the dates above already account for it. " +
+            list.notes.map(esc).join(" ") + " This is general information, not tax advice.</p></div>";
 
     out.innerHTML = html;
     out.hidden = false;
@@ -262,6 +382,8 @@
     if (!validate()) { track("checker_incomplete", {}); return; }
     show(answers(), "submit");
   });
+
+  renderStrip();
 
   // Arriving on a shared or bookmarked link: fill the form and show the list.
   if (fromHash()) {

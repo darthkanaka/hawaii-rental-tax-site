@@ -19,7 +19,7 @@
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans:wght@400;500;600;700&family=Sofia+Sans+Extra+Condensed:wght@700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/style.css">
   <script type="application/ld+json">
   {
@@ -94,8 +94,8 @@
   <header class="site-header">
     <nav class="nav" aria-label="Main">
       <a class="brand" href="/">
-        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true"><circle cx="13" cy="13" r="12" stroke="#12414e" stroke-width="2"/><path d="M4 15c3-2.5 6-2.5 9 0s6 2.5 9 0" stroke="#12414e" stroke-width="2" stroke-linecap="round"/><path d="M6 10.5c2.3-2 4.7-2 7 0s4.7 2 7 0" stroke="#8f4e26" stroke-width="1.6" stroke-linecap="round" opacity="0.8"/></svg>
-        Hawaii Rental Tax
+        <span class="brand-mark" aria-hidden="true">20</span>
+        <span class="brand-name">Hawaii Rental Tax</span>
       </a>
       <div class="nav-links" id="nav-links">
         <a href="/" aria-current="page">Checker</a>
@@ -111,87 +111,118 @@
   <!-- /hrt:header -->
 
   <main id="main">
-    <section class="section checker-section" id="checker">
-      <div class="container narrow">
-        <p class="eyebrow">Free checker</p>
-        <h1>What do you need to file for your Hawaii rental?</h1>
-        <p class="lede">Answer six quick questions and get your checklist. Which taxes you owe, what to register for, which returns to file, and the date each one is due. Free, no signup, and nothing you enter leaves your browser.</p>
+    <section class="hero20" aria-labelledby="hero-title">
+      <div class="hero20-inner">
+        <div class="hero20-copy">
+          <p class="kicker">Free checker for Hawaii rental owners</p>
+          <h1 id="hero-title">Almost every Hawaii rental tax deadline lands on the 20th.</h1>
+          <p class="hero20-sub">Answer six questions and see your whole year. Which 20ths are yours, which form goes with each one, and the dates that move because of a weekend or a holiday.</p>
+          <a class="btn" href="#checker" data-track="hero_cta">Find my 20ths<svg aria-hidden="true" viewBox="0 0 16 16"><path d="M8 2v11M3 8.5 8 13.5 13 8.5" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
+        </div>
+        <p class="hero20-num" aria-hidden="true">20<span>th</span></p>
+      </div>
+      <section class="strip" aria-labelledby="strip-title">
+        <div class="strip-head">
+          <h2 id="strip-title">Every monthly due date in <span id="strip-year">2027</span></h2>
+          <p id="strip-sub">The 20th, unless it lands on a weekend or a state holiday. Five of them move.</p>
+        </div>
+        <ol class="strip-list" id="strip-list">
+            <li><span class="mon">Jan</span><span class="day">20</span><span class="wd">Wed</span></li>
+            <li class="moved"><span class="mon">Feb</span><span class="day">22</span><span class="wd">Mon</span><span class="why">The 20th is a Saturday</span></li>
+            <li class="moved"><span class="mon">Mar</span><span class="day">22</span><span class="wd">Mon</span><span class="why">The 20th is a Saturday</span></li>
+            <li><span class="mon">Apr</span><span class="day">20</span><span class="wd">Tue</span></li>
+            <li><span class="mon">May</span><span class="day">20</span><span class="wd">Thu</span></li>
+            <li class="moved"><span class="mon">Jun</span><span class="day">21</span><span class="wd">Mon</span><span class="why">The 20th is a Sunday</span></li>
+            <li><span class="mon">Jul</span><span class="day">20</span><span class="wd">Tue</span></li>
+            <li class="moved"><span class="mon">Aug</span><span class="day">23</span><span class="wd">Mon</span><span class="why">The 20th is Statehood Day</span></li>
+            <li><span class="mon">Sep</span><span class="day">20</span><span class="wd">Mon</span></li>
+            <li><span class="mon">Oct</span><span class="day">20</span><span class="wd">Wed</span></li>
+            <li class="moved"><span class="mon">Nov</span><span class="day">22</span><span class="wd">Mon</span><span class="why">The 20th is a Saturday</span></li>
+            <li><span class="mon">Dec</span><span class="day">20</span><span class="wd">Mon</span></li>
+        </ol>
+      </section>
+    </section>
 
+    <section class="check" id="checker" aria-labelledby="check-title">
+      <div class="container">
+        <div class="check-head">
+          <h2 id="check-title">Six answers, then your whole year.</h2>
+          <p>A rough guess is fine anywhere. Change an answer later and the year redraws.</p>
+        </div>
         <noscript><p class="notice">The checker needs JavaScript to run. The <a href="/rates/">2026 rates page</a> and the Department of Taxation's <a href="https://tax.hawaii.gov/rental/">rental property page</a> cover the same rules.</p></noscript>
-
         <form id="checker-form" class="checker" novalidate>
-          <fieldset id="q-stay">
-            <legend><span class="q-num">1</span> How long do guests usually stay?</legend>
-            <div class="choices">
-              <label class="choice"><input type="radio" name="stay" value="str"><span>Less than 180 days at a time<small>Vacation rental, Airbnb, VRBO</small></span></label>
-              <label class="choice"><input type="radio" name="stay" value="ltr"><span>180 days or more<small>A long-term tenant on a lease</small></span></label>
-              <label class="choice"><input type="radio" name="stay" value="both"><span>Some of each</span></label>
-            </div>
-            <p class="field-error" hidden>Pick one to continue.</p>
-          </fieldset>
-
-          <fieldset id="q-county">
-            <legend><span class="q-num">2</span> Where's the rental?</legend>
-            <div class="choices two">
-              <label class="choice"><input type="radio" name="county" value="honolulu"><span>O&#699;ahu</span></label>
-              <label class="choice"><input type="radio" name="county" value="maui"><span>Maui County<small>Maui, Moloka&#699;i, L&#257;na&#699;i</small></span></label>
-              <label class="choice"><input type="radio" name="county" value="hawaii"><span>Hawai&#699;i Island</span></label>
-              <label class="choice"><input type="radio" name="county" value="kauai"><span>Kaua&#699;i</span></label>
-            </div>
-            <p class="field-error" hidden>Pick one to continue.</p>
-          </fieldset>
-
-          <fieldset id="q-rent">
-            <legend><span class="q-num">3</span> About how much rent comes in a year?</legend>
-            <p class="hint">Count everything guests or tenants pay you, including cleaning fees. A rough guess is fine.</p>
-            <div class="choices two">
-              <label class="choice"><input type="radio" name="rent" value="b1"><span>Under $18,000</span></label>
-              <label class="choice"><input type="radio" name="rent" value="b2"><span>$18,000 to $36,000</span></label>
-              <label class="choice"><input type="radio" name="rent" value="b3"><span>$36,000 to $44,000</span></label>
-              <label class="choice"><input type="radio" name="rent" value="b4"><span>$44,000 to $89,000</span></label>
-              <label class="choice"><input type="radio" name="rent" value="b5"><span>Over $89,000</span></label>
-              <label class="choice"><input type="radio" name="rent" value="unsure"><span>Not sure</span></label>
-            </div>
-            <p class="field-error" hidden>Pick one to continue. "Not sure" is fine.</p>
-          </fieldset>
-
-          <fieldset id="q-have">
-            <legend><span class="q-num">4</span> What have you set up so far?</legend>
-            <p class="hint">Leave them all unchecked if you haven't registered or aren't sure.</p>
-            <div class="choices">
-              <label class="choice"><input type="checkbox" id="have-get" value="get"><span>A GET license</span></label>
-              <label class="choice" data-short-only><input type="checkbox" id="have-tat" value="tat"><span>A state TAT registration</span></label>
-            </div>
-          </fieldset>
-
-          <fieldset id="q-status">
-            <legend><span class="q-num">5</span> Are you up to date on filing?</legend>
-            <div class="choices">
-              <label class="choice"><input type="radio" name="status" value="current"><span>Yes, every return is filed</span></label>
-              <label class="choice"><input type="radio" name="status" value="behind"><span>I'm behind, or I never filed</span></label>
-              <label class="choice"><input type="radio" name="status" value="letter"><span>I got a letter from the state or county</span></label>
-              <label class="choice"><input type="radio" name="status" value="new"><span>I'm just starting to rent</span></label>
-            </div>
-            <p class="field-error" hidden>Pick one to continue.</p>
-          </fieldset>
-
-          <fieldset id="q-home">
-            <legend><span class="q-num">6</span> Where do you live?</legend>
-            <div class="choices two">
-              <label class="choice"><input type="radio" name="home" value="island"><span>On the same island as the rental</span></label>
-              <label class="choice"><input type="radio" name="home" value="state"><span>Elsewhere in Hawaii</span></label>
-              <label class="choice"><input type="radio" name="home" value="mainland"><span>On the mainland</span></label>
-              <label class="choice"><input type="radio" name="home" value="abroad"><span>Outside the US</span></label>
-            </div>
-            <p class="field-error" hidden>Pick one to continue.</p>
-          </fieldset>
-
-          <button class="btn" type="submit" data-track="checker_submit">Show my checklist</button>
+          <div class="q-grid">
+            <fieldset id="q-stay">
+              <legend><span class="q-num">01</span><span>How long do guests usually stay?</span></legend>
+              <div class="segs">
+                <label class="seg"><input type="radio" name="stay" value="str"><span>Under 180 days</span></label>
+                <label class="seg"><input type="radio" name="stay" value="ltr"><span>180 days or more</span></label>
+                <label class="seg"><input type="radio" name="stay" value="both"><span>Some of each</span></label>
+              </div>
+              <p class="field-error" hidden>Pick one to continue.</p>
+            </fieldset>
+            <fieldset id="q-county">
+              <legend><span class="q-num">02</span><span>Where's the rental?</span></legend>
+              <p class="hint">Moloka&#699;i and L&#257;na&#699;i are part of Maui County.</p>
+              <div class="segs">
+                <label class="seg"><input type="radio" name="county" value="honolulu"><span>O&#699;ahu</span></label>
+                <label class="seg"><input type="radio" name="county" value="maui"><span>Maui County</span></label>
+                <label class="seg"><input type="radio" name="county" value="hawaii"><span>Hawai&#699;i Island</span></label>
+                <label class="seg"><input type="radio" name="county" value="kauai"><span>Kaua&#699;i</span></label>
+              </div>
+              <p class="field-error" hidden>Pick one to continue.</p>
+            </fieldset>
+            <fieldset id="q-rent">
+              <legend><span class="q-num">03</span><span>About how much rent comes in a year?</span></legend>
+              <p class="hint">Everything guests or tenants pay you, cleaning fees included. A rough guess is fine.</p>
+              <div class="segs">
+                <label class="seg"><input type="radio" name="rent" value="b1"><span>Under $18,000</span></label>
+                <label class="seg"><input type="radio" name="rent" value="b2"><span>$18,000 to $36,000</span></label>
+                <label class="seg"><input type="radio" name="rent" value="b3"><span>$36,000 to $44,000</span></label>
+                <label class="seg"><input type="radio" name="rent" value="b4"><span>$44,000 to $89,000</span></label>
+                <label class="seg"><input type="radio" name="rent" value="b5"><span>Over $89,000</span></label>
+                <label class="seg"><input type="radio" name="rent" value="unsure"><span>Not sure</span></label>
+              </div>
+              <p class="field-error" hidden>Pick one to continue. "Not sure" is fine.</p>
+            </fieldset>
+            <fieldset id="q-have">
+              <legend><span class="q-num">04</span><span>What have you set up so far?</span></legend>
+              <p class="hint">Leave these off if you haven't registered or aren't sure.</p>
+              <div class="segs">
+                <label class="seg"><input type="checkbox" id="have-get" value="get"><span>A GET license</span></label>
+                <label class="seg" data-short-only><input type="checkbox" id="have-tat" value="tat"><span>A state TAT registration</span></label>
+              </div>
+            </fieldset>
+            <fieldset id="q-status">
+              <legend><span class="q-num">05</span><span>Are you up to date on filing?</span></legend>
+              <div class="segs">
+                <label class="seg"><input type="radio" name="status" value="current"><span>Yes, all filed</span></label>
+                <label class="seg"><input type="radio" name="status" value="behind"><span>I'm behind, or never filed</span></label>
+                <label class="seg"><input type="radio" name="status" value="letter"><span>I got a letter from the state or county</span></label>
+                <label class="seg"><input type="radio" name="status" value="new"><span>I'm just starting</span></label>
+              </div>
+              <p class="field-error" hidden>Pick one to continue.</p>
+            </fieldset>
+            <fieldset id="q-home">
+              <legend><span class="q-num">06</span><span>Where do you live?</span></legend>
+              <div class="segs">
+                <label class="seg"><input type="radio" name="home" value="island"><span>Same island as the rental</span></label>
+                <label class="seg"><input type="radio" name="home" value="state"><span>Elsewhere in Hawaii</span></label>
+                <label class="seg"><input type="radio" name="home" value="mainland"><span>On the mainland</span></label>
+                <label class="seg"><input type="radio" name="home" value="abroad"><span>Outside the US</span></label>
+              </div>
+              <p class="field-error" hidden>Pick one to continue.</p>
+            </fieldset>
+          </div>
+          <div class="submit-row">
+            <button class="btn" type="submit" data-track="checker_submit">Show my year<svg aria-hidden="true" viewBox="0 0 16 16"><path d="M8 2v11M3 8.5 8 13.5 13 8.5" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+            <p>Free, and your answers never leave this browser.</p>
+          </div>
         </form>
-
-        <section id="results" class="results" aria-labelledby="results-title" hidden></section>
       </div>
     </section>
+
+    <section id="results" class="results" aria-labelledby="results-title" hidden></section>
 
     <section class="section divided" id="faq">
       <div class="container narrow">
@@ -217,7 +248,7 @@
             <div class="answer"><p>No. It's general information based on the state's published rules. Your actual filing schedule is the one the Department of Taxation assigns you, and if your situation is complicated, a Hawaii CPA or enrolled agent can look at it.</p></div>
           </details>
         </div>
-        <p class="mt-lg muted">Built in Honolulu by Kawika Lopez. It isn't connected to the State of Hawaii or any county, and it doesn't keep anything you enter. Want the numbers behind it? See <a href="/rates/">every 2026 rate by island</a>.</p>
+        <p class="faq-note">Built in Honolulu by Kawika Lopez. It isn't connected to the State of Hawaii or any county, and it doesn't keep anything you enter. Want the numbers behind it? See <a href="/rates/">every 2026 rate by island</a>.</p>
       </div>
     </section>
   </main>
@@ -227,7 +258,7 @@
     <div class="container">
       <div class="cols">
         <div>
-          <p class="brand">Hawaii Rental Tax</p>
+          <p class="brand-line"><span class="brand-mark" aria-hidden="true">20</span><span class="brand-name">Hawaii Rental Tax</span></p>
           <p class="tagline">A free checker that tells Hawaii rental owners what to register for, which returns to file, and when they're due. Built in Honolulu.</p>
         </div>
         <div>

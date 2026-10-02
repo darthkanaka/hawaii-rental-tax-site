@@ -19,7 +19,11 @@ serves `main`.
   liability thresholds, the rent bands, Hawaii state holidays (HRS 8-1), the
   weekend and holiday rollover of due dates, and the checklist itself. Pure
   functions, no DOM, so node can test it.
-- `assets/js/checker.js` reads the form, renders the checklist, and keeps the
+- `yearPlan()` in the same file lays the checklist out as a year: twelve
+  monthly columns from the next state due date, one row per return or
+  payment, every due date as an event, and the next one up. `yearStrip()`
+  gives the front page its calendar year of 20ths and why each one moves.
+- `assets/js/checker.js` reads the form, renders the year, and keeps the
   answers in the URL hash so a checklist can be bookmarked or shared.
 - **Nothing is sent or stored.** No forms post anywhere, no database. Google
   Analytics gets page views, clicks, and the options picked in the checker.
@@ -40,6 +44,15 @@ NODE_PATH=<dir>/node_modules node _tools/test_checker_browser.js
 The browser test drives every control in Chrome and checks every date, rate
 and line on screen against the rules. Analytics requests are blocked during
 the test so it never reaches the real property.
+
+## Design
+
+"The Twentieth" (2026-10-01): almost every deadline lands on the 20th, so the
+site reads like a tide table. Deep ocean ink for the header, hero and footer,
+sand for the page, a paper band for results, coral for anything due. Sofia
+Sans Extra Condensed for display and numerals, Sofia Sans for body. Tokens and
+the contrast notes are at the top of `assets/css/style.css`. The favicon is a
+drawn "20" in `favicon.svg`; the PNG icons and `og.jpg` were rendered from it.
 
 ## Shared blocks
 

@@ -125,6 +125,59 @@ eq(all.includes("\u2014"), false, "no em dashes in output");
 eq(/undefined|NaN/.test(all), false, "no undefined or NaN in output");
 
 
+// ---- why a 20th moves, for the front-page strip and the year chart
+eq(C.holidayName(D(2027, 8, 20)), "Statehood Day", "Aug 20 2027 is Statehood Day");
+eq(C.holidayName(D(2026, 1, 19)), "Martin Luther King Jr. Day", "MLK Day 2026");
+eq(C.holidayName(D(2026, 3, 26)), "Prince Kūhiō Day", "Kuhio Day name keeps its diacritics");
+eq(C.holidayName(D(2027, 12, 31)), "New Year's Day", "observed New Year's on Dec 31 2027 is named");
+eq(C.holidayName(D(2026, 10, 20)), null, "an ordinary Tuesday has no name");
+eq([1, 2, 3, 4, 11, 12, 13, 20, 21, 22, 23, 24].map(C.ordinal).join(), "1st,2nd,3rd,4th,11th,12th,13th,20th,21st,22nd,23rd,24th", "ordinals");
+const sh = (y, m) => { const x = C.dueShift(y, m); return [s(x.due), x.moved, x.weekend, x.why]; };
+eq(sh(2027, 1), ["2027-01-20", false, false, null], "Jan 20 2027 stays");
+eq(sh(2027, 2), ["2027-02-22", true, true, "the 20th is a Saturday"], "Feb 2027 moves for a Saturday");
+eq(sh(2027, 6), ["2027-06-21", true, true, "the 20th is a Sunday"], "Jun 2027 moves for a Sunday");
+eq(sh(2027, 8), ["2027-08-23", true, false, "the 20th is Statehood Day"], "Aug 2027 moves for Statehood Day");
+eq(sh(2030, 1), ["2030-01-22", true, false, "the 20th is a Sunday and the 21st is Martin Luther King Jr. Day"], "Jan 2030 moves twice");
+eq(sh(2025, 1), ["2025-01-21", true, false, "the 20th is Martin Luther King Jr. Day"], "MLK Day on the 20th");
+const strip27 = C.yearStrip(2027);
+eq(strip27.map(x => x.day).join(), "20,22,22,20,20,21,20,23,20,20,22,20", "2027 monthly due days");
+eq(strip27.filter(x => x.moved).map(x => x.mon).join(), "Feb,Mar,Jun,Aug,Nov", "five 2027 dates move");
+eq(strip27.map(x => x.wd).join(), "Wed,Mon,Mon,Tue,Thu,Mon,Tue,Mon,Mon,Wed,Mon,Mon", "2027 weekdays");
+eq([C.stripYear(D(2026, 9, 30)), C.stripYear(D(2026, 10, 1)), C.stripYear(D(2027, 1, 1))], [2026, 2027, 2027], "strip shows next year from October");
+
+// ---- the year plan for one Maui owner on Oct 1 2026
+const mauiA = { stay: "str", county: "maui", rent: "b4", status: "current", home: "island", have: { get: true, tat: true } };
+const P = C.yearPlan(mauiA, oct1);
+const grid = r => r.cells ? r.cells.map(c => c ? "x" : ".").join("") : null;
+eq(P.cols.map(c => c.mon + c.day).join(" "), "Oct20 Nov20 Dec21 Jan20 Feb22 Mar22 Apr20 May20 Jun21 Jul20 Aug23 Sep20", "columns Oct 2026 to Sep 2027");
+eq(P.rows.map(r => [r.form, grid(r)]), [["G-45", "x..x..x..x.."], ["TA-1", "xxxxxxxxxxxx"], ["MCTAT", "xxxxxxxxxxxx"], ["G-49, TA-2", "......x....."]], "rows and markers");
+eq(s(P.rows[2].cells[2].due), "2026-12-20", "Maui County's December payment is the plain 20th, a Sunday");
+eq(s(P.rows[1].cells[2].due), "2026-12-21", "the state TA-1 rolls to Monday");
+eq([P.next.dueText, P.next.weekday, P.next.days], ["Tue, Oct 20, 2026", "Tuesday", 19], "next up");
+eq(P.next.items.map(i => i.form + " " + i.what), ["G-45 GET for July to September 2026", "TA-1 State TAT for September 2026", "MCTAT County payment for September 2026"], "next up items");
+eq(P.groups.slice(1, 4).map(g => g.dueText + " " + g.items.map(i => i.form).join("+")), ["Fri, Nov 20, 2026 TA-1+MCTAT", "Sun, Dec 20, 2026 MCTAT", "Mon, Dec 21, 2026 TA-1"], "dates in order, county and state apart in December");
+eq(P.moved.map(c => c.mon), ["Dec", "Feb", "Mar", "Jun", "Aug"], "moved months that carry a state return");
+eq(P.unknown, [], "every schedule known");
+eq(P.groups.find(g => s(g.due) === "2027-04-20").items.map(i => i.form).join(), "G-45,TA-1,MCTAT,G-49,TA-2,MCTAT", "April 20 carries the quarter, the month, both annuals and the county top-up");
+
+// columns start at the first state due date that hasn't passed
+eq(C.yearPlan(mauiA, D(2026, 10, 21)).cols[0].mon, "Nov", "day after the 20th starts with next month");
+const dec21 = C.yearPlan(mauiA, D(2026, 12, 21));
+eq([dec21.cols[0].mon, grid(dec21.rows[1]).slice(0, 1), grid(dec21.rows[2]).slice(0, 1)], ["Dec", "x", "."], "Dec 21: state TA-1 still due today, county's Sunday date has passed");
+eq(dec21.next.dueText, "Mon, Dec 21, 2026", "next up on Dec 21 is that day");
+
+const ltrP = C.yearPlan({ stay: "ltr", county: "kauai", rent: "b2", status: "current", home: "island", have: { get: true } }, oct1);
+eq(ltrP.rows.map(r => [r.form, grid(r)]), [["G-45", "...x.....x.."], ["G-49", "......x....."]], "long-term: GET twice a year and the annual");
+eq(ltrP.next.dueText, "Wed, Jan 20, 2027", "long-term semiannual filer's next date");
+eq(ltrP.moved.map(c => c.mon), [], "no state return lands in a moved month");
+
+const unsureP = C.yearPlan({ stay: "str", county: "kauai", rent: "unsure", status: "new", home: "abroad", have: {} }, oct1);
+eq(unsureP.unknown, ["G-45", "TA-1", "KTAT"], "unknown rent leaves the periodic rows open");
+eq(unsureP.next.dueText, "Tue, Apr 20, 2027", "with no schedule, the next known date is the annual");
+const bothP = C.yearPlan({ stay: "both", county: "hawaii", rent: "b3", status: "letter", home: "island", have: { get: true, tat: true } }, oct1);
+eq(bothP.unknown, ["TA-1", "HCTAT"], "mixed rental: TAT and county schedules open, GET known");
+eq(grid(bothP.rows[0]), "...x.....x..", "mixed rental $36k to $44k: GET twice a year");
+
 // ================================================================ exhaustive
 // Every combination of answers, on three different "todays", must satisfy
 // the rules below. One failure per rule is reported, with the answers.
@@ -182,6 +235,29 @@ for (let hv = 0; hv < 4; hv++) {
   for (const f of L.file) if (f.next && f.next.length === 2) inv(!ge(f.next[0].due, f.next[1].due), "next dates in order", ctx);
   const json = JSON.stringify(L);
   inv(!/undefined|NaN|\u2014/.test(json), "no undefined, NaN, or em dash", ctx);
+
+  // the year plan the page draws
+  const Y = C.yearPlan(a, today);
+  inv(Y.cols.length === 12, "plan: twelve columns", ctx);
+  Y.cols.forEach((c, j) => {
+    inv(s(c.due) === s(C.businessDay(D(c.y, c.m, 20))), "plan: column date is that month's state due date", ctx);
+    if (j) { const p0 = Y.cols[j - 1]; inv(c.y * 12 + c.m === p0.y * 12 + p0.m + 1, "plan: columns are consecutive months", ctx); }
+    inv(c.moved === !!c.why, "plan: a moved column says why", ctx);
+  });
+  inv(ge(Y.cols[0].due, today), "plan: first column's date hasn't passed", ctx);
+  const expectCount = { monthly: 12, quarterly: 4, semiannual: 2, annual: 1 };
+  for (const r of Y.rows) {
+    if (!r.frequency) { inv(r.cells === null, "plan: unknown schedule has no markers", ctx); continue; }
+    const n = r.cells.filter(Boolean).length;
+    inv(n === expectCount[r.frequency], `plan: ${r.frequency} row has ${expectCount[r.frequency]} markers`, Object.assign({ form: r.form, n }, ctx));
+    r.cells.forEach((c, j) => { if (c) inv(c.due.y === Y.cols[j].y && c.due.m === Y.cols[j].m, "plan: marker sits in its month", ctx); });
+  }
+  inv(JSON.stringify(Y.unknown) === JSON.stringify(L.file.filter(f => !f.annual && !f.frequency).map(f => f.form)), "plan: unknown rows match the checklist", ctx);
+  inv(Y.events.every(e => ge(e.due, today)), "plan: every event today or later", ctx);
+  inv(Y.events.every(e => ge(e.due, Y.next.due)), "plan: next up is the earliest event", ctx);
+  inv(Y.next.days === C.daysBetween(today, Y.next.due) && Y.next.days >= 0, "plan: days until next", ctx);
+  inv(Y.moved.every(c => c.moved && c.marked), "plan: moved notes only where a state date moved", ctx);
+  inv(!/undefined|NaN|\u2014/.test(JSON.stringify(Y)), "plan: no undefined, NaN, or em dash", ctx);
 }
 console.log(`swept ${combos} answer combinations`);
 
@@ -208,6 +284,23 @@ for (let t = D(2026, 1, 1); ge(D(2030, 12, 31), t); t = C.addDays(t, 1)) {
   inv(n.due.y === n.year + 1 && n.due.m === 4, "annual: April of the following year", { t: s(t) });
 }
 console.log(`swept ${days} day-frequency pairs`);
+
+// Every day for five years: the plan's first column and next date never
+// sit in the past, and the strip always shows the same twelve 20ths.
+let planDays = 0;
+const planA = [mauiA, { stay: "ltr", county: "honolulu", rent: "b1", status: "current", home: "island", have: { get: true } },
+               { stay: "str", county: "hawaii", rent: "b5", status: "behind", home: "mainland", have: {} }];
+for (let t = D(2026, 1, 1); ge(D(2030, 12, 31), t); t = C.addDays(t, 1)) {
+  for (const a of planA) {
+    const Y = C.yearPlan(a, t);
+    planDays++;
+    inv(ge(Y.cols[0].due, t) && ge(Y.next.due, t), "plan by day: nothing in the past", { t: s(t), a });
+    inv(!ge(Y.cols[0].due, C.addDays(t, 62)), "plan by day: first column within two months", { t: s(t) });
+  }
+  const st = C.yearStrip(C.stripYear(t));
+  inv(st.length === 12 && st.every(x => x.day >= 20 && x.day <= 24), "strip by day: twelve dates, 20th to 24th", { t: s(t) });
+}
+console.log(`swept ${planDays} day-plan pairs`);
 
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

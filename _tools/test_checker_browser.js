@@ -1,5 +1,6 @@
 /* Browser test for the checker. Drives every control in a real Chrome,
-   then checks every date, rate and line on screen against checker-logic.js.
+   then checks every date, marker, rate and line on screen against
+   yearPlan() in checker-logic.js.
 
    Needs puppeteer-core somewhere on NODE_PATH and a local server:
      python3 -m http.server 8111   (from the repo root)
@@ -50,16 +51,28 @@ async function answer(p, a) {
 
 // What the page should show, straight from the rules.
 function expected(a) {
-  const L = C.checklist(a, T);
+  const P = C.yearPlan(a, T), L = P.list;
+  const cf = L.file.find(f => f.county);
+  const n = P.next;
   return {
     rates: L.taxes.map(t => t.rate),
     register: L.register.map(r => r.title),
-    files: L.file.map(f => ({ form: f.form, county: !!f.county,
-      dates: (f.next || []).map(n => n.dueText).concat(f.county ? [f.annualNext.dueText] : []),
-      freq: f.frequencyText || null })),
+    cols: P.cols.map(c => c.mon + c.day),
+    rows: P.rows.map(r => ({ form: r.form, grid: r.cells ? r.cells.map(c => c ? "x" : ".").join("") : "open",
+                             dates: r.cells ? r.cells.filter(Boolean).map(c => "Due " + c.dueText) : [] })),
+    groups: P.groups.map(g => g.dueText + " | " + g.items.map(i => i.form + " " + i.what).join(" / ")),
+    next: n.dueText,
+    nextBig: C.fmt(n.due).split(", ")[1],
+    nextWhen: n.weekday + ", " + (n.days === 0 ? "today" : n.days === 1 ? "tomorrow" : n.days + " days from today"),
+    nextItems: n.items.map(i => i.form + " " + i.what),
+    sups: P.moved.length,
+    stars: (P.moved.some(c => c.weekend) ? 1 : 0) + P.moved.filter(c => !c.weekend).length,
+    countyAnnual: cf ? cf.annualNext.dueText : null,
+    title: "Your year, " + P.cols[0].month + " to " + P.cols[11].month,
     also: L.also.map(x => x.text + (x.link ? " " + x.link.text : "")),
     tools: L.tools.map(t => t.name),
-    first: L.first ? L.first.title : null
+    first: L.first ? L.first.title : null,
+    unknown: P.unknown
   };
 }
 
@@ -67,17 +80,34 @@ async function shown(p) {
   return p.evaluate(() => {
     const R = document.getElementById("results");
     const q = (sel, root) => Array.from((root || R).querySelectorAll(sel));
+    const txt = e => (e ? e.textContent.replace(/\s+/g, " ").trim() : null);
+    const box = R.querySelector(".next-box");
     return {
       hidden: R.hidden,
-      rates: q(".tax-rate").map(e => e.textContent.trim()),
-      register: q(".step-title").map(e => e.textContent.trim()),
-      files: q(".file-row").map(row => ({
-        form: row.querySelector(".form-id").textContent.trim(),
-        text: row.querySelector(".file-body").textContent.replace(/\s+/g, " ").trim()
+      title: txt(R.querySelector("#results-title")),
+      rates: q(".tax-rate").map(txt),
+      register: q(".step-title").map(txt),
+      cols: q(".year-chart thead .cols th:not(.due-h)").map(th => th.querySelector(".mon").textContent + th.querySelector(".day").childNodes[0].textContent),
+      rows: q(".year-chart tbody tr").map(tr => ({
+        form: tr.dataset.form,
+        grid: tr.querySelector("td.open") ? "open" : Array.from(tr.querySelectorAll("td")).map(td => td.querySelector(".mk") ? "x" : ".").join(""),
+        dates: Array.from(tr.querySelectorAll("td .sr-only")).map(e => e.textContent)
       })),
-      also: q(".also-list li").map(e => e.textContent.trim()),
-      tools: q(".tool-name").map(e => e.textContent.trim()),
+      groups: q(".date-list li").map(li => txt(li.querySelector(".dl-date")) + " | " + Array.from(li.querySelectorAll(".dl-items > span")).map(txt).join(" / ")),
+      next: box && box.dataset.due,
+      nextBig: txt(box && box.querySelector(".next-date")),
+      nextWhen: txt(box && box.querySelector(".next-when")),
+      nextItems: q(".next-items li").map(li => Array.from(li.children).map(txt).join(" ")),
+      nextNote: txt(box && box.querySelector(".next-note")),
+      sups: q(".year-chart thead sup").length,
+      stars: q(".notes .star").length,
+      notes: txt(R.querySelector(".notes")) || "",
+      summary: txt(R.querySelector(".summary")),
+      also: q(".also-list li").map(txt),
+      tools: q(".tool-name").map(txt),
       first: (R.querySelector(".priority h3") || {}).textContent || null,
+      chartShown: !!R.querySelector(".chart-wrap") && getComputedStyle(R.querySelector(".chart-wrap")).display !== "none",
+      listShown: !!R.querySelector(".date-list") && getComputedStyle(R.querySelector(".date-list")).display !== "none",
       focused: document.activeElement && document.activeElement.id,
       hash: location.hash,
       overflow: document.documentElement.scrollWidth - window.innerWidth
@@ -87,21 +117,33 @@ async function shown(p) {
 
 function compare(a, got, label) {
   const e = expected(a);
+  const same = (x, y, what) => ok(JSON.stringify(x) === JSON.stringify(y), `${label}: ${what}`, `${JSON.stringify(x)}\n   vs ${JSON.stringify(y)}`);
   ok(!got.hidden, `${label}: results visible`);
-  ok(JSON.stringify(got.rates) === JSON.stringify(e.rates), `${label}: rates`, `${got.rates} vs ${e.rates}`);
-  ok(JSON.stringify(got.register) === JSON.stringify(e.register), `${label}: registration steps`, `${got.register} vs ${e.register}`);
-  ok(got.files.map(f => f.form).join() === e.files.map(f => f.form).join(), `${label}: returns listed`, `${got.files.map(f => f.form)} vs ${e.files.map(f => f.form)}`);
-  e.files.forEach((ef, i) => {
-    const gf = got.files[i] || { text: "" };
-    for (const d of ef.dates) ok(gf.text.includes(d), `${label}: ${ef.form} shows ${d}`, gf.text);
-    if (ef.freq) ok(gf.text.includes((ef.county ? "Paid " : "Filed ") + ef.freq), `${label}: ${ef.form} says how often`, gf.text);
-    // and no date appears that the rules didn't produce
-    const dates = gf.text.match(/(Mon|Tue|Wed|Thu|Fri|Sat|Sun), [A-Z][a-z]{2} \d{1,2}, \d{4}/g) || [];
-    ok(dates.every(d => ef.dates.includes(d)), `${label}: ${ef.form} shows only rule dates`, dates.join(" | "));
+  same(got.title, e.title, "heading names the twelve months");
+  same(got.rates, e.rates, "rates");
+  same(got.register, e.register, "registration steps");
+  same(got.cols, e.cols, "column dates");
+  same(got.rows.map(r => r.form), e.rows.map(r => r.form), "rows");
+  e.rows.forEach((er, i) => {
+    const gr = got.rows[i] || {};
+    same(gr.grid, er.grid, `${er.form} markers`);
+    same(gr.dates, er.dates, `${er.form} dates read aloud`);
   });
-  ok(JSON.stringify(got.also) === JSON.stringify(e.also), `${label}: also required`, `${got.also.length} vs ${e.also.length}`);
-  ok(JSON.stringify(got.tools) === JSON.stringify(e.tools), `${label}: tools`, `${got.tools} vs ${e.tools}`);
-  ok((got.first || null) === e.first, `${label}: catch-up panel`, `${got.first} vs ${e.first}`);
+  same(got.groups, e.groups, "every due date in order");
+  same(got.next, e.next, "next up date");
+  same(got.nextBig, e.nextBig, "next up big date");
+  same(got.nextWhen, e.nextWhen, "next up weekday and countdown");
+  same(got.nextItems, e.nextItems, "next up items");
+  ok(!!got.nextNote === e.unknown.length > 0, `${label}: open schedules get a note`, got.nextNote);
+  if (e.unknown.length) ok(e.unknown.every(f => got.nextNote.includes(f)), `${label}: note names the open forms`, got.nextNote);
+  same(got.sups, e.sups, "moved dates marked");
+  same(got.stars, e.stars, "a note for each kind of move");
+  if (e.countyAnnual) ok(got.notes.includes(e.countyAnnual), `${label}: county annual date in the notes`, got.notes);
+  const dates = (got.summary + " " + got.notes).match(/(Mon|Tue|Wed|Thu|Fri|Sat|Sun), [A-Z][a-z]{2} \d{1,2}, \d{4}/g) || [];
+  ok(dates.every(d => e.groups.some(g => g.startsWith(d)) || d === e.countyAnnual), `${label}: notes show only rule dates`, dates.join(" | "));
+  same(got.also, e.also, "also required");
+  same(got.tools, e.tools, "tools");
+  same(got.first || null, e.first, "catch-up panel");
 }
 
 // Scenarios chosen so every option of every question appears at least once.
@@ -135,6 +177,15 @@ const SCEN = [
     events: (window.dataLayer || []).filter(x => x[0] === "event").map(x => x[1])
   }));
   ok(v.invalid.join() === "q-stay,q-county,q-rent,q-status,q-home", "validation flags all five", v.invalid.join());
+  const strip = await p.evaluate(() => ({
+    year: document.getElementById("strip-year").textContent,
+    sub: document.getElementById("strip-sub").textContent,
+    days: Array.from(document.querySelectorAll("#strip-list li")).map(li => li.querySelector(".mon").textContent + li.querySelector(".day").textContent + (li.classList.contains("moved") ? "*" : ""))
+  }));
+  const sy = C.stripYear(T), st = C.yearStrip(sy);
+  ok(strip.year === String(sy), "strip shows the right year", strip.year);
+  ok(strip.days.join() === st.map(x => x.mon + x.day + (x.moved ? "*" : "")).join(), "strip shows every monthly due date", strip.days.join());
+  ok(strip.sub.includes(["None", "One", "Two", "Three", "Four", "Five", "Six"][st.filter(x => x.moved).length]), "strip counts the moves", strip.sub);
   ok(v.errors === 5, "five error messages shown", String(v.errors));
   ok(v.focus === "stay", "focus moves to the first missing question", v.focus);
   ok(v.resultsHidden, "no results when incomplete");
@@ -168,6 +219,7 @@ const SCEN = [
     const got = await shown(p);
     compare(a, got, label);
     ok(got.focused === "results-title", `${label}: focus moves to the checklist`, got.focused);
+    ok(got.chartShown && !got.listShown, `${label}: desktop shows the chart`);
     const ev = await p.evaluate(() => (window.dataLayer || []).filter(x => x[0] === "event" && x[1] === "checker_complete").map(x => x[2]));
     ok(ev.length === 1 && ev[0].stay === a.stay && ev[0].county === a.county && ev[0].rent === a.rent && ev[0].status === a.status && ev[0].home === a.home,
        `${label}: complete event carries the choices`, JSON.stringify(ev));
@@ -180,7 +232,7 @@ const SCEN = [
     await new Promise(r => setTimeout(r, 150));
     const again = await shown(q);
     compare(a, again, `${label} via link`);
-    ok(JSON.stringify(again.files) === JSON.stringify(got.files), `${label}: link shows identical returns`);
+    ok(JSON.stringify(again.rows) === JSON.stringify(got.rows) && JSON.stringify(again.groups) === JSON.stringify(got.groups), `${label}: link shows the identical year`);
     const prefilled = await q.evaluate(() => ["stay","county","rent","status","home"].map(n => (document.querySelector(`input[name="${n}"]:checked`) || {}).value));
     ok(prefilled.join() === [a.stay, a.county, a.rent, a.status, a.home].join(), `${label}: link prefills the form`, prefilled.join());
     await q.close();
@@ -217,6 +269,9 @@ const SCEN = [
   await tap(p, 'button[type="submit"]');
   await new Promise(r => setTimeout(r, 150));
   ok((await shown(p)).overflow <= 0, "375px: checklist fits", String((await shown(p)).overflow));
+  const phone = await shown(p);
+  ok(!phone.chartShown && phone.listShown, "375px: the date list replaces the chart");
+  compare(SCEN[6], phone, "375px");
   await p.screenshot({ path: process.env.SHOT || "/tmp/checker-375.png", fullPage: true });
   await p.close();
 

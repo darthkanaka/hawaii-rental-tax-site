@@ -97,29 +97,39 @@
     return x;
   }
 
-  function holidays(y) {
+  // Each holiday with the name the page shows when it moves a due date.
+  function namedHolidays(y) {
     var list = [
-      observed(ymd(y, 1, 1)),        // New Year's Day
-      nthWeekday(y, 1, 1, 3),        // Dr. Martin Luther King, Jr. Day
-      nthWeekday(y, 2, 1, 3),        // Presidents' Day
-      observed(ymd(y, 3, 26)),       // Prince Jonah Kuhio Kalanianaole Day
-      addDays(easter(y), -2),        // Good Friday
-      lastWeekday(y, 5, 1),          // Memorial Day
-      observed(ymd(y, 6, 11)),       // King Kamehameha I Day
-      observed(ymd(y, 7, 4)),        // Independence Day
-      nthWeekday(y, 8, 5, 3),        // Statehood Day
-      nthWeekday(y, 9, 1, 1),        // Labor Day
-      observed(ymd(y, 11, 11)),      // Veterans' Day
-      nthWeekday(y, 11, 4, 4),       // Thanksgiving
-      observed(ymd(y, 12, 25))       // Christmas
+      { date: observed(ymd(y, 1, 1)),   name: "New Year's Day" },
+      { date: nthWeekday(y, 1, 1, 3),   name: "Martin Luther King Jr. Day" },
+      { date: nthWeekday(y, 2, 1, 3),   name: "Presidents' Day" },
+      { date: observed(ymd(y, 3, 26)),  name: "Prince K\u016bhi\u014d Day" },
+      { date: addDays(easter(y), -2),   name: "Good Friday" },
+      { date: lastWeekday(y, 5, 1),     name: "Memorial Day" },
+      { date: observed(ymd(y, 6, 11)),  name: "King Kamehameha Day" },
+      { date: observed(ymd(y, 7, 4)),   name: "Independence Day" },
+      { date: nthWeekday(y, 8, 5, 3),   name: "Statehood Day" },
+      { date: nthWeekday(y, 9, 1, 1),   name: "Labor Day" },
+      { date: observed(ymd(y, 11, 11)), name: "Veterans' Day" },
+      { date: nthWeekday(y, 11, 4, 4),  name: "Thanksgiving" },
+      { date: observed(ymd(y, 12, 25)), name: "Christmas" }
     ];
     if (y % 2 === 0) {               // general election day, even years:
-      list.push(addDays(nthWeekday(y, 11, 1, 1), 1)); // Tuesday after the first Monday in November
+      // Tuesday after the first Monday in November
+      list.push({ date: addDays(nthWeekday(y, 11, 1, 1), 1), name: "Election Day" });
     }
     // New Year's Day of the following year can be observed on Dec 31.
     var nextNY = observed(ymd(y + 1, 1, 1));
-    if (nextNY.y === y) { list.push(nextNY); }
+    if (nextNY.y === y) { list.push({ date: nextNY, name: "New Year's Day" }); }
     return list;
+  }
+
+  function holidays(y) { return namedHolidays(y).map(function (h) { return h.date; }); }
+
+  function holidayName(x) {
+    var list = namedHolidays(x.y);
+    for (var i = 0; i < list.length; i++) { if (same(list[i].date, x)) { return list[i].name; } }
+    return null;
   }
 
   function isHoliday(x) {
@@ -185,6 +195,42 @@
     if (!before(due, today)) { return { due: due, dueText: fmt(due), year: today.y - 1 }; }
     due = annualDue(today.y, noShift);
     return { due: due, dueText: fmt(due), year: today.y };
+  }
+
+  // ------------------------------------------------- why a 20th moves
+  var WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+  function ordinal(n) {
+    var s = ["th", "st", "nd", "rd"], v = n % 100;
+    return n + (s[(v - 20) % 10] || s[v] || s[0]);
+  }
+
+  // The state due date in a month, and in words why it isn't the 20th.
+  // `weekend` is true when a plain weekend is the only reason.
+  function dueShift(y, m) {
+    var raw = ymd(y, m, 20), due = businessDay(raw);
+    if (same(raw, due)) { return { raw: raw, due: due, moved: false, weekend: false, why: null }; }
+    var parts = [], weekend = true;
+    for (var cur = raw; before(cur, due); cur = addDays(cur, 1)) {
+      var name = holidayName(cur);
+      if (name) { weekend = false; parts.push("the " + ordinal(cur.d) + " is " + name); }
+      else if (same(cur, raw)) { parts.push("the 20th is a " + WEEKDAYS[weekday(cur)]); }
+    }
+    return { raw: raw, due: due, moved: true, weekend: weekend, why: parts.join(" and ") };
+  }
+
+  // The front page shows one calendar year of monthly due dates: this year,
+  // or next year once October arrives.
+  function stripYear(today) { return today.m >= 10 ? today.y + 1 : today.y; }
+
+  function yearStrip(y) {
+    var out = [];
+    for (var m = 1; m <= 12; m++) {
+      var sh = dueShift(y, m);
+      out.push({ y: y, m: m, mon: MON[m - 1], due: sh.due, day: sh.due.d, wd: DAYS[weekday(sh.due)],
+                 moved: sh.moved, weekend: sh.weekend, why: sh.why });
+    }
+    return out;
   }
 
   function hawaiiToday(now) {
@@ -348,6 +394,89 @@
     return { form: form, tax: tax, annual: true, next: [{ due: n.due, dueText: n.dueText, period: "all of " + n.year }] };
   }
 
+  function daysBetween(a, b) { return Math.round((toUTC(b) - toUTC(a)) / 86400000); }
+
+  // The checklist laid out as a year: twelve monthly columns starting with
+  // the first state due date that hasn't passed, one row per return or
+  // payment, every due date as an event, and the next one up. Pure, like
+  // checklist(), so the tests can hold the page to it.
+  function yearPlan(a, today) {
+    var L = checklist(a, today);
+    var county = COUNTIES[a.county];
+    var y = today.y, m = today.m;
+    if (before(businessDay(ymd(y, m, 20)), today)) { m += 1; if (m === 13) { m = 1; y += 1; } }
+    var cols = [];
+    for (var i = 0; i < 12; i++) {
+      var sh = dueShift(y, m);
+      cols.push({ y: y, m: m, mon: MON[m - 1], month: MONTHS[m - 1], due: sh.due, day: sh.due.d,
+                  wd: DAYS[weekday(sh.due)], moved: sh.moved, weekend: sh.weekend, why: sh.why, marked: false });
+      m += 1; if (m === 13) { m = 1; y += 1; }
+    }
+    function colOf(d) {
+      for (var j = 0; j < cols.length; j++) { if (cols[j].y === d.y && cols[j].m === d.m) { return j; } }
+      return -1;
+    }
+    function empty() { return cols.map(function () { return null; }); }
+
+    var rows = [], events = [];
+    function event(due, form, what) { events.push({ due: due, dueText: fmt(due), form: form, what: what }); }
+
+    L.file.forEach(function (f) {
+      if (f.annual) { return; }
+      var isGet = f.form === "G-45";
+      var row = { form: f.form, kind: f.county ? "ring" : (isGet ? "coral" : "ink"),
+                  label: f.county ? "County payment" : (isGet ? "GET" : "State TAT"),
+                  county: !!f.county, frequency: f.frequency, frequencyText: f.frequencyText, cells: null };
+      if (f.frequency) {
+        row.cells = empty();
+        // the county's own dates: plain 20th unless the county says they move
+        var dates = f.county ? upcoming(f.frequency, today, 14, !county.shifts) : upcoming(f.frequency, today, 14);
+        dates.forEach(function (n) {
+          var j = colOf(n.due);
+          if (j === -1) { return; }
+          row.cells[j] = n;
+          if (!f.county || county.shifts) { cols[j].marked = true; }
+          event(n.due, f.form, (f.county ? "County payment" : (isGet ? "GET" : "State TAT")) + " for " + n.period);
+        });
+      }
+      rows.push(row);
+    });
+
+    var annual = L.file.filter(function (f) { return f.annual; });
+    var an = annual[0].next[0];
+    var arow = { form: annual.map(function (f) { return f.form; }).join(", "), kind: "diamond", label: "Annual returns",
+                 annual: true, frequency: "annual", frequencyText: "once a year", year: +an.period.replace(/\D/g, ""), cells: empty() };
+    var aj = colOf(an.due);
+    arow.cells[aj] = an;
+    cols[aj].marked = true;
+    rows.push(arow);
+    annual.forEach(function (f) {
+      event(f.next[0].due, f.form, (f.form === "G-49" ? "Annual GET return" : "Annual state TAT return") + " for " + f.next[0].period);
+    });
+    var cf = L.file.filter(function (f) { return f.county; })[0];
+    if (cf) {
+      event(cf.annualNext.due, cf.form, "Anything your TA-2 shows that your " + cf.form + " payments missed");
+    }
+
+    events.sort(function (p, q) { return toUTC(p.due) - toUTC(q.due); });
+    var groups = [];
+    events.forEach(function (e) {
+      var last = groups[groups.length - 1];
+      if (last && same(last.due, e.due)) { last.items.push(e); }
+      else { groups.push({ due: e.due, dueText: e.dueText, items: [e] }); }
+    });
+    var first = groups[0];
+
+    return {
+      list: L, cols: cols, rows: rows, events: events, groups: groups,
+      next: { due: first.due, dueText: first.dueText, weekday: WEEKDAYS[weekday(first.due)],
+              days: daysBetween(today, first.due), items: first.items },
+      unknown: rows.filter(function (r) { return !r.frequency; }).map(function (r) { return r.form; }),
+      moved: cols.filter(function (c) { return c.moved && c.marked; }),
+      county: county
+    };
+  }
+
   function fmtLong(iso) {
     var p = iso.split("-");
     return MONTHS[+p[1] - 1] + " " + (+p[2]) + ", " + p[0];
@@ -380,6 +509,8 @@
     RULES_CHECKED: RULES_CHECKED, BILL47: BILL47, VDP: VDP, RATES: RATES, LIABILITY: LIABILITY, BANDS: BANDS, COUNTIES: COUNTIES, DOTAX: DOTAX, TOOLS: TOOLS,
     frequencyForLiability: frequencyForLiability, frequencyForBand: frequencyForBand,
     ymd: ymd, addDays: addDays, weekday: weekday, easter: easter, holidays: holidays, isHoliday: isHoliday,
+    holidayName: holidayName, dueShift: dueShift, stripYear: stripYear, yearStrip: yearStrip, yearPlan: yearPlan,
+    MONTHS: MONTHS, WEEKDAYS: WEEKDAYS, ordinal: ordinal, daysBetween: daysBetween,
     businessDay: businessDay, periodicDue: periodicDue, annualDue: annualDue, upcoming: upcoming, nextAnnual: nextAnnual,
     hawaiiToday: hawaiiToday, fmt: fmt, checklist: checklist
   };
