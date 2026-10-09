@@ -275,6 +275,41 @@ const SCEN = [
   await p.screenshot({ path: process.env.SHOT || "/tmp/checker-375.png", fullPage: true });
   await p.close();
 
+  // ---- 6b. the checker prompt at the top of /rates/, where search visitors land
+  for (const w of [1100, 375]) {
+    p = await page(browser, w);
+    await p.goto(`${BASE}/rates/`, { waitUntil: "load" });
+    const strip = await p.evaluate(() => {
+      const a = document.querySelector(".cta-strip a.btn");
+      const h2 = document.querySelector("main h2");
+      return a && {
+        href: a.getAttribute("href"), text: a.textContent.trim(),
+        beforeFirstH2: !!(a.compareDocumentPosition(h2) & Node.DOCUMENT_POSITION_FOLLOWING),
+        top: a.getBoundingClientRect().top, vh: window.innerHeight,
+        overflow: document.documentElement.scrollWidth - window.innerWidth
+      };
+    });
+    ok(!!strip && strip.href === "/#checker" && strip.text === "Find my 20ths", `${w}px: /rates/ has the checker prompt`, JSON.stringify(strip));
+    if (strip) {
+      ok(strip.beforeFirstH2, `${w}px: the prompt sits above the first rate table`);
+      if (w === 1100) ok(strip.top < strip.vh, "1100px: the prompt shows without scrolling", `${strip.top} of ${strip.vh}`);
+      ok(strip.overflow <= 0, `${w}px: /rates/ fits`, String(strip.overflow));
+    }
+    if (w === 1100) {
+      await p.evaluate(() => document.querySelector(".cta-strip a.btn").addEventListener("click", e => e.preventDefault(), { once: true }));
+      await tap(p, ".cta-strip a.btn");
+      const ev = await p.evaluate(() => (window.dataLayer || []).filter(x => x[0] === "event" && x[1] === "click").map(x => x[2].label));
+      ok(ev.includes("rates_top_cta"), "the prompt records its click", ev.join());
+      await Promise.all([p.waitForNavigation({ waitUntil: "load" }), tap(p, ".cta-strip a.btn")]);
+      await new Promise(r => setTimeout(r, 300));
+      const land = await p.evaluate(() => ({ path: location.pathname, hash: location.hash,
+        top: document.getElementById("checker").getBoundingClientRect().top, vh: window.innerHeight }));
+      ok(land.path === "/" && land.hash === "#checker" && land.top < land.vh, "the prompt opens the checker", JSON.stringify(land));
+    }
+    ok(p.errors.length === 0, `${w}px: /rates/ has no console errors`, p.errors.join(" | "));
+    await p.close();
+  }
+
   // ---- 7. every other page loads clean
   for (const path of ["/rates/", "/learn/", "/learn/bill-47-catch-up-checklist/", "/learn/hawaii-tat-11-percent/",
                       "/learn/get-tax-long-term-rentals/", "/privacy/", "/terms/", "/404.html"]) {
