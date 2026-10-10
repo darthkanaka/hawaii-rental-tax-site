@@ -63,6 +63,11 @@ Edit the partial, never the stamped copy.
 ## Affiliate links
 
 Recommendations live in `TOOLS` in `checker-logic.js`. Each has an
-`affiliate` flag. Switch a link to its affiliate URL and set the flag to
-`true` only after that program approves the site; the commission disclosure
-appears automatically when any recommendation shown is an affiliate link.
+`affiliate` flag. Switch a link to the program's own referral URL and set the
+flag to `true` only once that account exists; the link then gets
+`rel="sponsored"` and its own commission note, and an optional `perk` (a
+discount only the referral link gets) shows beside it.
+
+Live: **Hospitable** since 2026-10-09, $200 per qualified host, account
+kawika@elevatemediahi.com under Veex Photo LLC, dashboard at
+affiliates.hospitable.com.

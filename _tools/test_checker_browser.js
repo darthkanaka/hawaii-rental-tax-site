@@ -257,8 +257,20 @@ const SCEN = [
   for (const l of toolLinks) await l.click();
   const clicks = await p.evaluate(() => (window.dataLayer || []).filter(x => x[0] === "event" && x[1] === "outbound_click").length);
   ok(clicks === toolLinks.length, "every tool link records an outbound click", `${clicks} of ${toolLinks.length}`);
-  const rels = await p.$$eval(".tool-row a", as => as.map(a => a.rel + "|" + a.target));
-  ok(rels.every(r => r.startsWith("noopener|_blank")), "tool links open safely in a new tab", rels.join());
+  const rows = await p.$$eval(".tool-row", lis => lis.map(li => {
+    const a = li.querySelector("a");
+    return { name: a.textContent.trim(), href: a.href, rel: a.rel, target: a.target,
+             note: (li.querySelector(".tool-note") || {}).textContent || null, text: li.textContent };
+  }));
+  for (const r of rows) {
+    const t = Object.values(C.TOOLS).find(x => x.name === r.name);
+    ok(r.href === t.href, `${r.name}: links where the rules say`, r.href);
+    ok(r.target === "_blank" && r.rel.split(" ").includes("noopener"), `${r.name}: opens safely in a new tab`, r.rel);
+    ok(r.rel.split(" ").includes("sponsored") === t.affiliate, `${r.name}: rel sponsored only on an affiliate link`, r.rel);
+    ok(!!r.note === t.affiliate, `${r.name}: commission note only on an affiliate link`, String(r.note));
+    if (t.perk) ok(r.text.includes(t.perk) === t.affiliate, `${r.name}: the discount shows only through the affiliate link`, r.text);
+  }
+  ok(rows.some(r => r.name === "Hospitable"), "this scenario shows Hospitable, so the affiliate path is tested");
   await p.close();
 
   // ---- 6. phone width: nothing spills sideways, before or after results

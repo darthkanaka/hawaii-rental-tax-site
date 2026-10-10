@@ -482,13 +482,17 @@
     return MONTHS[+p[1] - 1] + " " + (+p[2]) + ", " + p[0];
   }
 
-  // Recommendations. `affiliate: true` turns on the disclosure line; flip a
-  // link to its affiliate URL only once that program has approved the site.
+  // Recommendations. `affiliate: true` puts the commission note on that link
+  // and marks it rel="sponsored"; set it only with the program's own link.
+  // `perk` is shown only on an affiliate link, since only that link gets it.
   var TOOLS = {
     baselane:   { name: "Baselane", href: "https://www.baselane.com/", affiliate: false,
                   why: "Free banking and bookkeeping built for landlords. Keeps every rent payment in one place, which is the number your returns start from." },
-    hospitable: { name: "Hospitable", href: "https://hospitable.com/", affiliate: false,
-                  why: "Pulls your Airbnb, VRBO and direct bookings into one place, so the month's rent is one report instead of three." },
+    // Affiliate since 2026-10-09: $200 per qualified host, account under Veex Photo LLC
+    hospitable: { name: "Hospitable", affiliate: true,
+                  href: "https://hospitable.com/partners/refer?utm_source=affiliates&utm_medium=blog&utm_campaign=UYDR3S47",
+                  why: "Pulls your Airbnb, VRBO and direct bookings into one place, so the month's rent is one report instead of three.",
+                  perk: "Signing up through this link gets you 25% off Hospitable's software for three months." },
     mylodgetax: { name: "Avalara MyLodgeTax", href: "https://www.avalara.com/mylodgetax/en/", affiliate: false,
                   why: "Files lodging taxes for you for a monthly fee. It covers TAT, not GET, so you'd still file GET yourself." },
     tati:       { name: "TATi Maui", href: "https://tatimaui.com/", affiliate: false,

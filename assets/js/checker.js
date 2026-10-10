@@ -319,11 +319,11 @@
       html += "<div><h3 class=\"block-title\">Tools that can help</h3><ul class=\"tool-list\">" + list.tools.map(function (x) {
         var id = x.name.toLowerCase().replace(/[^a-z]+/g, "_").replace(/^_|_$/g, "");
         return "<li class=\"tool-row\"><a class=\"tool-name\" href=\"" + esc(x.href) + "\" rel=\"" + (x.affiliate ? "sponsored noopener" : "noopener") +
-          "\" target=\"_blank\" data-track=\"tool_" + id + "\">" + esc(x.name) + "</a><span>" + esc(x.why) + "</span></li>";
+          "\" target=\"_blank\" data-track=\"tool_" + id + "\">" + esc(x.name) + "</a><span>" + esc(x.why) +
+          (x.affiliate && x.perk ? " " + esc(x.perk) : "") + "</span>" +
+          (x.affiliate ? "<span class=\"tool-note\">We earn a commission if you sign up through this link. It doesn't change what we recommend.</span>" : "") +
+          "</li>";
       }).join("") + "</ul>";
-      if (list.tools.some(function (x) { return x.affiliate; })) {
-        html += "<p class=\"fine-print\">Some of these links pay us a commission if you sign up. It doesn't change what you pay or what we recommend.</p>";
-      }
       html += "</div>";
     }
     html += "</div>";

@@ -375,6 +375,7 @@ p { margin: 0; }
 .tool-row { padding: 14px 0; border-bottom: 1px solid var(--rule); display: flex; flex-direction: column; gap: 4px; font-size: 15px; line-height: 1.5; }
 .tool-name { font-size: 17px; font-weight: 700; }
 .tool-row span { color: var(--muted); }
+.tool-row .tool-note { font-size: 13px; font-style: italic; }
 
 .results .actions { margin-top: 44px; }
 .copy-status { margin-top: 10px; min-height: 1.5em; font-size: 15px; color: var(--muted); }
