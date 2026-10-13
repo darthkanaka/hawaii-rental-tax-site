@@ -486,10 +486,11 @@
   // and marks it rel="sponsored"; set it only with the program's own link.
   // `perk` is shown only on an affiliate link, since only that link gets it.
   var TOOLS = {
-    // Baselane partner application submitted 2026-10-12, under review. Its
-    // agreement bars calling Baselane a bank and puts a disclosure beside any
-    // use of "banking", so this line avoids the word.
-    baselane:   { name: "Baselane", href: "https://www.baselane.com/", affiliate: false,
+    // Affiliate since 2026-10-13: $200 per approved Baselane account, paid once
+    // commissions reach $2,000. Its agreement bars calling Baselane a bank and
+    // puts a disclosure beside any use of "banking", so this line avoids the word.
+    baselane:   { name: "Baselane", affiliate: true,
+                  href: "https://get.baselane.com/lpc/banking-partner?atp=hawaiitax",
                   why: "Rent collection and bookkeeping built for landlords. Keeps every rent payment in one place, which is the number your returns start from." },
     // Affiliate since 2026-10-09: $200 per qualified host, account under Veex Photo LLC
     hospitable: { name: "Hospitable", affiliate: true,

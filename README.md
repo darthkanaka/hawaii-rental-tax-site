@@ -68,6 +68,12 @@ flag to `true` only once that account exists; the link then gets
 `rel="sponsored"` and its own commission note, and an optional `perk` (a
 discount only the referral link gets) shows beside it.
 
-Live: **Hospitable** since 2026-10-09, $200 per qualified host, account
-kawika@elevatemediahi.com under Veex Photo LLC, dashboard at
-affiliates.hospitable.com.
+Live:
+- **Hospitable** since 2026-10-09, $200 per qualified host, account
+  kawika@elevatemediahi.com under Veex Photo LLC, dashboard at
+  affiliates.hospitable.com.
+- **Baselane** since 2026-10-13, $200 per approved Baselane account, paid by
+  ACH once commissions reach $2,000, portal at baselane.affonso.io. Its
+  agreement bars calling Baselane a "bank"; any use of "banking" near the
+  link needs its FDIC disclosure beside it, so the checker's line avoids the
+  word (a unit test holds this). No brand bidding or incentivized traffic.

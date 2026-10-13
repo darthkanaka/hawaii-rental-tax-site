@@ -121,7 +121,8 @@ eq(C.checklist({ stay: "ltr", county: "maui", rent: "b5", status: "current", hom
 
 // ---- affiliate links: the program's own link, and only where approved
 eq([C.TOOLS.hospitable.affiliate, C.TOOLS.hospitable.href.startsWith("https://hospitable.com/partners/refer?") && C.TOOLS.hospitable.href.includes("utm_campaign=UYDR3S47")], [true, true], "Hospitable uses the Veex Photo referral link");
-eq(Object.values(C.TOOLS).filter(t => t.affiliate).map(t => t.name), ["Hospitable"], "Hospitable is the only affiliate link so far");
+eq(Object.values(C.TOOLS).filter(t => t.affiliate).map(t => t.name), ["Baselane", "Hospitable"], "Baselane and Hospitable are the affiliate links");
+eq(C.TOOLS.baselane.href, "https://get.baselane.com/lpc/banking-partner?atp=hawaiitax", "Baselane uses the approved partner link");
 eq(Object.values(C.TOOLS).every(t => /^https:\/\//.test(t.href)), true, "every tool link is https");
 eq(/\bbank/i.test(C.TOOLS.baselane.why), false, "Baselane's line never says bank or banking (its partner agreement)");
 
