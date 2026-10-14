@@ -1,0 +1,288 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//hawaiirentaltax.com//Due dates//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+NAME:Rental tax dates\, Hawaiʻi Island
+X-WR-CALNAME:Rental tax dates\, Hawaiʻi Island
+DESCRIPTION:Your Hawaii rental tax due dates from hawaiirentaltax.com\, Oct
+ ober 2026 to December 2027.
+X-WR-CALDESC:Your Hawaii rental tax due dates from hawaiirentaltax.com\, Oc
+ tober 2026 to December 2027.
+X-WR-TIMEZONE:Pacific/Honolulu
+SOURCE;VALUE=URI:https://hawaiirentaltax.com/calendar/str-hawaii-b2.ics
+REFRESH-INTERVAL;VALUE=DURATION:P1D
+X-PUBLISHED-TTL:P1D
+BEGIN:VEVENT
+UID:tat-202610-str-hawaii-b2@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20261020
+DTEND;VALUE=DATE:20261021
+SUMMARY:State TAT return due for July to September 2026 (TA-1)
+DESCRIPTION:File Form TA-1 and pay the state TAT for July to September 2026
+  on Hawaii Tax Online. It counts as filed with the County of Hawaiʻi too.
+ \nhttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Rules checked Oct
+ ober 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:State TAT return due for July to September 2026 (TA-1)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:county-202610-str-hawaii-b2@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20261020
+DTEND;VALUE=DATE:20261021
+SUMMARY:County TAT payment due for July to September 2026 (HCTAT)
+DESCRIPTION:Pay the County of Hawaiʻi its 3% TAT for July to September 202
+ 6. There's no county return\, just the payment.\nhttps://tat.ehawaii.gov/t
+ at/hawaii/\nThe county's payment site charges $2.50 per payment\, plus $1 
+ by eCheck or 2.5% by card.\n\nFrom hawaiirentaltax.com. Rules checked Octo
+ ber 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:County TAT payment due for July to September 2026 (HCTAT)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:get-202701-str-hawaii-b2@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270120
+DTEND;VALUE=DATE:20270121
+SUMMARY:GET return due for July to December 2026 (G-45)
+DESCRIPTION:File Form G-45 and pay the GET for July to December 2026 on Haw
+ aii Tax Online.\nhttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Ru
+ les checked October 1\, 2026. This is general information\, not tax advice
+ .
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:GET return due for July to December 2026 (G-45)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:tat-202701-str-hawaii-b2@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270120
+DTEND;VALUE=DATE:20270121
+SUMMARY:State TAT return due for October to December 2026 (TA-1)
+DESCRIPTION:File Form TA-1 and pay the state TAT for October to December 20
+ 26 on Hawaii Tax Online. It counts as filed with the County of Hawaiʻi to
+ o.\nhttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Rules checked O
+ ctober 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:State TAT return due for October to December 2026 (TA-1)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:county-202701-str-hawaii-b2@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270120
+DTEND;VALUE=DATE:20270121
+SUMMARY:County TAT payment due for October to December 2026 (HCTAT)
+DESCRIPTION:Pay the County of Hawaiʻi its 3% TAT for October to December 2
+ 026. There's no county return\, just the payment.\nhttps://tat.ehawaii.gov
+ /tat/hawaii/\nThe county's payment site charges $2.50 per payment\, plus $
+ 1 by eCheck or 2.5% by card.\n\nFrom hawaiirentaltax.com. Rules checked Oc
+ tober 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:County TAT payment due for October to December 2026 (HCTAT)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:tat-202704-str-hawaii-b2@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270420
+DTEND;VALUE=DATE:20270421
+SUMMARY:State TAT return due for January to March 2027 (TA-1)
+DESCRIPTION:File Form TA-1 and pay the state TAT for January to March 2027 
+ on Hawaii Tax Online. It counts as filed with the County of Hawaiʻi too.\
+ nhttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Rules checked Octo
+ ber 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:State TAT return due for January to March 2027 (TA-1)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:county-202704-str-hawaii-b2@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270420
+DTEND;VALUE=DATE:20270421
+SUMMARY:County TAT payment due for January to March 2027 (HCTAT)
+DESCRIPTION:Pay the County of Hawaiʻi its 3% TAT for January to March 2027
+ . There's no county return\, just the payment.\nhttps://tat.ehawaii.gov/ta
+ t/hawaii/\nThe county's payment site charges $2.50 per payment\, plus $1 b
+ y eCheck or 2.5% by card.\n\nFrom hawaiirentaltax.com. Rules checked Octob
+ er 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:County TAT payment due for January to March 2027 (HCTAT)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:annual-get-202704-str-hawaii-b2@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270420
+DTEND;VALUE=DATE:20270421
+SUMMARY:Annual GET return due for 2026 (G-49)
+DESCRIPTION:File Form G-49\, the annual GET return for 2026\, on Hawaii Tax
+  Online.\nhttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Rules che
+ cked October 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Annual GET return due for 2026 (G-49)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:annual-tat-202704-str-hawaii-b2@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270420
+DTEND;VALUE=DATE:20270421
+SUMMARY:Annual state TAT return due for 2026 (TA-2)
+DESCRIPTION:File Form TA-2\, the annual state TAT return for 2026\, on Hawa
+ ii Tax Online.\nhttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Rul
+ es checked October 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Annual state TAT return due for 2026 (TA-2)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:county-annual-202704-str-hawaii-b2@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270420
+DTEND;VALUE=DATE:20270421
+SUMMARY:County TAT top-up due for 2026\, if your TA-2 shows one
+DESCRIPTION:If your TA-2 for 2026 shows county TAT that your HCTAT payments
+  missed\, pay the rest to the County of Hawaiʻi.\nhttps://tat.ehawaii.gov
+ /tat/hawaii/\n\nFrom hawaiirentaltax.com. Rules checked October 1\, 2026. 
+ This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:County TAT top-up due for 2026\, if your TA-2 shows one
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:get-202707-str-hawaii-b2@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270720
+DTEND;VALUE=DATE:20270721
+SUMMARY:GET return due for January to June 2027 (G-45)
+DESCRIPTION:File Form G-45 and pay the GET for January to June 2027 on Hawa
+ ii Tax Online.\nhttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Rul
+ es checked October 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:GET return due for January to June 2027 (G-45)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:tat-202707-str-hawaii-b2@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270720
+DTEND;VALUE=DATE:20270721
+SUMMARY:State TAT return due for April to June 2027 (TA-1)
+DESCRIPTION:File Form TA-1 and pay the state TAT for April to June 2027 on 
+ Hawaii Tax Online. It counts as filed with the County of Hawaiʻi too.\nht
+ tps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Rules checked October
+  1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:State TAT return due for April to June 2027 (TA-1)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:county-202707-str-hawaii-b2@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270720
+DTEND;VALUE=DATE:20270721
+SUMMARY:County TAT payment due for April to June 2027 (HCTAT)
+DESCRIPTION:Pay the County of Hawaiʻi its 3% TAT for April to June 2027. T
+ here's no county return\, just the payment.\nhttps://tat.ehawaii.gov/tat/h
+ awaii/\nThe county's payment site charges $2.50 per payment\, plus $1 by e
+ Check or 2.5% by card.\n\nFrom hawaiirentaltax.com. Rules checked October 
+ 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:County TAT payment due for April to June 2027 (HCTAT)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:tat-202710-str-hawaii-b2@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20271020
+DTEND;VALUE=DATE:20271021
+SUMMARY:State TAT return due for July to September 2027 (TA-1)
+DESCRIPTION:File Form TA-1 and pay the state TAT for July to September 2027
+  on Hawaii Tax Online. It counts as filed with the County of Hawaiʻi too.
+ \nhttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Rules checked Oct
+ ober 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:State TAT return due for July to September 2027 (TA-1)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:county-202710-str-hawaii-b2@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20271020
+DTEND;VALUE=DATE:20271021
+SUMMARY:County TAT payment due for July to September 2027 (HCTAT)
+DESCRIPTION:Pay the County of Hawaiʻi its 3% TAT for July to September 202
+ 7. There's no county return\, just the payment.\nhttps://tat.ehawaii.gov/t
+ at/hawaii/\nThe county's payment site charges $2.50 per payment\, plus $1 
+ by eCheck or 2.5% by card.\n\nFrom hawaiirentaltax.com. Rules checked Octo
+ ber 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:County TAT payment due for July to September 2027 (HCTAT)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+END:VCALENDAR

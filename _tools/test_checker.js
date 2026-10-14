@@ -312,5 +312,78 @@ for (let t = D(2026, 1, 1); ge(D(2030, 12, 31), t); t = C.addDays(t, 1)) {
 }
 console.log(`swept ${planDays} day-plan pairs`);
 
+// ---- calendar files: the same dates as the page, in valid iCalendar
+const CAL = require("./build_calendars.js");
+const fs = require("fs");
+const path = require("path");
+const W = C.calendarWindow();
+eq([s(W.from), s(W.to)], [C.RULES_CHECKED.slice(0, 8) + "01", (+C.RULES_CHECKED.slice(0, 4) + 1) + "-12-31"], "calendar window: rules month to the end of next year");
+const key = e => [s(e.due), e.kind, e.form, e.what, e.period, e.dueText].join("|");
+const allA = [];
+for (const stay of ["str", "ltr", "both"]) for (const county of Object.keys(C.COUNTIES)) for (const rent of C.BANDS.map(b => b.id).concat("unsure"))
+  allA.push({ stay, county, rent, status: "current", home: "island", have: {} });
+// Every day in the window, the page's twelve months and the calendar hold
+// exactly the same dates for every set of answers.
+let calDays = 0;
+for (const a of allA) {
+  const all = C.calendarPlan(a, W.from, W.to);
+  inv(all.events.every(e => ge(e.due, W.from) && ge(W.to, e.due)), "calendar: every date inside the window", { a });
+  for (let t = W.from; ge(W.to, t); t = C.addDays(t, 3)) {
+    const Y = C.yearPlan(a, t);
+    const lo = C.ymd(Y.cols[0].y, Y.cols[0].m, 1);
+    const end = Y.cols[11];
+    const hi = C.addDays(C.ymd(end.m === 12 ? end.y + 1 : end.y, end.m === 12 ? 1 : end.m + 1, 1), -1);
+    // the page shows nothing already past, so compare from today on
+    const inRange = e => ge(e.due, t) && ge(e.due, lo) && ge(hi, e.due) && ge(e.due, W.from) && ge(W.to, e.due);
+    const page = Y.events.filter(inRange).map(key).sort(), cal = all.events.filter(inRange).map(key).sort();
+    inv(JSON.stringify(page) === JSON.stringify(cal), "calendar: same dates as the page's year", { t: s(t), a, page, cal });
+    inv(JSON.stringify(Y.unknown) === JSON.stringify(all.unknown), "calendar: same open schedules as the page", { t: s(t), a });
+    calDays++;
+  }
+}
+console.log(`swept ${calDays} day-calendar pairs`);
+
+// one file per answer set that changes the dates; "not sure" gets none
+const files = CAL.combos().map(CAL.fileName);
+eq(files.length, 3 * Object.keys(C.COUNTIES).length * C.BANDS.length, "calendar: one file per stay, island and rent range");
+eq(files.filter(f => /unsure/.test(f)).length, 0, "calendar: no file for an unknown rent");
+const onDisk = fs.readdirSync(CAL.DIR).sort();
+eq(onDisk, files.slice().sort(), "calendar: the folder holds exactly the built files");
+const uids = new Set();
+for (const a of CAL.combos()) {
+  const f = CAL.fileName(a), body = CAL.ics(a);
+  eq(fs.readFileSync(path.join(CAL.DIR, f), "utf8") === body, true, `calendar ${f}: file on disk is current`);
+  const raw = body.split("\r\n");
+  eq(raw[raw.length - 1], "", `calendar ${f}: ends with CRLF`);
+  eq(body.replace(/\r\n/g, "").includes("\n"), false, `calendar ${f}: only CRLF line breaks`);
+  eq(raw.every(l => Buffer.byteLength(l) <= 75), true, `calendar ${f}: no line over 75 octets`);
+  eq(/\u2014/.test(body), false, `calendar ${f}: no em dash`);
+  const lines = body.replace(/\r\n /g, "").split("\r\n").filter(Boolean);
+  eq([lines[0], lines[1], lines[lines.length - 1]], ["BEGIN:VCALENDAR", "VERSION:2.0", "END:VCALENDAR"], `calendar ${f}: wrapper`);
+  const P = C.calendarPlan(a, W.from, W.to);
+  const starts = lines.filter(l => l.startsWith("DTSTART;VALUE=DATE:")).map(l => l.slice(19));
+  const ends = lines.filter(l => l.startsWith("DTEND;VALUE=DATE:")).map(l => l.slice(17));
+  const ymdStr = x => `${x.y}${String(x.m).padStart(2, "0")}${String(x.d).padStart(2, "0")}`;
+  eq(starts, P.events.map(e => ymdStr(e.due)), `calendar ${f}: every date, in order`);
+  eq(ends, P.events.map(e => ymdStr(C.addDays(e.due, 1))), `calendar ${f}: each event is one whole day`);
+  eq(lines.filter(l => l === "BEGIN:VALARM").length, P.events.length, `calendar ${f}: a reminder on every date`);
+  for (const l of lines.filter(l => l.startsWith("UID:"))) { eq(uids.has(l), false, `calendar ${f}: unique ${l}`); uids.add(l); }
+  const sums = lines.filter(l => l.startsWith("SUMMARY:")).map(l => l.slice(8).replace(/\\,/g, ","));
+  eq(sums, P.events.map(e => CAL.summary(e, P.county)), `calendar ${f}: titles`);
+  const county = C.COUNTIES[a.county];
+  P.events.forEach((e, i) => {
+    // forms named in the title match the event
+    const want = { get: "(G-45)", tat: "(TA-1)", county: `(${county.short})`, "annual-get": "(G-49)", "annual-tat": "(TA-2)", "county-annual": "TA-2" }[e.kind];
+    inv(sums[i].includes(want), "calendar: title names the form", { f, sum: sums[i] });
+    // a county that doesn't move its dates keeps the plain 20th
+    if ((e.kind === "county" || e.kind === "county-annual") && !county.shifts) inv(e.due.d === 20, "calendar: county keeps the 20th", { f, e });
+    else inv(isBiz(e.due), "calendar: state dates are business days", { f, e });
+    const d = CAL.description(e, county), sh = C.dueShift(e.due.y, e.due.m);
+    const shouldSay = (!(e.kind === "county" || e.kind === "county-annual") || county.shifts) && sh.moved && sh.due.d === e.due.d;
+    inv(d.includes("because " + sh.why) === !!shouldSay, "calendar: a moved date says why, only when it moved", { f, e, d });
+  });
+  eq(/aren't here/.test(body.replace(/\r\n /g, "")), P.unknown.length > 0, `calendar ${f}: says which schedules it leaves out`);
+}
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

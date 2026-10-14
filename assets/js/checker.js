@@ -279,6 +279,30 @@
     return notes.length ? "<div class=\"sched-notes\">" + notes.map(function (x) { return "<p>" + x + "</p>"; }).join("") + "</div>" : "";
   }
 
+  // Every choice adds a calendar that follows the published file, so the
+  // dates stay current each time the rules are refreshed and the files are
+  // rebuilt (_tools/build_calendars.js).
+  var CAL_ICON = "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\" focusable=\"false\"><rect x=\"3.5\" y=\"5\" width=\"17\" height=\"15\" rx=\"1.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"/>" +
+    "<path d=\"M3.5 10h17M8 3v4M16 3v4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/></svg>";
+
+  function calendarFile(a) { return "/calendar/" + a.stay + "-" + a.county + "-" + a.rent + ".ics"; }
+
+  function calendarBlock(a) {
+    if (a.rent === "unsure") {
+      return "<div class=\"cal-add\"><p class=\"cal-later\">Once you know your rent range, pick it in question 3 and you can add these dates to your calendar.</p></div>";
+    }
+    var file = calendarFile(a);
+    var feed = "webcal://" + location.host + file;
+    return "<div class=\"cal-add\"><div class=\"cal-row\">" +
+      "<button type=\"button\" class=\"btn small cal-btn\" id=\"cal-toggle\" aria-expanded=\"false\" aria-controls=\"cal-options\">" + CAL_ICON + "Add these dates to my calendar</button>" +
+      "<p>Your due dates go straight into your own calendar. There's no email and no sign-up, and the dates stay current each year.</p></div>" +
+      "<ul class=\"cal-options\" id=\"cal-options\" hidden>" +
+      "<li><a class=\"cal-opt\" id=\"cal-apple\" href=\"" + esc(feed) + "\" data-track=\"calendar_apple\"><b>Apple Calendar</b><span>Works on iPhone, iPad and Mac.</span></a></li>" +
+      "<li><a class=\"cal-opt\" id=\"cal-google\" href=\"https://calendar.google.com/calendar/render?cid=" + encodeURIComponent(feed) + "\" target=\"_blank\" rel=\"noopener\" data-track=\"calendar_google\"><b>Google Calendar</b><span>Opens Google Calendar so you can add it.</span></a></li>" +
+      "<li><button type=\"button\" class=\"cal-opt\" id=\"cal-copy\" data-link=\"" + esc(location.origin + file) + "\" data-track=\"calendar_copy\"><b>Other calendar apps</b><span>Copies a link you can add in Outlook or any calendar app that takes one.</span></button></li>" +
+      "</ul><p class=\"cal-status\" role=\"status\" aria-live=\"polite\"></p></div>";
+  }
+
   function renderResults(a, t, P) {
     var L = P.list;
     var county = C.COUNTIES[a.county];
@@ -292,6 +316,7 @@
       "<div class=\"part-head\"><div><p class=\"eyebrow\">Part two</p>" +
       "<h2 id=\"results-title\" tabindex=\"-1\">Your schedule, " + P.cols[0].month + " " + P.cols[0].y + " to " + P.cols[11].month + " " + P.cols[11].y + "</h2></div>" +
       "<p class=\"meta\">" + n + " dates. " + esc(scheduleSentence(a, f)) + "</p></div>";
+    html += calendarBlock(a);
 
     html += "<div class=\"sched-wrap\"><table class=\"sched\"><caption class=\"sr-only\">Every due date in order</caption><thead><tr>" +
       "<th scope=\"col\">Due date</th><th scope=\"col\">Form</th><th scope=\"col\">Return or payment</th><th scope=\"col\">Period</th><th scope=\"col\">Filed with</th><th scope=\"col\">Status</th>" +
@@ -384,6 +409,27 @@
         out.querySelectorAll(".extra").forEach(function (el) { el.hidden = !open; });
         more.setAttribute("aria-expanded", open ? "true" : "false");
         more.textContent = open ? "Show fewer dates" : "Show all " + out.querySelectorAll(".sched tbody tr").length + " dates";
+      });
+    }
+    var cal = document.getElementById("cal-toggle");
+    if (cal) {
+      var opts = document.getElementById("cal-options");
+      cal.addEventListener("click", function () {
+        var open = cal.getAttribute("aria-expanded") !== "true";
+        opts.hidden = !open;
+        cal.setAttribute("aria-expanded", open ? "true" : "false");
+        if (open) { track("calendar_open", {}); }
+      });
+      document.getElementById("cal-copy").addEventListener("click", function () {
+        var status = out.querySelector(".cal-status");
+        var link = this.getAttribute("data-link");
+        function done(ok) {
+          status.textContent = ok ? "Link copied. In your calendar app, add a calendar from the web and paste it there."
+                                  : "Here's the link to add in your calendar app. " + link;
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(link).then(function () { done(true); }, function () { done(false); });
+        } else { done(false); }
       });
     }
     document.getElementById("edit-answers").addEventListener("click", function () {

@@ -11,6 +11,7 @@
 "use strict";
 const puppeteer = require("puppeteer-core");
 const C = require("../assets/js/checker-logic.js");
+const CAL = require("./build_calendars.js");
 const BASE = process.env.BASE || "http://localhost:8111";
 const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const TODAY = "2026-10-01";
@@ -174,6 +175,36 @@ function compareResults(got, e, label) {
   ok(!/Answer the rest/.test(got.strip), `${label}: strip stops asking once complete`, got.strip);
 }
 
+// The calendar offer: right links for the answers, the file it points at is
+// the one the builder makes, and every control works.
+async function checkCalendar(p, a, label) {
+  const later = await p.$(".cal-later");
+  if (a.rent === "unsure") {
+    ok(!!later && !(await p.$("#cal-toggle")), `${label}: no calendar until the rent is known`);
+    return;
+  }
+  const file = "/calendar/" + CAL.fileName(a);
+  const c = await p.evaluate(() => {
+    const t = document.getElementById("cal-toggle"), o = document.getElementById("cal-options");
+    return t && { text: t.textContent.trim(), exp: t.getAttribute("aria-expanded"), hidden: o.hidden,
+      note: document.querySelector(".cal-row p").textContent,
+      apple: document.getElementById("cal-apple").getAttribute("href"),
+      google: document.getElementById("cal-google").getAttribute("href"),
+      googleRel: document.getElementById("cal-google").rel,
+      copy: document.getElementById("cal-copy").getAttribute("data-link"), host: location.host, origin: location.origin };
+  });
+  if (!c) { ok(false, `${label}: calendar button shown`); return; }
+  ok(c.text === "Add these dates to my calendar" && c.exp === "false" && c.hidden, `${label}: calendar button starts closed`, JSON.stringify(c));
+  ok(/no email and no sign-up/.test(c.note), `${label}: calendar says no email`, c.note);
+  const feed = "webcal://" + c.host + file;
+  ok(c.apple === feed, `${label}: Apple link subscribes to the right file`, c.apple);
+  ok(c.google === "https://calendar.google.com/calendar/render?cid=" + encodeURIComponent(feed) && c.googleRel.includes("noopener"), `${label}: Google link adds the right file`, c.google);
+  ok(c.copy === c.origin + file, `${label}: copied link is the right file`, c.copy);
+  const got = await p.evaluate(async f => { const r = await fetch(f, { cache: "no-store" }); return { status: r.status, type: r.headers.get("content-type"), body: await r.text() }; }, file);
+  ok(got.status === 200 && /^text\/calendar/.test(got.type || ""), `${label}: calendar file is served as a calendar`, got.status + " " + got.type);
+  ok(got.body === CAL.ics(a), `${label}: served calendar matches the builder`);
+}
+
 // Scenarios chosen so every option of every question appears at least once.
 const SCEN = [
   { stay: "str",  county: "honolulu", rent: "b1", status: "current", home: "island",   have: { get: true, tat: true } },
@@ -251,6 +282,7 @@ const SCEN = [
     compareStatement(s, e, label);
     compareResults(s, e, label);
     ok(s.chartShown && !s.listShown, `${label}: desktop shows the table`);
+    await checkCalendar(p, a, label);
     const done = (await events(p)).filter(x => x[1] === "checker_complete").map(x => x[2]);
     ok(done.length === 1 && done[0].stay === a.stay && done[0].county === a.county && done[0].rent === a.rent && done[0].status === a.status && done[0].home === a.home && done[0].source === "live",
        `${label}: one complete event carrying the choices`, JSON.stringify(done));
@@ -298,6 +330,23 @@ const SCEN = [
     st = await p.evaluate(() => ({ hidden: document.querySelectorAll(".sched tbody tr[hidden]").length, exp: document.getElementById("show-all").getAttribute("aria-expanded"), text: document.getElementById("show-all").textContent }));
     ok(st.hidden === total - 12 && st.exp === "false" && st.text === `Show all ${total} dates`, "show fewer hides them again", JSON.stringify(st));
   }
+  await tap(p, "#cal-toggle");
+  let cs = await p.evaluate(() => ({ exp: document.getElementById("cal-toggle").getAttribute("aria-expanded"), hidden: document.getElementById("cal-options").hidden,
+    names: Array.from(document.querySelectorAll(".cal-opt b")).map(b => b.textContent) }));
+  ok(cs.exp === "true" && !cs.hidden && cs.names.join() === "Apple Calendar,Google Calendar,Other calendar apps", "calendar button opens three choices", JSON.stringify(cs));
+  ok((await events(p)).some(x => x[1] === "calendar_open"), "opening the calendar choices is tracked");
+  await p.evaluate(() => document.querySelectorAll("a.cal-opt").forEach(a => a.addEventListener("click", ev => ev.preventDefault())));
+  await tap(p, "#cal-apple");
+  await tap(p, "#cal-google");
+  await tap(p, "#cal-copy");
+  await new Promise(r => setTimeout(r, 300));
+  const calClicks = (await events(p)).filter(x => x[1] === "click").map(x => x[2].label);
+  ok(["calendar_apple", "calendar_google", "calendar_copy"].every(l => calClicks.includes(l)), "each calendar choice is tracked", calClicks.join());
+  const calStatus = await p.$eval(".cal-status", e => e.textContent);
+  ok(/^Link copied\./.test(calStatus) || calStatus.includes("/calendar/" + CAL.fileName(changed)), "copying the calendar link gives feedback", calStatus);
+  await tap(p, "#cal-toggle");
+  cs = await p.evaluate(() => ({ exp: document.getElementById("cal-toggle").getAttribute("aria-expanded"), hidden: document.getElementById("cal-options").hidden }));
+  ok(cs.exp === "false" && cs.hidden, "calendar button closes the choices again", JSON.stringify(cs));
   await tap(p, "#copy-link");
   await new Promise(r => setTimeout(r, 300));
   ok(/Link copied|address bar/.test(await p.$eval(".copy-status", e => e.textContent)), "copy link gives feedback");
@@ -309,8 +358,9 @@ const SCEN = [
   ok(await p.evaluate(() => document.activeElement && document.activeElement.name === "stay"), "change my answers returns to question 1");
   await p.evaluate(() => document.querySelectorAll(".tool-row a").forEach(a => a.addEventListener("click", ev => ev.preventDefault())));
   const toolLinks = await p.$$(".tool-row a");
+  const before = (await events(p)).filter(x => x[1] === "outbound_click").length;
   for (const l of toolLinks) await l.click();
-  const clicks = (await events(p)).filter(x => x[1] === "outbound_click").length;
+  const clicks = (await events(p)).filter(x => x[1] === "outbound_click").length - before;
   ok(clicks === toolLinks.length, "every tool link records an outbound click", `${clicks} of ${toolLinks.length}`);
   const rows = await p.$$eval(".tool-row", lis => lis.map(li => {
     const a = li.querySelector("a");
@@ -337,6 +387,8 @@ const SCEN = [
   s = await shown(p);
   ok(s.overflow <= 0, "375px: page fits with the full schedule", String(s.overflow));
   ok(!s.chartShown && s.listShown, "375px: the date list replaces the table");
+  await tap(p, "#cal-toggle");
+  ok((await shown(p)).overflow <= 0, "375px: calendar choices fit");
   compareResults(s, expected(SCEN[6]), "375px");
   await p.screenshot({ path: process.env.SHOT || "/tmp/checker-375.png", fullPage: true });
   await p.close();

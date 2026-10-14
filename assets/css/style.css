@@ -236,6 +236,23 @@ p { margin: 0; }
 .part-two { padding-top: 104px; }
 .part-two h2:focus { outline: none; }
 .part-two .meta { margin-bottom: 4px; font-family: var(--sans); font-size: 15px; color: var(--muted); }
+.cal-add { margin-top: 28px; font-family: var(--sans); }
+.cal-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
+.cal-row p, .cal-later { flex: 1 1 320px; max-width: 600px; font-size: 15px; line-height: 1.5; color: var(--muted); }
+.cal-btn svg { width: 19px; height: 19px; flex: none; }
+.cal-options { list-style: none; margin: 16px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 760px) { .cal-options { grid-template-columns: minmax(0, 1fr); } }
+.cal-opt {
+  display: flex; flex-direction: column; gap: 4px; width: 100%; height: 100%; padding: 16px 18px;
+  font: inherit; text-align: left; color: var(--ink); text-decoration: none; cursor: pointer;
+  background: var(--white); border: 1px solid var(--rule-2); border-radius: 4px;
+}
+.cal-opt b { font-size: 17px; font-weight: 700; }
+.cal-opt span { font-size: 14px; line-height: 1.45; color: var(--muted); }
+.cal-opt:hover { color: var(--ink); border-color: var(--ink); }
+.cal-opt:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.cal-status { margin-top: 8px; min-height: 1.5em; font-size: 15px; line-height: 1.5; color: var(--muted); overflow-wrap: anywhere; }
+
 .sched-wrap { margin-top: 28px; overflow-x: auto; border: 1px solid var(--rule-2); border-radius: 4px; background: var(--white); }
 .sched { width: 100%; min-width: 820px; border-collapse: collapse; font-family: var(--sans); font-size: 16px; }
 .sched thead tr { background: var(--ink); color: var(--on-dark); text-align: left; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
@@ -366,7 +383,7 @@ sup.fn { color: var(--coral); font-family: var(--sans); font-weight: 700; font-s
 
 /* ---------------------------------------------------------------- print: the statement and schedule */
 @media print {
-  .site-header, .site-footer, .hero-copy, .seal, .part-one, .faq-section, .skip-link, .p3-actions, .copy-status, .sched-more { display: none !important; }
+  .site-header, .site-footer, .hero-copy, .seal, .part-one, .faq-section, .skip-link, .p3-actions, .copy-status, .sched-more, .cal-add { display: none !important; }
   body { background: #fff; font-size: 12pt; }
   .hero { padding-top: 0; }
   .st-card { box-shadow: none; border-color: #000; }

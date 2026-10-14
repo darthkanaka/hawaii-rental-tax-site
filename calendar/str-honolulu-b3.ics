@@ -1,0 +1,664 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//hawaiirentaltax.com//Due dates//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+NAME:Rental tax dates\, Oʻahu
+X-WR-CALNAME:Rental tax dates\, Oʻahu
+DESCRIPTION:Your Hawaii rental tax due dates from hawaiirentaltax.com\, Oct
+ ober 2026 to December 2027.
+X-WR-CALDESC:Your Hawaii rental tax due dates from hawaiirentaltax.com\, Oc
+ tober 2026 to December 2027.
+X-WR-TIMEZONE:Pacific/Honolulu
+SOURCE;VALUE=URI:https://hawaiirentaltax.com/calendar/str-honolulu-b3.ics
+REFRESH-INTERVAL;VALUE=DURATION:P1D
+X-PUBLISHED-TTL:P1D
+BEGIN:VEVENT
+UID:tat-202610-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20261020
+DTEND;VALUE=DATE:20261021
+SUMMARY:State TAT return due for September 2026 (TA-1)
+DESCRIPTION:File Form TA-1 and pay the state TAT for September 2026 on Hawa
+ ii Tax Online. It counts as filed with the City and County of Honolulu too
+ .\nhttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Rules checked Oc
+ tober 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:State TAT return due for September 2026 (TA-1)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:county-202610-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20261020
+DTEND;VALUE=DATE:20261021
+SUMMARY:County TAT payment due for September 2026 (OTAT)
+DESCRIPTION:Pay the City and County of Honolulu its 3% TAT for September 20
+ 26. There's no county return\, just the payment.\nhttps://otatpay.honolulu
+ .gov/\nPaying from a bank account is free. Cards cost 3%.\n\nFrom hawaiire
+ ntaltax.com. Rules checked October 1\, 2026. This is general information\,
+  not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:County TAT payment due for September 2026 (OTAT)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:tat-202611-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20261120
+DTEND;VALUE=DATE:20261121
+SUMMARY:State TAT return due for October 2026 (TA-1)
+DESCRIPTION:File Form TA-1 and pay the state TAT for October 2026 on Hawaii
+  Tax Online. It counts as filed with the City and County of Honolulu too.\
+ nhttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Rules checked Octo
+ ber 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:State TAT return due for October 2026 (TA-1)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:county-202611-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20261120
+DTEND;VALUE=DATE:20261121
+SUMMARY:County TAT payment due for October 2026 (OTAT)
+DESCRIPTION:Pay the City and County of Honolulu its 3% TAT for October 2026
+ . There's no county return\, just the payment.\nhttps://otatpay.honolulu.g
+ ov/\nPaying from a bank account is free. Cards cost 3%.\n\nFrom hawaiirent
+ altax.com. Rules checked October 1\, 2026. This is general information\, n
+ ot tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:County TAT payment due for October 2026 (OTAT)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:county-202612-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20261220
+DTEND;VALUE=DATE:20261221
+SUMMARY:County TAT payment due for November 2026 (OTAT)
+DESCRIPTION:Pay the City and County of Honolulu its 3% TAT for November 202
+ 6. There's no county return\, just the payment.\nhttps://otatpay.honolulu.
+ gov/\nPaying from a bank account is free. Cards cost 3%.\n\nFrom hawaiiren
+ taltax.com. Rules checked October 1\, 2026. This is general information\, 
+ not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:County TAT payment due for November 2026 (OTAT)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:tat-202612-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20261221
+DTEND;VALUE=DATE:20261222
+SUMMARY:State TAT return due for November 2026 (TA-1)
+DESCRIPTION:File Form TA-1 and pay the state TAT for November 2026 on Hawai
+ i Tax Online. It counts as filed with the City and County of Honolulu too.
+ \nhttps://hitax.hawaii.gov/\nIt's due Monday because the 20th is a Sunday.
+ \n\nFrom hawaiirentaltax.com. Rules checked October 1\, 2026. This is gene
+ ral information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:State TAT return due for November 2026 (TA-1)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:get-202701-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270120
+DTEND;VALUE=DATE:20270121
+SUMMARY:GET return due for July to December 2026 (G-45)
+DESCRIPTION:File Form G-45 and pay the GET for July to December 2026 on Haw
+ aii Tax Online.\nhttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Ru
+ les checked October 1\, 2026. This is general information\, not tax advice
+ .
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:GET return due for July to December 2026 (G-45)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:tat-202701-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270120
+DTEND;VALUE=DATE:20270121
+SUMMARY:State TAT return due for December 2026 (TA-1)
+DESCRIPTION:File Form TA-1 and pay the state TAT for December 2026 on Hawai
+ i Tax Online. It counts as filed with the City and County of Honolulu too.
+ \nhttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Rules checked Oct
+ ober 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:State TAT return due for December 2026 (TA-1)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:county-202701-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270120
+DTEND;VALUE=DATE:20270121
+SUMMARY:County TAT payment due for December 2026 (OTAT)
+DESCRIPTION:Pay the City and County of Honolulu its 3% TAT for December 202
+ 6. There's no county return\, just the payment.\nhttps://otatpay.honolulu.
+ gov/\nPaying from a bank account is free. Cards cost 3%.\n\nFrom hawaiiren
+ taltax.com. Rules checked October 1\, 2026. This is general information\, 
+ not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:County TAT payment due for December 2026 (OTAT)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:county-202702-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270220
+DTEND;VALUE=DATE:20270221
+SUMMARY:County TAT payment due for January 2027 (OTAT)
+DESCRIPTION:Pay the City and County of Honolulu its 3% TAT for January 2027
+ . There's no county return\, just the payment.\nhttps://otatpay.honolulu.g
+ ov/\nPaying from a bank account is free. Cards cost 3%.\n\nFrom hawaiirent
+ altax.com. Rules checked October 1\, 2026. This is general information\, n
+ ot tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:County TAT payment due for January 2027 (OTAT)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:tat-202702-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270222
+DTEND;VALUE=DATE:20270223
+SUMMARY:State TAT return due for January 2027 (TA-1)
+DESCRIPTION:File Form TA-1 and pay the state TAT for January 2027 on Hawaii
+  Tax Online. It counts as filed with the City and County of Honolulu too.\
+ nhttps://hitax.hawaii.gov/\nIt's due Monday because the 20th is a Saturday
+ .\n\nFrom hawaiirentaltax.com. Rules checked October 1\, 2026. This is gen
+ eral information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:State TAT return due for January 2027 (TA-1)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:county-202703-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270320
+DTEND;VALUE=DATE:20270321
+SUMMARY:County TAT payment due for February 2027 (OTAT)
+DESCRIPTION:Pay the City and County of Honolulu its 3% TAT for February 202
+ 7. There's no county return\, just the payment.\nhttps://otatpay.honolulu.
+ gov/\nPaying from a bank account is free. Cards cost 3%.\n\nFrom hawaiiren
+ taltax.com. Rules checked October 1\, 2026. This is general information\, 
+ not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:County TAT payment due for February 2027 (OTAT)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:tat-202703-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270322
+DTEND;VALUE=DATE:20270323
+SUMMARY:State TAT return due for February 2027 (TA-1)
+DESCRIPTION:File Form TA-1 and pay the state TAT for February 2027 on Hawai
+ i Tax Online. It counts as filed with the City and County of Honolulu too.
+ \nhttps://hitax.hawaii.gov/\nIt's due Monday because the 20th is a Saturda
+ y.\n\nFrom hawaiirentaltax.com. Rules checked October 1\, 2026. This is ge
+ neral information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:State TAT return due for February 2027 (TA-1)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:tat-202704-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270420
+DTEND;VALUE=DATE:20270421
+SUMMARY:State TAT return due for March 2027 (TA-1)
+DESCRIPTION:File Form TA-1 and pay the state TAT for March 2027 on Hawaii T
+ ax Online. It counts as filed with the City and County of Honolulu too.\nh
+ ttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Rules checked Octobe
+ r 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:State TAT return due for March 2027 (TA-1)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:county-202704-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270420
+DTEND;VALUE=DATE:20270421
+SUMMARY:County TAT payment due for March 2027 (OTAT)
+DESCRIPTION:Pay the City and County of Honolulu its 3% TAT for March 2027. 
+ There's no county return\, just the payment.\nhttps://otatpay.honolulu.gov
+ /\nPaying from a bank account is free. Cards cost 3%.\n\nFrom hawaiirental
+ tax.com. Rules checked October 1\, 2026. This is general information\, not
+  tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:County TAT payment due for March 2027 (OTAT)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:annual-get-202704-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270420
+DTEND;VALUE=DATE:20270421
+SUMMARY:Annual GET return due for 2026 (G-49)
+DESCRIPTION:File Form G-49\, the annual GET return for 2026\, on Hawaii Tax
+  Online.\nhttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Rules che
+ cked October 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Annual GET return due for 2026 (G-49)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:annual-tat-202704-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270420
+DTEND;VALUE=DATE:20270421
+SUMMARY:Annual state TAT return due for 2026 (TA-2)
+DESCRIPTION:File Form TA-2\, the annual state TAT return for 2026\, on Hawa
+ ii Tax Online.\nhttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Rul
+ es checked October 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Annual state TAT return due for 2026 (TA-2)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:county-annual-202704-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270420
+DTEND;VALUE=DATE:20270421
+SUMMARY:County TAT top-up due for 2026\, if your TA-2 shows one
+DESCRIPTION:If your TA-2 for 2026 shows county TAT that your OTAT payments 
+ missed\, pay the rest to the City and County of Honolulu.\nhttps://otatpay
+ .honolulu.gov/\n\nFrom hawaiirentaltax.com. Rules checked October 1\, 2026
+ . This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:County TAT top-up due for 2026\, if your TA-2 shows one
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:tat-202705-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270520
+DTEND;VALUE=DATE:20270521
+SUMMARY:State TAT return due for April 2027 (TA-1)
+DESCRIPTION:File Form TA-1 and pay the state TAT for April 2027 on Hawaii T
+ ax Online. It counts as filed with the City and County of Honolulu too.\nh
+ ttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Rules checked Octobe
+ r 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:State TAT return due for April 2027 (TA-1)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:county-202705-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270520
+DTEND;VALUE=DATE:20270521
+SUMMARY:County TAT payment due for April 2027 (OTAT)
+DESCRIPTION:Pay the City and County of Honolulu its 3% TAT for April 2027. 
+ There's no county return\, just the payment.\nhttps://otatpay.honolulu.gov
+ /\nPaying from a bank account is free. Cards cost 3%.\n\nFrom hawaiirental
+ tax.com. Rules checked October 1\, 2026. This is general information\, not
+  tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:County TAT payment due for April 2027 (OTAT)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:county-202706-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270620
+DTEND;VALUE=DATE:20270621
+SUMMARY:County TAT payment due for May 2027 (OTAT)
+DESCRIPTION:Pay the City and County of Honolulu its 3% TAT for May 2027. Th
+ ere's no county return\, just the payment.\nhttps://otatpay.honolulu.gov/\
+ nPaying from a bank account is free. Cards cost 3%.\n\nFrom hawaiirentalta
+ x.com. Rules checked October 1\, 2026. This is general information\, not t
+ ax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:County TAT payment due for May 2027 (OTAT)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:tat-202706-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270621
+DTEND;VALUE=DATE:20270622
+SUMMARY:State TAT return due for May 2027 (TA-1)
+DESCRIPTION:File Form TA-1 and pay the state TAT for May 2027 on Hawaii Tax
+  Online. It counts as filed with the City and County of Honolulu too.\nhtt
+ ps://hitax.hawaii.gov/\nIt's due Monday because the 20th is a Sunday.\n\nF
+ rom hawaiirentaltax.com. Rules checked October 1\, 2026. This is general i
+ nformation\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:State TAT return due for May 2027 (TA-1)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:get-202707-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270720
+DTEND;VALUE=DATE:20270721
+SUMMARY:GET return due for January to June 2027 (G-45)
+DESCRIPTION:File Form G-45 and pay the GET for January to June 2027 on Hawa
+ ii Tax Online.\nhttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Rul
+ es checked October 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:GET return due for January to June 2027 (G-45)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:tat-202707-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270720
+DTEND;VALUE=DATE:20270721
+SUMMARY:State TAT return due for June 2027 (TA-1)
+DESCRIPTION:File Form TA-1 and pay the state TAT for June 2027 on Hawaii Ta
+ x Online. It counts as filed with the City and County of Honolulu too.\nht
+ tps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Rules checked October
+  1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:State TAT return due for June 2027 (TA-1)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:county-202707-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270720
+DTEND;VALUE=DATE:20270721
+SUMMARY:County TAT payment due for June 2027 (OTAT)
+DESCRIPTION:Pay the City and County of Honolulu its 3% TAT for June 2027. T
+ here's no county return\, just the payment.\nhttps://otatpay.honolulu.gov/
+ \nPaying from a bank account is free. Cards cost 3%.\n\nFrom hawaiirentalt
+ ax.com. Rules checked October 1\, 2026. This is general information\, not 
+ tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:County TAT payment due for June 2027 (OTAT)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:county-202708-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270820
+DTEND;VALUE=DATE:20270821
+SUMMARY:County TAT payment due for July 2027 (OTAT)
+DESCRIPTION:Pay the City and County of Honolulu its 3% TAT for July 2027. T
+ here's no county return\, just the payment.\nhttps://otatpay.honolulu.gov/
+ \nPaying from a bank account is free. Cards cost 3%.\n\nFrom hawaiirentalt
+ ax.com. Rules checked October 1\, 2026. This is general information\, not 
+ tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:County TAT payment due for July 2027 (OTAT)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:tat-202708-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270823
+DTEND;VALUE=DATE:20270824
+SUMMARY:State TAT return due for July 2027 (TA-1)
+DESCRIPTION:File Form TA-1 and pay the state TAT for July 2027 on Hawaii Ta
+ x Online. It counts as filed with the City and County of Honolulu too.\nht
+ tps://hitax.hawaii.gov/\nIt's due Monday because the 20th is Statehood Day
+ .\n\nFrom hawaiirentaltax.com. Rules checked October 1\, 2026. This is gen
+ eral information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:State TAT return due for July 2027 (TA-1)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:tat-202709-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270920
+DTEND;VALUE=DATE:20270921
+SUMMARY:State TAT return due for August 2027 (TA-1)
+DESCRIPTION:File Form TA-1 and pay the state TAT for August 2027 on Hawaii 
+ Tax Online. It counts as filed with the City and County of Honolulu too.\n
+ https://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Rules checked Octob
+ er 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:State TAT return due for August 2027 (TA-1)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:county-202709-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270920
+DTEND;VALUE=DATE:20270921
+SUMMARY:County TAT payment due for August 2027 (OTAT)
+DESCRIPTION:Pay the City and County of Honolulu its 3% TAT for August 2027.
+  There's no county return\, just the payment.\nhttps://otatpay.honolulu.go
+ v/\nPaying from a bank account is free. Cards cost 3%.\n\nFrom hawaiirenta
+ ltax.com. Rules checked October 1\, 2026. This is general information\, no
+ t tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:County TAT payment due for August 2027 (OTAT)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:tat-202710-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20271020
+DTEND;VALUE=DATE:20271021
+SUMMARY:State TAT return due for September 2027 (TA-1)
+DESCRIPTION:File Form TA-1 and pay the state TAT for September 2027 on Hawa
+ ii Tax Online. It counts as filed with the City and County of Honolulu too
+ .\nhttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Rules checked Oc
+ tober 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:State TAT return due for September 2027 (TA-1)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:county-202710-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20271020
+DTEND;VALUE=DATE:20271021
+SUMMARY:County TAT payment due for September 2027 (OTAT)
+DESCRIPTION:Pay the City and County of Honolulu its 3% TAT for September 20
+ 27. There's no county return\, just the payment.\nhttps://otatpay.honolulu
+ .gov/\nPaying from a bank account is free. Cards cost 3%.\n\nFrom hawaiire
+ ntaltax.com. Rules checked October 1\, 2026. This is general information\,
+  not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:County TAT payment due for September 2027 (OTAT)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:county-202711-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20271120
+DTEND;VALUE=DATE:20271121
+SUMMARY:County TAT payment due for October 2027 (OTAT)
+DESCRIPTION:Pay the City and County of Honolulu its 3% TAT for October 2027
+ . There's no county return\, just the payment.\nhttps://otatpay.honolulu.g
+ ov/\nPaying from a bank account is free. Cards cost 3%.\n\nFrom hawaiirent
+ altax.com. Rules checked October 1\, 2026. This is general information\, n
+ ot tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:County TAT payment due for October 2027 (OTAT)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:tat-202711-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20271122
+DTEND;VALUE=DATE:20271123
+SUMMARY:State TAT return due for October 2027 (TA-1)
+DESCRIPTION:File Form TA-1 and pay the state TAT for October 2027 on Hawaii
+  Tax Online. It counts as filed with the City and County of Honolulu too.\
+ nhttps://hitax.hawaii.gov/\nIt's due Monday because the 20th is a Saturday
+ .\n\nFrom hawaiirentaltax.com. Rules checked October 1\, 2026. This is gen
+ eral information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:State TAT return due for October 2027 (TA-1)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:tat-202712-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20271220
+DTEND;VALUE=DATE:20271221
+SUMMARY:State TAT return due for November 2027 (TA-1)
+DESCRIPTION:File Form TA-1 and pay the state TAT for November 2027 on Hawai
+ i Tax Online. It counts as filed with the City and County of Honolulu too.
+ \nhttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Rules checked Oct
+ ober 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:State TAT return due for November 2027 (TA-1)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:county-202712-str-honolulu-b3@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20271220
+DTEND;VALUE=DATE:20271221
+SUMMARY:County TAT payment due for November 2027 (OTAT)
+DESCRIPTION:Pay the City and County of Honolulu its 3% TAT for November 202
+ 7. There's no county return\, just the payment.\nhttps://otatpay.honolulu.
+ gov/\nPaying from a bank account is free. Cards cost 3%.\n\nFrom hawaiiren
+ taltax.com. Rules checked October 1\, 2026. This is general information\, 
+ not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:County TAT payment due for November 2027 (OTAT)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,159 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//hawaiirentaltax.com//Due dates//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+NAME:Rental tax dates\, Maui County
+X-WR-CALNAME:Rental tax dates\, Maui County
+DESCRIPTION:Your Hawaii rental tax due dates from hawaiirentaltax.com\, Oct
+ ober 2026 to December 2027. Your TA-1 and MCTAT dates aren't here because 
+ they follow the TAT schedule you picked when you registered.
+X-WR-CALDESC:Your Hawaii rental tax due dates from hawaiirentaltax.com\, Oc
+ tober 2026 to December 2027. Your TA-1 and MCTAT dates aren't here because
+  they follow the TAT schedule you picked when you registered.
+X-WR-TIMEZONE:Pacific/Honolulu
+SOURCE;VALUE=URI:https://hawaiirentaltax.com/calendar/both-maui-b4.ics
+REFRESH-INTERVAL;VALUE=DURATION:P1D
+X-PUBLISHED-TTL:P1D
+BEGIN:VEVENT
+UID:get-202610-both-maui-b4@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20261020
+DTEND;VALUE=DATE:20261021
+SUMMARY:GET return due for July to September 2026 (G-45)
+DESCRIPTION:File Form G-45 and pay the GET for July to September 2026 on Ha
+ waii Tax Online.\nhttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. R
+ ules checked October 1\, 2026. This is general information\, not tax advic
+ e.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:GET return due for July to September 2026 (G-45)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:get-202701-both-maui-b4@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270120
+DTEND;VALUE=DATE:20270121
+SUMMARY:GET return due for October to December 2026 (G-45)
+DESCRIPTION:File Form G-45 and pay the GET for October to December 2026 on 
+ Hawaii Tax Online.\nhttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com.
+  Rules checked October 1\, 2026. This is general information\, not tax adv
+ ice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:GET return due for October to December 2026 (G-45)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:get-202704-both-maui-b4@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270420
+DTEND;VALUE=DATE:20270421
+SUMMARY:GET return due for January to March 2027 (G-45)
+DESCRIPTION:File Form G-45 and pay the GET for January to March 2027 on Haw
+ aii Tax Online.\nhttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Ru
+ les checked October 1\, 2026. This is general information\, not tax advice
+ .
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:GET return due for January to March 2027 (G-45)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:annual-get-202704-both-maui-b4@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270420
+DTEND;VALUE=DATE:20270421
+SUMMARY:Annual GET return due for 2026 (G-49)
+DESCRIPTION:File Form G-49\, the annual GET return for 2026\, on Hawaii Tax
+  Online.\nhttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Rules che
+ cked October 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Annual GET return due for 2026 (G-49)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:annual-tat-202704-both-maui-b4@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270420
+DTEND;VALUE=DATE:20270421
+SUMMARY:Annual state TAT return due for 2026 (TA-2)
+DESCRIPTION:File Form TA-2\, the annual state TAT return for 2026\, on Hawa
+ ii Tax Online.\nhttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Rul
+ es checked October 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Annual state TAT return due for 2026 (TA-2)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:county-annual-202704-both-maui-b4@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270420
+DTEND;VALUE=DATE:20270421
+SUMMARY:County TAT top-up due for 2026\, if your TA-2 shows one
+DESCRIPTION:If your TA-2 for 2026 shows county TAT that your MCTAT payments
+  missed\, pay the rest to Maui County.\nhttps://www.mauicounty.gov/tat\n\n
+ From hawaiirentaltax.com. Rules checked October 1\, 2026. This is general 
+ information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:County TAT top-up due for 2026\, if your TA-2 shows one
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:get-202707-both-maui-b4@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20270720
+DTEND;VALUE=DATE:20270721
+SUMMARY:GET return due for April to June 2027 (G-45)
+DESCRIPTION:File Form G-45 and pay the GET for April to June 2027 on Hawaii
+  Tax Online.\nhttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. Rules
+  checked October 1\, 2026. This is general information\, not tax advice.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:GET return due for April to June 2027 (G-45)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:get-202710-both-maui-b4@hawaiirentaltax.com
+DTSTAMP:20261001T000000Z
+DTSTART;VALUE=DATE:20271020
+DTEND;VALUE=DATE:20271021
+SUMMARY:GET return due for July to September 2027 (G-45)
+DESCRIPTION:File Form G-45 and pay the GET for July to September 2027 on Ha
+ waii Tax Online.\nhttps://hitax.hawaii.gov/\n\nFrom hawaiirentaltax.com. R
+ ules checked October 1\, 2026. This is general information\, not tax advic
+ e.
+URL:https://hawaiirentaltax.com/
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:GET return due for July to September 2027 (G-45)
+TRIGGER:-P2DT15H
+END:VALARM
+END:VEVENT
+END:VCALENDAR

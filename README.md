@@ -10,8 +10,9 @@ Run by Veex Photo LLC. It replaced a tax filing service that was wound down on
 site offers that service any more, and `_tools/verify.py` blocks anything that
 would.
 
-Static HTML, one stylesheet, plain JavaScript, no build step. GitHub Pages
-serves `main`.
+Static HTML, one stylesheet, plain JavaScript, no build step for the pages.
+The calendar files in `calendar/` are generated (see Calendar files). GitHub
+Pages serves `main`.
 
 ## How the checker works
 
@@ -30,12 +31,15 @@ serves `main`.
 - `RULES_CHECKED` at the top of `checker-logic.js` is the date the rules were
   last checked against the Department of Taxation and the counties. Change a
   rule and that date together.
+- **Re-check the rules each January**, then bump `RULES_CHECKED` and rebuild
+  the calendar files, so every calendar people added rolls forward a year.
 
 ## Before every push
 
 ```bash
 python3 _tools/sync.py                 # stamp the shared header and footer
 python3 _tools/verify.py               # structured data, links, banned copy
+node _tools/build_calendars.js         # rebuild calendar/*.ics (--check just compares)
 node _tools/test_checker.js            # every rule, every answer combination, every day 2026-2030
 python3 -m http.server 8111 &          # then, with puppeteer-core on NODE_PATH:
 NODE_PATH=<dir>/node_modules node _tools/test_checker_browser.js
@@ -44,6 +48,22 @@ NODE_PATH=<dir>/node_modules node _tools/test_checker_browser.js
 The browser test drives every control in Chrome and checks every date, rate
 and line on screen against the rules. Analytics requests are blocked during
 the test so it never reaches the real property.
+
+## Calendar files
+
+Part two offers "Add these dates to my calendar" with three choices: Apple
+Calendar (a `webcal://` link), Google Calendar (its add-by-URL link) and other
+apps (copies the `https://` link). All three add a calendar that follows the
+published file, so nobody gives an email or signs up.
+
+`_tools/build_calendars.js` writes one `.ics` per stay, island and rent range
+(60 files). When the rent answer is "not sure", a line asking for a rent
+range takes the button's place. Each file holds every due date from the month in
+`RULES_CHECKED` through December of the next year, from `calendarPlan()` in
+`checker-logic.js`, with a reminder three days before at 9 AM. The unit tests
+hold every file to the page's own schedule, day by day, and fail if a file on
+disk is stale. Event UIDs are stable, so a rebuild updates people's calendars
+instead of duplicating events.
 
 ## Design
 

@@ -482,6 +482,55 @@
     };
   }
 
+  // Every due date from `from` to `to`, inclusive, for the calendar files.
+  // Same dates and wording as yearPlan(), over a longer window: every period
+  // and every annual return, not just the next twelve months.
+  function calendarPlan(a, from, to) {
+    var L = checklist(a, from);
+    var county = COUNTIES[a.county];
+    var events = [];
+    function add(due, form, what, kind, period) {
+      if (before(due, from) || before(to, due)) { return; }
+      events.push({ due: due, dueText: fmt(due), form: form, what: what, kind: kind, period: period });
+    }
+    L.file.forEach(function (f) {
+      if (f.annual || !f.frequency) { return; }
+      var isGet = f.form === "G-45";
+      var label = f.county ? "County payment" : (isGet ? "GET" : "State TAT");
+      var kind = f.county ? "county" : (isGet ? "get" : "tat");
+      for (var y = from.y - 1; y <= to.y; y++) {
+        PERIODS[f.frequency].forEach(function (p) {
+          var period = periodLabel(y, p[0], p[1]);
+          add(periodicDue(y, p[1], f.county && !county.shifts), f.form, label + " for " + period, kind, period);
+        });
+      }
+    });
+    var cf = L.file.filter(function (f) { return f.county; })[0];
+    for (var ty = from.y - 2; ty <= to.y; ty++) {
+      L.file.forEach(function (f) {
+        if (!f.annual) { return; }
+        add(annualDue(ty), f.form, (f.form === "G-49" ? "Annual GET return" : "Annual state TAT return") + " for all of " + ty,
+            f.form === "G-49" ? "annual-get" : "annual-tat", "All of " + ty);
+      });
+      if (cf) {
+        add(annualDue(ty, !county.shifts), cf.form, "Anything your TA-2 shows that your " + cf.form + " payments missed",
+            "county-annual", "All of " + ty);
+      }
+    }
+    events.sort(function (p, q) { return toUTC(p.due) - toUTC(q.due); });
+    return {
+      events: events, county: county,
+      unknown: L.file.filter(function (f) { return !f.annual && !f.frequency; }).map(function (f) { return f.form; })
+    };
+  }
+
+  // The calendar files cover the month the rules were checked through the
+  // end of the next year, so refreshing the rules refreshes the calendars.
+  function calendarWindow() {
+    var p = RULES_CHECKED.split("-");
+    return { from: ymd(+p[0], +p[1], 1), to: ymd(+p[0] + 1, 12, 31) };
+  }
+
   function fmtLong(iso) {
     var p = iso.split("-");
     return MONTHS[+p[1] - 1] + " " + (+p[2]) + ", " + p[0];
@@ -523,6 +572,7 @@
     frequencyForLiability: frequencyForLiability, frequencyForBand: frequencyForBand,
     ymd: ymd, addDays: addDays, weekday: weekday, easter: easter, holidays: holidays, isHoliday: isHoliday,
     holidayName: holidayName, dueShift: dueShift, stripYear: stripYear, yearStrip: yearStrip, yearPlan: yearPlan,
+    calendarPlan: calendarPlan, calendarWindow: calendarWindow, fmtLong: fmtLong,
     MONTHS: MONTHS, WEEKDAYS: WEEKDAYS, ordinal: ordinal, daysBetween: daysBetween,
     businessDay: businessDay, periodicDue: periodicDue, annualDue: annualDue, upcoming: upcoming, nextAnnual: nextAnnual,
     hawaiiToday: hawaiiToday, fmt: fmt, checklist: checklist
