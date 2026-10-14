@@ -26,7 +26,7 @@ ROOT = Path(__file__).resolve().parent.parent
 PARTIALS = ROOT / "_partials"
 
 # Bumped whenever the tax content on the site is re-verified against DOTAX.
-LEGAL_DATE = "September 2026"
+LEGAL_DATE = "October 2026"
 
 
 

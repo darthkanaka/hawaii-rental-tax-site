@@ -165,6 +165,8 @@ eq(P.next.items.map(i => i.form + " " + i.what), ["G-45 GET for July to Septembe
 eq(P.groups.slice(1, 4).map(g => g.dueText + " " + g.items.map(i => i.form).join("+")), ["Fri, Nov 20, 2026 TA-1+MCTAT", "Sun, Dec 20, 2026 MCTAT", "Mon, Dec 21, 2026 TA-1"], "dates in order, county and state apart in December");
 eq(P.moved.map(c => c.mon), ["Dec", "Feb", "Mar", "Jun", "Aug"], "moved months that carry a state return");
 eq(P.unknown, [], "every schedule known");
+eq(P.events.slice(0, 3).map(e => e.kind + " " + e.period), ["get July to September 2026", "tat September 2026", "county September 2026"], "events carry their kind and period");
+eq(P.events.filter(e => e.kind.startsWith("annual") || e.kind === "county-annual").map(e => e.kind + " " + e.period), ["annual-get All of 2026", "annual-tat All of 2026", "county-annual All of 2026"], "annual events carry the year");
 eq(P.groups.find(g => s(g.due) === "2027-04-20").items.map(i => i.form).join(), "G-45,TA-1,MCTAT,G-49,TA-2,MCTAT", "April 20 carries the quarter, the month, both annuals and the county top-up");
 
 // columns start at the first state due date that hasn't passed
@@ -261,6 +263,7 @@ for (let hv = 0; hv < 4; hv++) {
   }
   inv(JSON.stringify(Y.unknown) === JSON.stringify(L.file.filter(f => !f.annual && !f.frequency).map(f => f.form)), "plan: unknown rows match the checklist", ctx);
   inv(Y.events.every(e => ge(e.due, today)), "plan: every event today or later", ctx);
+  inv(Y.events.every(e => ["get", "tat", "county", "annual-get", "annual-tat", "county-annual"].includes(e.kind) && /\d{4}$/.test(e.period)), "plan: every event has a kind and a period ending in its year", ctx);
   inv(Y.events.every(e => ge(e.due, Y.next.due)), "plan: next up is the earliest event", ctx);
   inv(Y.next.days === C.daysBetween(today, Y.next.due) && Y.next.days >= 0, "plan: days until next", ctx);
   inv(Y.moved.every(c => c.moved && c.marked), "plan: moved notes only where a state date moved", ctx);

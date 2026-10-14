@@ -419,7 +419,9 @@
     function empty() { return cols.map(function () { return null; }); }
 
     var rows = [], events = [];
-    function event(due, form, what) { events.push({ due: due, dueText: fmt(due), form: form, what: what }); }
+    function event(due, form, what, kind, period) {
+      events.push({ due: due, dueText: fmt(due), form: form, what: what, kind: kind, period: period });
+    }
 
     L.file.forEach(function (f) {
       if (f.annual) { return; }
@@ -436,7 +438,8 @@
           if (j === -1) { return; }
           row.cells[j] = n;
           if (!f.county || county.shifts) { cols[j].marked = true; }
-          event(n.due, f.form, (f.county ? "County payment" : (isGet ? "GET" : "State TAT")) + " for " + n.period);
+          event(n.due, f.form, (f.county ? "County payment" : (isGet ? "GET" : "State TAT")) + " for " + n.period,
+                f.county ? "county" : (isGet ? "get" : "tat"), n.period);
         });
       }
       rows.push(row);
@@ -451,11 +454,13 @@
     cols[aj].marked = true;
     rows.push(arow);
     annual.forEach(function (f) {
-      event(f.next[0].due, f.form, (f.form === "G-49" ? "Annual GET return" : "Annual state TAT return") + " for " + f.next[0].period);
+      event(f.next[0].due, f.form, (f.form === "G-49" ? "Annual GET return" : "Annual state TAT return") + " for " + f.next[0].period,
+            f.form === "G-49" ? "annual-get" : "annual-tat", "All of " + arow.year);
     });
     var cf = L.file.filter(function (f) { return f.county; })[0];
     if (cf) {
-      event(cf.annualNext.due, cf.form, "Anything your TA-2 shows that your " + cf.form + " payments missed");
+      event(cf.annualNext.due, cf.form, "Anything your TA-2 shows that your " + cf.form + " payments missed",
+            "county-annual", "All of " + cf.annualNext.year);
     }
 
     events.sort(function (p, q) { return toUTC(p.due) - toUTC(q.due); });

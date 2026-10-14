@@ -18,7 +18,7 @@
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans:wght@400;500;600;700&family=Sofia+Sans+Extra+Condensed:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/style.css">
   <script type="application/ld+json">
   {
@@ -49,21 +49,17 @@
   <a class="skip-link" href="#main">Skip to content</a>
   <!-- hrt:header -->
   <header class="site-header">
-    <nav class="nav" aria-label="Main">
-      <a class="brand" href="/">
-        <span class="brand-mark" aria-hidden="true">20</span>
-        <span class="brand-name">Hawaii Rental Tax</span>
-      </a>
-      <div class="nav-links" id="nav-links">
-        <a href="/">Checker</a>
-        <a href="/rates/">Rates</a>
-        <a href="/learn/">Learn</a>
-      </div>
-      <a class="btn small" href="/#checker" data-track="nav_cta">Check my rental</a>
-      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
-        <span class="bar" aria-hidden="true"></span><span class="bar" aria-hidden="true"></span><span class="bar" aria-hidden="true"></span>
-      </button>
-    </nav>
+    <div class="wrap">
+      <nav class="nav" aria-label="Main">
+        <a class="brand" href="/"><img src="/assets/img/brand/logo-horizontal-on-light.svg" alt="Hawaii Rental Tax" width="235" height="32"></a>
+        <div class="nav-links">
+          <a href="/">Checklist</a>
+          <a href="/rates/">Rates by island</a>
+          <a href="/learn/">Guides</a>
+        </div>
+      </nav>
+      <div class="double-rule" aria-hidden="true"></div>
+    </div>
   </header>
   <!-- /hrt:header -->
 
@@ -111,31 +107,18 @@
 
   <!-- hrt:footer -->
   <footer class="site-footer">
-    <div class="container">
-      <div class="cols">
-        <div>
-          <p class="brand-line"><span class="brand-mark" aria-hidden="true">20</span><span class="brand-name">Hawaii Rental Tax</span></p>
-          <p class="tagline">A free checker that tells Hawaii rental owners what to register for, which returns to file, and when they're due. Built in Honolulu.</p>
-        </div>
-        <div>
-          <ul>
-            <li><a href="/">The checker</a></li>
-            <li><a href="/rates/">2026 rates</a></li>
-            <li><a href="/learn/">Learn</a></li>
-          </ul>
-        </div>
-        <div>
-          <ul>
-            <li>Spotted something wrong? <a href="mailto:kawika@elevatemediahi.com?subject=Hawaii%20Rental%20Tax%20correction">Tell me</a></li>
-            <li><a href="/privacy/">Privacy</a></li>
-            <li><a href="/terms/">Terms</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="legal">
-        <p>General information about Hawaii tax rules as of September 2026, not tax or legal advice. Rules change, and your actual filing schedule is the one the Hawaii Department of Taxation assigns you. Not affiliated with the State of Hawaii or any county.</p>
-        <p>&copy; 2026 Veex Photo LLC &middot; <a href="/privacy/">Privacy</a> &middot; <a href="/terms/">Terms</a></p>
-      </div>
+    <div class="wrap">
+      <div class="double-rule" aria-hidden="true"></div>
+      <img class="footer-logo" src="/assets/img/brand/logo-vertical-on-light.svg" alt="Hawaii Rental Tax" width="160" height="75">
+      <nav class="footer-links" aria-label="Footer">
+        <a href="/#checker">Checklist</a>
+        <a href="/rates/">Rates by island</a>
+        <a href="/learn/">Guides</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+        <a href="mailto:kawika@elevatemediahi.com?subject=Hawaii%20Rental%20Tax%20correction">Report an error</a>
+      </nav>
+      <p class="legal">General information about Hawaii tax rules as of October 2026, not tax or legal advice. Your actual filing schedule is the one the Department of Taxation assigns you. Not affiliated with the State of Hawaii or any county. &copy; 2026 Veex Photo LLC.</p>
     </div>
   </footer>
   <!-- /hrt:footer -->

@@ -47,12 +47,19 @@ the test so it never reaches the real property.
 
 ## Design
 
-"The Twentieth" (2026-10-01): almost every deadline lands on the 20th, so the
-site reads like a tide table. Deep ocean ink for the header, hero and footer,
-sand for the page, a paper band for results, coral for anything due. Sofia
-Sans Extra Condensed for display and numerals, Sofia Sans for body. Tokens and
-the contrast notes are at the top of `assets/css/style.css`. The favicon is a
-drawn "20" in `favicon.svg`; the PNG icons and `og.jpg` were rendered from it.
+"Of Record" (2026-10-14): a public reference that reads like an official
+statement without the coldness of a government page. Paper and sand for the
+page, deep ink for type and the rules, coral only for marks and anything due.
+Source Serif 4 for headings and numbers, Source Sans 3 for body. The home page
+sets the question form (Part one) beside a live tax statement that fills in as
+each answer comes, then opens the full schedule (Part two) and the law summary
+(Part three) once all five answers are in. Tokens are at the top of
+`assets/css/style.css`.
+
+The logos live in `assets/img/brand/` (horizontal and vertical, on light and on
+dark, plus the bare mark in coral and deep). `favicon.svg` is the coral mark on
+a deep square; the PNG icons were rendered from it. `og.jpg` is a 1200 by 630
+render of the masthead, headline and the three "free" promises.
 
 ## Shared blocks
 
