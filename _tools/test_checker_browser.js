@@ -523,7 +523,7 @@ const SCEN = [
     for (const w of [1100, 375]) {
       p = await page(browser, w);
       const res = await p.goto(BASE + path, { waitUntil: "load" });
-      ok(res.status() === 200, `${path} loads at ${w}px`, String(res.status()));
+      ok([200, 304].includes(res.status()), `${path} loads at ${w}px`, String(res.status()));
       ok(p.errors.length === 0, `${path} has no console errors at ${w}px`, p.errors.join(" | "));
       const info = await p.evaluate(() => ({ links: document.querySelectorAll('a[href="/#checker"]').length,
         overflow: document.documentElement.scrollWidth - window.innerWidth,
