@@ -551,12 +551,21 @@
   // scrolls down to it, and its rules draw outward. The mark looks the same
   // turned 180 degrees, so it starts upright and comes to rest upright.
   var queueSeal = function () {};
+
+  // The turn runs the whole way the mark crosses the screen: from where it
+  // comes up from the bottom edge (or from the top of the page, if it's
+  // already showing) until it's near the top.
+  function sealSpan(mark) {
+    var box = mark.getBoundingClientRect();
+    var center = box.top + box.height / 2 + window.scrollY;
+    return { start: Math.max(0, center - window.innerHeight), end: center - window.innerHeight * 0.15 };
+  }
   (function () {
     var mark = document.querySelector(".seal-mark");
     if (!mark || !window.requestAnimationFrame) { return; }
     var img = mark.querySelector("img"), rules = mark.querySelectorAll("span");
     var queued = false;
-    function ease(x) { return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
+    function ease(x) { return (1 - Math.cos(Math.PI * x)) / 2; }
     function draw() {
       queued = false;
       if (reduceMotion()) {
@@ -564,10 +573,8 @@
         rules.forEach(function (r) { r.style.transform = ""; });
         return;
       }
-      var box = mark.getBoundingClientRect();
-      // done once the mark sits just above the middle of the screen
-      var end = box.top + box.height / 2 + window.scrollY - window.innerHeight * 0.55;
-      var p = end <= 0 ? 1 : Math.min(1, Math.max(0, window.scrollY / end));
+      var span = sealSpan(mark);
+      var p = span.end <= span.start ? 1 : Math.min(1, Math.max(0, (window.scrollY - span.start) / (span.end - span.start)));
       var e = ease(p);
       img.style.transform = "rotate(" + (e * 180).toFixed(2) + "deg)";
       rules.forEach(function (r) { r.style.transform = "scaleX(" + (0.3 + 0.7 * e).toFixed(3) + ")"; });

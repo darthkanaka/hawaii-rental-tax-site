@@ -454,20 +454,23 @@ const SCEN = [
       await new Promise(r => setTimeout(r, 120));
       return p.evaluate(() => {
         const m = document.querySelector(".seal-mark"), b = m.getBoundingClientRect();
-        const end = b.top + b.height / 2 + scrollY - innerHeight * 0.55;
-        return { end, img: m.querySelector("img").style.transform, rules: Array.from(m.querySelectorAll("span")).map(s => s.style.transform) };
+        const c = b.top + b.height / 2 + scrollY;
+        const start = Math.max(0, c - innerHeight), end = c - innerHeight * 0.15;
+        return { start, end, img: m.querySelector("img").style.transform, rules: Array.from(m.querySelectorAll("span")).map(s => s.style.transform) };
       });
     };
     const top = await seal(0);
     if (reduced) {
-      const mid = await seal(top.end / 2);
+      const mid = await seal((top.start + top.end) / 2);
       ok(top.img === "" && mid.img === "" && mid.rules.every(r => r === ""), `${tag}: the seal holds still`, JSON.stringify(mid));
     } else {
       const deg = x => +((/rotate\(([-\d.]+)deg\)/.exec(x.img) || [])[1]);
       const sc = x => x.rules.map(r => +((/scaleX\(([\d.]+)\)/.exec(r) || [])[1]));
-      ok(top.end > 0 && deg(top) === 0 && sc(top).every(v => v === 0.3), `${tag}: the seal starts upright with short rules`, JSON.stringify(top));
-      const mid = await seal(top.end / 2);
-      ok(deg(mid) > 60 && deg(mid) < 120 && sc(mid).every(v => v > 0.4 && v < 0.9), `${tag}: halfway down it's halfway round`, JSON.stringify(mid));
+      ok(top.end - top.start >= 0.6 * 900 && deg(top) === 0 && sc(top).every(v => v === 0.3), `${tag}: the seal starts upright with short rules, and turns over most of a screen of scrolling`, JSON.stringify(top));
+      const mid = await seal((top.start + top.end) / 2);
+      ok(Math.abs(deg(mid) - 90) < 1 && sc(mid).every(v => Math.abs(v - 0.65) < 0.01), `${tag}: halfway down it's halfway round`, JSON.stringify(mid));
+      const q = await seal(top.start + (top.end - top.start) / 4);
+      ok(deg(q) > 20 && deg(q) < 35, `${tag}: it eases in rather than snapping`, JSON.stringify(q));
       const done = await seal(top.end);
       ok(Math.abs(deg(done) - 180) < 0.5 && sc(done).every(v => v === 1), `${tag}: it lands a half turn round, upright, rules full`, JSON.stringify(done));
       const past = await seal(top.end + 600);
