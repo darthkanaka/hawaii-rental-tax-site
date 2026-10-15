@@ -234,9 +234,18 @@ const SCEN = [
   const colophon = await p.$eval("#rules-checked", e => e.textContent);
   const rc = C.RULES_CHECKED.split("-").map(Number);
   ok(colophon === `Rules current as of ${C.MONTHS[rc[1] - 1]} ${rc[2]}, ${rc[0]}`, "colophon date matches RULES_CHECKED", colophon);
+  const groups = await p.evaluate(() => Array.from(document.querySelectorAll(".qcard")).map(c => ({
+    id: c.id, role: c.getAttribute("role"),
+    name: (document.getElementById(c.getAttribute("aria-labelledby")) || {}).textContent,
+    hint: c.getAttribute("aria-describedby") ? (document.getElementById(c.getAttribute("aria-describedby")) || {}).textContent : null,
+    hintLast: !c.querySelector(".qhint") || c.querySelector(".qhint").nextElementSibling === c.querySelector(".qsource")
+  })));
+  ok(groups.length === 6 && groups.every(g => /^\d\.\s?[A-Z]/.test(g.name || "")), "every question card is named by its heading", JSON.stringify(groups));
+  ok(groups.every(g => g.role === (g.id === "q-have" ? "group" : "radiogroup")), "radio questions are radio groups, the checkboxes a group");
+  ok(groups.filter(g => g.hint).map(g => g.id).join() === "q-rent,q-have" && groups.every(g => g.hintLast), "hints sit above the source line and are read with the question", JSON.stringify(groups));
   await tap(p, "#see-schedule");
   const v = await p.evaluate(() => ({
-    invalid: Array.from(document.querySelectorAll("fieldset.invalid")).map(f => f.id),
+    invalid: Array.from(document.querySelectorAll(".qcard.invalid")).map(f => f.id),
     errors: Array.from(document.querySelectorAll(".field-error")).filter(e => !e.hidden).length,
     focus: document.activeElement && document.activeElement.name,
     resultsHidden: document.getElementById("results").hidden

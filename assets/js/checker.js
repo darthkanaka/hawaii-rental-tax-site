@@ -476,7 +476,7 @@
   form.addEventListener("change", function (ev) {
     if (!started) { started = true; track("checker_start", {}); }
     if (ev.target.name === "stay") { syncStay(); }
-    var fs = ev.target.closest("fieldset");
+    var fs = ev.target.closest(".qcard");
     if (fs && fs.classList.contains("invalid") && val(ev.target.name)) {
       fs.classList.remove("invalid");
       var msg = fs.querySelector(".field-error");

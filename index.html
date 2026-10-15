@@ -158,8 +158,8 @@
         </div>
         <noscript><p class="notice">The checklist needs JavaScript to run. The <a href="/rates/">2026 rates page</a> and the Department of Taxation's <a href="https://tax.hawaii.gov/rental/">rental property page</a> cover the same rules.</p></noscript>
         <form id="checker-form" class="qgrid" novalidate>
-          <fieldset id="q-stay" class="qcard">
-            <legend class="qhead"><span class="qnum">1.</span><span>How long do guests stay?</span></legend>
+          <div id="q-stay" class="qcard" role="radiogroup" aria-labelledby="q-stay-h">
+            <p class="qhead" id="q-stay-h"><span class="qnum">1.</span><span>How long do guests stay?</span></p>
             <div class="opts">
               <label class="opt"><input class="rad" type="radio" name="stay" value="str"><span>Less than 180 days at a time</span></label>
               <label class="opt"><input class="rad" type="radio" name="stay" value="ltr"><span>180 days or more, on a lease</span></label>
@@ -167,9 +167,9 @@
             </div>
             <p class="field-error" hidden>Pick one to continue.</p>
             <p class="qsource">Stays under 180 days owe TAT. HRS &sect;237D-1.</p>
-          </fieldset>
-          <fieldset id="q-county" class="qcard">
-            <legend class="qhead"><span class="qnum">2.</span><span>Where is the rental?</span></legend>
+          </div>
+          <div id="q-county" class="qcard" role="radiogroup" aria-labelledby="q-county-h">
+            <p class="qhead" id="q-county-h"><span class="qnum">2.</span><span>Where is the rental?</span></p>
             <div class="opts">
               <label class="opt"><input class="rad" type="radio" name="county" value="honolulu"><span>O&#699;ahu</span></label>
               <label class="opt"><input class="rad" type="radio" name="county" value="maui"><span>Maui, Moloka&#699;i or L&#257;na&#699;i</span></label>
@@ -178,9 +178,9 @@
             </div>
             <p class="field-error" hidden>Pick one to continue.</p>
             <p class="qsource">Each county adds its own 3% TAT, set by county ordinance.</p>
-          </fieldset>
-          <fieldset id="q-rent" class="qcard">
-            <legend class="qhead"><span class="qnum">3.</span><span>How much rent comes in a year?<span class="qhint">Everything guests pay you, cleaning fees included.</span></span></legend>
+          </div>
+          <div id="q-rent" class="qcard" role="radiogroup" aria-labelledby="q-rent-h" aria-describedby="q-rent-hint">
+            <p class="qhead" id="q-rent-h"><span class="qnum">3.</span><span>How much rent comes in a year?</span></p>
             <div class="opts two">
               <label class="opt"><input class="rad" type="radio" name="rent" value="b1"><span>Under $18,000</span></label>
               <label class="opt"><input class="rad" type="radio" name="rent" value="b2"><span>$18,000 to $36,000</span></label>
@@ -190,18 +190,20 @@
               <label class="opt"><input class="rad" type="radio" name="rent" value="unsure"><span>I'm not sure</span></label>
             </div>
             <p class="field-error" hidden>Pick one to continue. "I'm not sure" is fine.</p>
+            <p class="qhint" id="q-rent-hint">Everything guests pay you, cleaning fees included.</p>
             <p class="qsource">Sets how often you file. HRS &sect;237-30 and &sect;237D-6.</p>
-          </fieldset>
-          <fieldset id="q-have" class="qcard">
-            <legend class="qhead"><span class="qnum">4.</span><span>What have you registered?<span class="qhint">Leave unticked if you aren't sure.</span></span></legend>
+          </div>
+          <div id="q-have" class="qcard" role="group" aria-labelledby="q-have-h" aria-describedby="q-have-hint">
+            <p class="qhead" id="q-have-h"><span class="qnum">4.</span><span>What have you registered?</span></p>
             <div class="opts">
               <label class="opt"><input class="chk" type="checkbox" id="have-get" value="get"><span>A general excise tax license</span></label>
               <label class="opt" data-short-only><input class="chk" type="checkbox" id="have-tat" value="tat"><span>A state TAT registration</span></label>
             </div>
+            <p class="qhint" id="q-have-hint">Leave unticked if you aren't sure.</p>
             <p class="qsource">The GET license is $20 and TAT registration is $5, one time. HRS &sect;237-9 and &sect;237D-4.</p>
-          </fieldset>
-          <fieldset id="q-status" class="qcard">
-            <legend class="qhead"><span class="qnum">5.</span><span>Is your filing up to date?</span></legend>
+          </div>
+          <div id="q-status" class="qcard" role="radiogroup" aria-labelledby="q-status-h">
+            <p class="qhead" id="q-status-h"><span class="qnum">5.</span><span>Is your filing up to date?</span></p>
             <div class="opts">
               <label class="opt"><input class="rad" type="radio" name="status" value="current"><span>Yes, every return is filed</span></label>
               <label class="opt"><input class="rad" type="radio" name="status" value="behind"><span>I'm behind, or I've never filed</span></label>
@@ -210,9 +212,9 @@
             </div>
             <p class="field-error" hidden>Pick one to continue.</p>
             <p class="qsource">Late returns cost 5% a month, up to 25%. HRS &sect;231-39.</p>
-          </fieldset>
-          <fieldset id="q-home" class="qcard">
-            <legend class="qhead"><span class="qnum">6.</span><span>Where do you live?</span></legend>
+          </div>
+          <div id="q-home" class="qcard" role="radiogroup" aria-labelledby="q-home-h">
+            <p class="qhead" id="q-home-h"><span class="qnum">6.</span><span>Where do you live?</span></p>
             <div class="opts">
               <label class="opt"><input class="rad" type="radio" name="home" value="island"><span>On the same island as the rental</span></label>
               <label class="opt"><input class="rad" type="radio" name="home" value="state"><span>Elsewhere in Hawaii</span></label>
@@ -221,7 +223,7 @@
             </div>
             <p class="field-error" hidden>Pick one to continue.</p>
             <p class="qsource">Short-term rentals need a local contact on the island. HRS &sect;237D-4.</p>
-          </fieldset>
+          </div>
         </form>
 
         <div class="live-strip">

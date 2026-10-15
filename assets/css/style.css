@@ -187,19 +187,19 @@ p { margin: 0; }
 @media (max-width: 999px) { .qgrid { grid-template-columns: minmax(0, 1fr); } }
 
 .qcard {
-  margin: 0; padding: 22px 22px 18px; min-width: 0;
+  padding: 22px 22px 18px; min-width: 0;
   border: 1px solid var(--rule-2); border-radius: 4px; background: var(--white);
   display: flex; flex-direction: column;
 }
 .qhead {
-  float: left; width: 100%; min-height: 58px; padding: 0; margin: 0 0 6px;
-  display: flex; gap: 10px; align-items: baseline;
+  margin: 0 0 8px; display: flex; gap: 10px; align-items: baseline;
   font-size: 18px; font-weight: 600; line-height: 1.3;
 }
 .qnum { font-size: 16px; font-weight: 700; color: var(--coral); }
-.qhint { display: block; margin-top: 12px; font-size: 15px; font-weight: 400; font-style: italic; line-height: 1.45; color: var(--muted); }
-@media (max-width: 640px) { .qhead { min-height: 0; } }
-.opts { clear: both; display: flex; flex-direction: column; font-family: var(--sans); font-size: 16px; }
+/* a hint sits just above the source line, so it rides the bottom with it */
+.qhint { margin-top: auto; padding-top: 14px; font-size: 15px; font-style: italic; line-height: 1.45; color: var(--muted); }
+.qhint + .qsource { margin-top: 12px; }
+.opts { display: flex; flex-direction: column; font-family: var(--sans); font-size: 16px; }
 .opts.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(3, auto); grid-auto-flow: column; column-gap: 20px; }
 @media (max-width: 640px) { .opts.two { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; grid-auto-flow: row; } }
 .opt { display: flex; align-items: center; gap: 12px; min-height: 44px; cursor: pointer; }
@@ -207,6 +207,8 @@ p { margin: 0; }
   margin-top: auto; min-height: 39px; padding-top: 14px; border-top: 1px solid var(--rule-3);
   font-family: var(--sans); font-size: 13px; font-style: italic; line-height: 1.5; color: var(--muted);
 }
+/* side by side, room for two lines of source so the rules line up across a row */
+@media (min-width: 1000px) { .qsource { min-height: 53px; } }
 .field-error { margin: 4px 0 10px; font-family: var(--sans); font-size: 15px; font-weight: 600; color: var(--coral); }
 .qcard.invalid { border-color: var(--coral); box-shadow: 0 0 0 1px var(--coral); }
 
