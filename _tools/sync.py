@@ -19,7 +19,9 @@ them), so _partials/ and _tools/ never reach the public site.
 from __future__ import annotations
 
 import re
+import subprocess
 import sys
+from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -27,6 +29,19 @@ PARTIALS = ROOT / "_partials"
 
 # Bumped whenever the tax content on the site is re-verified against DOTAX.
 LEGAL_DATE = "October 2026"
+
+SITE = "https://hawaiirentaltax.com"
+# Every page search engines should know about, with its sitemap priority.
+SITEMAP = [
+    ("index.html", "1.0"),
+    ("rates/index.html", "0.8"),
+    ("learn/index.html", "0.5"),
+    ("learn/bill-47-catch-up-checklist/index.html", "0.5"),
+    ("learn/hawaii-tat-11-percent/index.html", "0.5"),
+    ("learn/get-tax-long-term-rentals/index.html", "0.5"),
+    ("privacy/index.html", "0.5"),
+    ("terms/index.html", "0.5"),
+]
 
 
 
@@ -61,6 +76,29 @@ def build_footer(_url: str | None) -> str:
 BUILDERS = {"header": build_header, "footer": build_footer}
 
 
+def last_changed(rel: str) -> str:
+    """The day a page last changed: today while it has uncommitted edits,
+    otherwise the day of its last commit."""
+    def git(*args: str) -> str:
+        return subprocess.run(["git", *args, "--", rel], cwd=ROOT, capture_output=True, text=True).stdout.strip()
+    if git("status", "--porcelain"):
+        return date.today().isoformat()
+    return git("log", "-1", "--format=%cs") or date.today().isoformat()
+
+
+def build_sitemap() -> str:
+    """sitemap.xml with each page's real last-changed date, so search engines
+    are told when a page changes."""
+    rows = [
+        f"  <url>\n    <loc>{SITE}{page_url(ROOT / rel)}</loc>\n"
+        f"    <lastmod>{last_changed(rel)}</lastmod>\n    <priority>{pri}</priority>\n  </url>"
+        for rel, pri in SITEMAP
+    ]
+    return ('<?xml version="1.0" encoding="UTF-8"?>\n'
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+            + "\n".join(rows) + "\n</urlset>\n")
+
+
 def stamp(path: Path) -> str:
     text = path.read_text()
     url = page_url(path)
@@ -91,6 +129,14 @@ def main() -> int:
         drifted.append(path.relative_to(ROOT).as_posix())
         if not check:
             path.write_text(after)
+
+    # after stamping, so a page the stamp just changed counts as changed today
+    sitemap = ROOT / "sitemap.xml"
+    want = build_sitemap()
+    if sitemap.read_text() != want:
+        drifted.append("sitemap.xml")
+        if not check:
+            sitemap.write_text(want)
 
     if check and drifted:
         print("shared blocks are out of date in:")

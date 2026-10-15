@@ -218,6 +218,26 @@ def main() -> int:
                 if frag and frag not in tp.ids:
                     findings.append(f"{rel}:{line}: {href!r} points at a missing #{frag}")
 
+    # --- 5. search basics: every indexable page is in the sitemap, and its
+    # description fits in a search result without being cut off ---
+    sys.path.insert(0, str(ROOT / "_tools"))
+    from sync import SITEMAP
+    listed = {rel for rel, _ in SITEMAP}
+    for path in pages():
+        rel = path.relative_to(ROOT).as_posix()
+        text = path.read_text()
+        if re.search(r'<meta name="robots" content="noindex', text):
+            continue
+        if rel not in listed:
+            findings.append(f"{rel}:1: indexable page missing from SITEMAP in _tools/sync.py")
+        m = re.search(r'<meta name="description" content="([^"]*)"', text)
+        if not m:
+            findings.append(f"{rel}:1: no meta description")
+        elif len(m.group(1)) > 160:
+            findings.append(f"{rel}:1: meta description is {len(m.group(1))} characters; search results cut off past about 160")
+        if "fonts.googleapis.com" in text:
+            findings.append(f"{rel}:1: loads Google Fonts; the fonts are served from /assets/fonts/")
+
     for f in findings:
         print(f)
 
