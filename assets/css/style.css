@@ -139,7 +139,7 @@ p { margin: 0; }
   margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
   font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
 }
-.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--coral-mark); flex: none; }
+.dot { position: relative; width: 8px; height: 8px; border-radius: 50%; background: var(--coral-mark); flex: none; }
 .st-card {
   background: var(--white); border: 1px solid var(--rule); border-radius: 4px;
   box-shadow: 0 36px 64px -40px rgba(13, 34, 48, 0.5); padding: 28px 28px 24px;
@@ -171,6 +171,8 @@ p { margin: 0; }
 .seal-mark { display: flex; align-items: center; gap: 24px; }
 .seal-mark span { flex: 1; border-top: 1px solid var(--rule); }
 .seal-mark img { width: 32px; height: 32px; opacity: 0.85; }
+.seal-mark span:first-child { transform-origin: right center; }
+.seal-mark span:last-child { transform-origin: left center; }
 .colophon {
   margin: 16px auto 0; max-width: 960px; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 40px;
   font-family: var(--sans); font-size: 12px; font-weight: 600; line-height: 1.8; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
@@ -376,6 +378,24 @@ sup.fn { color: var(--coral); font-family: var(--sans); font-weight: 700; font-s
 
 .not-found { padding: 96px 0; }
 .not-found h1 { margin-bottom: 18px; font-size: clamp(40px, 5.4vw, 60px); }
+
+/* ---------------------------------------------------------------- motion
+   Small and quiet: what an answer changed fades in, the live dots pulse once,
+   answer marks grow in. The seal's turn and the calendar slide live in
+   checker.js. All of it stops for anyone who asks for less motion. */
+@keyframes fresh-in { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+@keyframes dot-ring { from { transform: scale(1); opacity: 0.55; } to { transform: scale(3.4); opacity: 0; } }
+@keyframes mark-in { from { scale: 0.2; opacity: 0; } to { scale: 1; opacity: 1; } }
+.fresh { animation: fresh-in 380ms cubic-bezier(.2,.7,.2,1) both; }
+.st-coming tr.fresh { animation: none; }
+.st-coming tr.fresh td { animation: fresh-in 380ms cubic-bezier(.2,.7,.2,1) both; animation-delay: inherit; }
+.dot.pulse::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: inherit; animation: dot-ring 900ms ease-out both; }
+.rad:checked::after, .chk:checked::after { animation: mark-in 170ms cubic-bezier(.2,.7,.2,1); }
+.chk { transition: background-color 150ms ease; }
+@media (prefers-reduced-motion: reduce) {
+  .fresh, .st-coming tr.fresh td, .dot.pulse::after, .rad:checked::after, .chk:checked::after { animation: none; }
+  .chk { transition: none; }
+}
 
 /* ---------------------------------------------------------------- footer */
 .site-footer { padding-bottom: 56px; text-align: center; font-family: var(--sans); }

@@ -355,7 +355,16 @@ const SCEN = [
   ok(/^Link copied\./.test(calStatus) || calStatus.includes("/calendar/" + CAL.fileName(changed)), "copying the calendar link gives feedback", calStatus);
   await tap(p, "#cal-toggle");
   cs = await p.evaluate(() => ({ exp: document.getElementById("cal-toggle").getAttribute("aria-expanded"), hidden: document.getElementById("cal-options").hidden }));
-  ok(cs.exp === "false" && cs.hidden, "calendar button closes the choices again", JSON.stringify(cs));
+  ok(cs.exp === "false" && !cs.hidden, "calendar choices slide shut rather than vanish", JSON.stringify(cs));
+  await new Promise(r => setTimeout(r, 450));
+  cs = await p.evaluate(() => ({ exp: document.getElementById("cal-toggle").getAttribute("aria-expanded"), hidden: document.getElementById("cal-options").hidden, style: document.getElementById("cal-options").getAttribute("style") || "" }));
+  ok(cs.exp === "false" && cs.hidden && !/overflow/.test(cs.style), "calendar button closes the choices again", JSON.stringify(cs));
+  await tap(p, "#cal-toggle");
+  await new Promise(r => setTimeout(r, 450));
+  cs = await p.evaluate(() => { const o = document.getElementById("cal-options"); return { hidden: o.hidden, h: o.getBoundingClientRect().height, full: o.scrollHeight, style: o.getAttribute("style") || "" }; });
+  ok(!cs.hidden && Math.abs(cs.h - cs.full) < 1 && cs.h > 40 && !/overflow/.test(cs.style), "calendar choices slide open to full height", JSON.stringify(cs));
+  await tap(p, "#cal-toggle");
+  await new Promise(r => setTimeout(r, 450));
   await tap(p, "#copy-link");
   await new Promise(r => setTimeout(r, 300));
   ok(/Link copied|address bar/.test(await p.$eval(".copy-status", e => e.textContent)), "copy link gives feedback");
@@ -430,6 +439,78 @@ const SCEN = [
       ok(land.path === "/" && land.hash === "#checker" && land.top < land.vh, "the prompt opens the checklist", JSON.stringify(land));
     }
     ok(p.errors.length === 0, `${w}px: /rates/ has no console errors`, p.errors.join(" | "));
+    await p.close();
+  }
+
+  // ---- 6c. motion: the seal turns with the scroll, the statement shows what
+  // an answer changed, answer marks grow in, and all of it stops for reduced motion
+  for (const reduced of [false, true]) {
+    const tag = reduced ? "reduced motion" : "motion";
+    p = await page(browser, 1280);
+    if (reduced) await p.emulateMediaFeatures([{ name: "prefers-reduced-motion", value: "reduce" }]);
+    await p.goto(`${BASE}/?today=${TODAY}`, { waitUntil: "load" });
+    const seal = async y => {
+      await p.evaluate(y => window.scrollTo(0, y), y);
+      await new Promise(r => setTimeout(r, 120));
+      return p.evaluate(() => {
+        const m = document.querySelector(".seal-mark"), b = m.getBoundingClientRect();
+        const end = b.top + b.height / 2 + scrollY - innerHeight * 0.55;
+        return { end, img: m.querySelector("img").style.transform, rules: Array.from(m.querySelectorAll("span")).map(s => s.style.transform) };
+      });
+    };
+    const top = await seal(0);
+    if (reduced) {
+      const mid = await seal(top.end / 2);
+      ok(top.img === "" && mid.img === "" && mid.rules.every(r => r === ""), `${tag}: the seal holds still`, JSON.stringify(mid));
+    } else {
+      const deg = x => +((/rotate\(([-\d.]+)deg\)/.exec(x.img) || [])[1]);
+      const sc = x => x.rules.map(r => +((/scaleX\(([\d.]+)\)/.exec(r) || [])[1]));
+      ok(top.end > 0 && deg(top) === 0 && sc(top).every(v => v === 0.3), `${tag}: the seal starts upright with short rules`, JSON.stringify(top));
+      const mid = await seal(top.end / 2);
+      ok(deg(mid) > 60 && deg(mid) < 120 && sc(mid).every(v => v > 0.4 && v < 0.9), `${tag}: halfway down it's halfway round`, JSON.stringify(mid));
+      const done = await seal(top.end);
+      ok(Math.abs(deg(done) - 180) < 0.5 && sc(done).every(v => v === 1), `${tag}: it lands a half turn round, upright, rules full`, JSON.stringify(done));
+      const past = await seal(top.end + 600);
+      ok(deg(past) === 180, `${tag}: it stays put past that point`, JSON.stringify(past));
+      const back = await seal(0);
+      ok(deg(back) === 0, `${tag}: scrolling back turns it back`, JSON.stringify(back));
+    }
+    await p.evaluate(() => window.scrollTo(0, 0));
+    const look = () => p.evaluate(() => ({
+      fresh: Array.from(document.querySelectorAll(".st-card .fresh")).map(e => e.tagName + ":" + e.textContent.trim().slice(0, 30)),
+      pulses: document.querySelectorAll(".live-label .dot.pulse").length,
+      dots: document.querySelectorAll(".live-label .dot").length
+    }));
+    await tap(p, 'input[name="stay"][value="str"]');
+    let m = await look();
+    if (reduced) ok(m.fresh.length === 0 && m.pulses === 0, `${tag}: answers change the statement without effects`, JSON.stringify(m));
+    else ok(m.fresh.some(x => /^DD:Short-term/.test(x)) && m.pulses === m.dots && m.dots === 2, `${tag}: the first answer fades in its line and pulses both dots`, JSON.stringify(m));
+    const mark = await p.$eval('input[name="stay"][value="str"]', el => getComputedStyle(el, "::after").animationName);
+    ok(mark === (reduced ? "none" : "mark-in"), `${tag}: the radio dot ${reduced ? "just appears" : "grows in"}`, mark);
+    await tap(p, 'input[name="county"][value="maui"]');
+    await tap(p, 'input[name="rent"][value="b2"]');
+    m = await look();
+    const rows = await p.$$eval("#st-rows tr", r => r.length);
+    if (!reduced) ok(m.fresh.filter(x => /^TR:/.test(x)).length === rows && rows === 5, `${tag}: every new due date fades in`, JSON.stringify(m));
+    const delays = await p.$$eval("#st-rows tr", r => r.map(x => x.style.animationDelay));
+    if (!reduced) ok(delays.join() === ",60ms,120ms,180ms,240ms", `${tag}: the new dates come in one after another`, delays.join());
+    await p.evaluate(() => document.querySelectorAll(".dot").forEach(d => d.classList.remove("pulse")));
+    await tap(p, 'input[name="status"][value="current"]');
+    m = await look();
+    ok(m.fresh.length === 0 && m.pulses === 0, `${tag}: an answer that changes nothing on the statement stays quiet`, JSON.stringify(m));
+    await tap(p, "label:has(#have-get)");
+    const chk = await p.$eval("#have-get", el => getComputedStyle(el, "::after").animationName);
+    ok(chk === (reduced ? "none" : "mark-in"), `${tag}: the checkmark ${reduced ? "just appears" : "grows in"}`, chk);
+    await tap(p, 'input[name="home"][value="island"]');
+    await new Promise(r => setTimeout(r, 100));
+    await tap(p, "#cal-toggle");
+    const opened = await p.evaluate(() => { const o = document.getElementById("cal-options"); return { hidden: o.hidden, anims: o.getAnimations().length }; });
+    ok(!opened.hidden && opened.anims === (reduced ? 0 : 1), `${tag}: calendar choices ${reduced ? "open at once" : "slide open"}`, JSON.stringify(opened));
+    if (reduced) {
+      await tap(p, "#cal-toggle");
+      ok(await p.$eval("#cal-options", o => o.hidden), `${tag}: calendar choices close at once`);
+    }
+    ok(p.errors.length === 0, `${tag}: no console errors`, p.errors.join(" | "));
     await p.close();
   }
 

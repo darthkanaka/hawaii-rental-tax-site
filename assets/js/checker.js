@@ -21,6 +21,9 @@
 
   function track(name, params) { if (window.hrtTrack) { window.hrtTrack(name, params || {}); } }
 
+  function reduceMotion() { return !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches); }
+  function restart(el, cls) { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); }
+
   function esc(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
@@ -401,6 +404,23 @@
     wireResults();
   }
 
+  // Opens or closes a block by easing its height, top margin and opacity.
+  function slide(el, open) {
+    if (el.slideAnim) { el.slideAnim.cancel(); el.slideAnim = null; }
+    if (!el.animate || reduceMotion()) { el.style.overflow = ""; el.hidden = !open; return; }
+    el.hidden = false;
+    var full = { height: el.scrollHeight + "px", marginTop: getComputedStyle(el).marginTop, opacity: 1 };
+    var shut = { height: "0px", marginTop: "0px", opacity: 0 };
+    el.style.overflow = "hidden";
+    var anim = el.animate(open ? [shut, full] : [full, shut], { duration: 260, easing: "cubic-bezier(.2,.7,.2,1)" });
+    el.slideAnim = anim;
+    anim.onfinish = function () {
+      el.slideAnim = null;
+      el.style.overflow = "";
+      if (!open) { el.hidden = true; }
+    };
+  }
+
   function wireResults() {
     var more = document.getElementById("show-all");
     if (more) {
@@ -416,8 +436,8 @@
       var opts = document.getElementById("cal-options");
       cal.addEventListener("click", function () {
         var open = cal.getAttribute("aria-expanded") !== "true";
-        opts.hidden = !open;
         cal.setAttribute("aria-expanded", open ? "true" : "false");
+        slide(opts, open);
         if (open) { track("calendar_open", {}); }
       });
       document.getElementById("cal-copy").addEventListener("click", function () {
@@ -453,13 +473,38 @@
     });
   }
 
+  // ---------------------------------------------------------- showing what an answer changed
+  // Lines of the statement an answer changed fade in, new due dates one
+  // after another, and the live dots pulse once.
+  function snapshot() {
+    function texts(sel) { return Array.prototype.map.call(document.querySelectorAll(sel), function (el) { return el.textContent; }); }
+    return { facts: texts("#st-facts dd"), rows: texts("#st-rows tr"), foot: document.getElementById("st-foot").textContent };
+  }
+
+  function showChanges(before) {
+    var changed = false, n = 0;
+    function fresh(el, delay) { el.style.animationDelay = delay ? delay + "ms" : ""; restart(el, "fresh"); changed = true; }
+    document.querySelectorAll("#st-facts dd").forEach(function (d, i) {
+      if (d.textContent !== before.facts[i]) { fresh(d, 0); }
+    });
+    document.querySelectorAll("#st-rows tr").forEach(function (r) {
+      if (before.rows.indexOf(r.textContent) === -1) { fresh(r, n++ * 60); }
+    });
+    var foot = document.getElementById("st-foot");
+    if (foot.textContent !== before.foot) { fresh(foot.querySelector("b") || foot, 0); }
+    if (changed) { document.querySelectorAll(".live-label .dot").forEach(function (dot) { restart(dot, "pulse"); }); }
+  }
+
   // ---------------------------------------------------------- one pass, on every answer
-  function update(source) {
+  function update(source, animate) {
     var a = answers();
     var t = today();
     var P = previewPlan(a, t);
+    var before = animate && !reduceMotion() ? snapshot() : null;
     renderStatement(a, t, P);
+    if (before) { showChanges(before); }
     renderStrip(a, t, P);
+    queueSeal();
     if (complete(a)) {
       renderResults(a, t, P);
       var h = toHash(a);
@@ -482,7 +527,7 @@
       var msg = fs.querySelector(".field-error");
       if (msg) { msg.hidden = true; }
     }
-    update("live");
+    update("live", true);
   });
 
   function goToSchedule(ev) {
@@ -500,6 +545,38 @@
   document.getElementById("st-foot").addEventListener("click", function (ev) {
     if (ev.target.closest(".see-all")) { goToSchedule(ev); }
   });
+
+  // ---------------------------------------------------------- the seal
+  // The mark between the statement and Part one makes a half turn as the page
+  // scrolls down to it, and its rules draw outward. The mark looks the same
+  // turned 180 degrees, so it starts upright and comes to rest upright.
+  var queueSeal = function () {};
+  (function () {
+    var mark = document.querySelector(".seal-mark");
+    if (!mark || !window.requestAnimationFrame) { return; }
+    var img = mark.querySelector("img"), rules = mark.querySelectorAll("span");
+    var queued = false;
+    function ease(x) { return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
+    function draw() {
+      queued = false;
+      if (reduceMotion()) {
+        img.style.transform = "";
+        rules.forEach(function (r) { r.style.transform = ""; });
+        return;
+      }
+      var box = mark.getBoundingClientRect();
+      // done once the mark sits just above the middle of the screen
+      var end = box.top + box.height / 2 + window.scrollY - window.innerHeight * 0.55;
+      var p = end <= 0 ? 1 : Math.min(1, Math.max(0, window.scrollY / end));
+      var e = ease(p);
+      img.style.transform = "rotate(" + (e * 180).toFixed(2) + "deg)";
+      rules.forEach(function (r) { r.style.transform = "scaleX(" + (0.3 + 0.7 * e).toFixed(3) + ")"; });
+    }
+    queueSeal = function () { if (!queued) { queued = true; window.requestAnimationFrame(draw); } };
+    window.addEventListener("scroll", queueSeal, { passive: true });
+    window.addEventListener("resize", queueSeal);
+    draw();
+  })();
 
   // Arriving on a shared or bookmarked link fills the form and the statement.
   var linked = fromHash();
