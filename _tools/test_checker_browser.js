@@ -2,9 +2,10 @@
    then checks the live statement, the full schedule, the summary and every
    date on screen against yearPlan() in checker-logic.js.
 
-   Needs puppeteer-core somewhere on NODE_PATH and a local server:
+   Needs Google Chrome, `npm install` in _tools once, and a local server:
      python3 -m http.server 8111   (from the repo root)
-     NODE_PATH=<dir with node_modules> node _tools/test_checker_browser.js
+     node _tools/test_checker_browser.js
+   BASE=https://hawaiirentaltax.com runs it against the live site.
 
    Google Analytics requests are blocked so tests never reach the real
    property; events are read from window.dataLayer instead. */

@@ -37,33 +37,32 @@ Pages serves `main`.
 ## Before every push
 
 ```bash
-python3 _tools/sync.py                 # stamp the shared header and footer
-python3 _tools/verify.py               # structured data, links, banned copy
+python3 _tools/sync.py                 # stamp the shared header and footer, write sitemap.xml dates
+python3 _tools/verify.py               # structured data, links, banned copy, sitemap and description checks
 node _tools/build_calendars.js         # rebuild calendar/*.ics (--check just compares)
-node _tools/test_checker.js            # every rule, every answer combination, every day 2026-2030
-python3 -m http.server 8111 &          # then, with puppeteer-core on NODE_PATH:
-NODE_PATH=<dir>/node_modules node _tools/test_checker_browser.js
+node _tools/test_checker.js            # every rule, every answer combination, every day 2026-2030, every calendar file
+python3 -m http.server 8111 &          # then:
+node _tools/test_checker_browser.js    # BASE=https://hawaiirentaltax.com to run it against the live site
 ```
 
+The browser test and the image renderer need Google Chrome and
+`puppeteer-core`, pinned in `_tools/package.json`. Run `npm install` in
+`_tools` once on a new machine; `_tools/node_modules` is ignored by git and,
+like everything under an underscore folder, never served.
+
 The browser test drives every control in Chrome and checks every date, rate
-and line on screen against the rules. Analytics requests are blocked during
-the test so it never reaches the real property.
+and line on screen against the rules, plus the motion (seal turn, statement
+cues, calendar slide) with and without reduced motion. Analytics requests are
+blocked during the test so it never reaches the real property.
 
-## Calendar files
+## Images
 
-Part two offers "Add these dates to my calendar" with three choices: Apple
-Calendar (a `webcal://` link), Google Calendar (its add-by-URL link) and other
-apps (copies the `https://` link). All three add a calendar that follows the
-published file, so nobody gives an email or signs up.
-
-`_tools/build_calendars.js` writes one `.ics` per stay, island and rent range
-(60 files). When the rent answer is "not sure", a line asking for a rent
-range takes the button's place. Each file holds every due date from the month in
-`RULES_CHECKED` through December of the next year, from `calendarPlan()` in
-`checker-logic.js`, with a reminder three days before at 9 AM. The unit tests
-hold every file to the page's own schedule, day by day, and fail if a file on
-disk is stale. Event UIDs are stable, so a rebuild updates people's calendars
-instead of duplicating events.
+`node _tools/render_images.js` remakes the share image (`assets/img/og.jpg`)
+and the icons (`icon-32.png`, `apple-touch-icon.png`, `icon-512.png`,
+`favicon.ico`) from the logo files in `assets/img/brand/` and `favicon.svg`,
+using the site's own fonts. Add `--out DIR` to render somewhere else and
+compare first. After changing an icon, bump the `?v=` on the icon links in
+every page's head so browsers fetch it again.
 
 ## Design
 

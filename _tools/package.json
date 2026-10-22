@@ -1,0 +1,8 @@
+{
+  "name": "hawaiirentaltax-tools",
+  "private": true,
+  "description": "Test and render tools for hawaiirentaltax.com. Run npm install here once; the browser test and the image renderer need puppeteer-core and Google Chrome.",
+  "devDependencies": {
+    "puppeteer-core": "25.16.0"
+  }
+}
